@@ -52,6 +52,117 @@
 
     <hr>
 
+    <div class="todo-list">
+        <h1 class="heading">Task-2 todo list</h1>
+        <h2 class="sub-heading">Date:23 Sep 2024</h2>
+
+        <div class="todo-container">
+            <div class="search-bar">
+                <input type="text" class="input-bar"  placeholder="search here" id="searchBar">
+            </div> 
+            <table border="1" class="todo-table" id="todoList">
+                <thead>
+                    <tr>
+                        <td width="70%">Task</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+            <form action="#" class="todoForm" id="inputForm">
+                <div class="input-section">
+                    <input type="text" id="task" class="input-bar" placeholder="Enter Todo">
+                </div>
+                <br>
+                <input type="submit" id="todoSubmit" class="btn blue">
+            </form>
+        
+        <div class="loader" id="loader">
+                <div class="fill"></div>
+                <br>
+                <div class="progress"></div>
+        </div>
+        </div>
+
+
+        <button class="btn clear-storage" onclick="localStorage.clear()">
+            Clear Local storage
+        </button>
+        
+        
+        <script>
+                const todoListData = ['Read book', 'Create budget of this month']
+                const todoInput = document.querySelector('#task')
+                console.log(todoInput.value)
+                this.localStorage.setItem('todoList', JSON.stringify(todoListData))
+
+                window.addEventListener('DOMContentLoaded', function(){
+                    displayData(JSON.parse(localStorage.getItem('todoList')))
+                })
+
+                function displayData(list){
+                    const tableBody = document.querySelector('#tableBody')
+                    tableBody.innerHTML =''
+                    list.length && list.forEach((item, i) => {
+                        const tr =  document.createElement('tr');
+                        tr.innerHTML = (
+                                        `
+                                        <td width="70%">${item}</td>
+                                        <td class='flex-center'>
+                                            <button class="edit green btn">Edit</button>
+                                            <button class="delete red btn">Delete</button>
+                                        </td>
+                                        `    
+                                    )
+                        tableBody.append(tr)
+                    })
+                }
+
+                function afterSubmit(e){
+                    const todoInput = document.querySelector('#task')
+                    todoInput.value && todoListData.push(todoInput.value)
+                    console.log(todoListData)
+                    localStorage.setItem('todoList', JSON.stringify(todoListData))
+                }
+
+                function promiseArr() {
+                    return new Promise((resolve, reject) => {
+                            try {
+                                let i = 1;
+                                let loader = document.querySelector('.fill')
+                                let progressPercentage = document.querySelector('.progress')
+                                let loaderInterval = setInterval(() => {
+                                    loader.style.width = `${i}%`
+                                    progressPercentage.innerHTML = `${i}%` 
+                                    i++;
+                                    if(i > 100) {
+                                        clearInterval(loaderInterval)
+                                        resolve();
+                                    }
+                                },20)    
+                            } catch (error) {
+                                reject(error);
+                            }
+                    });
+                }
+
+                document.querySelector('#inputForm').addEventListener('submit', function(e){
+                    e.preventDefault();
+                    promiseArr()
+                        .then(() => {
+                            document.querySelector('#loader').innerHTML = ''
+                            afterSubmit()
+                            displayData(JSON.parse(localStorage.getItem('todoList')))
+                        })
+                })
+
+                // displayData(JSON.parse(localStorage.getItem('todoList')))
+        </script>
+    </div>
+
+
 
 </body>
 </html>
