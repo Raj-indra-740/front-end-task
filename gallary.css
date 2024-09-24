@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.gallary-container{
+    width: 100%;
+    /* max-width: 400px; */
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.img-container{
+    width: 100%;
+    max-width: 300px;
+    border-radius: 20px;
+    margin: 20px 0;
+}
