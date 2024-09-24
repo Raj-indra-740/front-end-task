@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    background-color: rgb(38 38 38);
+    color: aliceblue;
+}
 
 
 /* Image Slider */
@@ -30,6 +34,7 @@
 }
 
 .img-container {
+    /* border: 1px solid rgb(38 38 38); */
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
@@ -68,10 +73,6 @@
 
 /* Todo list */
 
-body{
-    background-color: rgb(38 38 38);
-    color: aliceblue;
-}
 
 .todo-list{
     width: 100%;

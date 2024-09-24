@@ -64,8 +64,7 @@
           />
         </div>
       </div>
-    </div>
-
+    
     <script>
       const sliderContainer = document.querySelector(".slider-container");
       function toggleClass(element) {
@@ -85,6 +84,9 @@
         return;
       });
     </script>
+
+    </div>
+
 
     <hr />
 
@@ -204,6 +206,7 @@
         }
 
         function editEntry(element) {
+          document.querySelector('.delete').disabled = true
           const currRow = element.parentElement.parentElement;
           const entry = currRow.firstElementChild;
           const entryValue = entry.innerText.trim();
@@ -227,6 +230,7 @@
           } else {
             alert("Task cannot be empty");
           }
+          document.querySelector('.delete').disabled = false
         }
 
         function searchTask(value) {
