@@ -155,10 +155,12 @@
               const tr = document.createElement("tr");
               tr.id = i;
               tr.innerHTML = `
-                                        <td width="70%">${item}</td>
-                                        <td class='flex-center'>
+                                        <td width="70%" >${item}</td>
+                                        <td>
+                                            <div class='flex-center'>
                                             <button class="edit green btn" onclick="editEntry(this)">Edit</button>
                                             <button class="delete red btn" onclick="deleteEntry(this)">Delete</button>
+                                            </div>
                                         </td>
                                         `;
               tableBody.append(tr);
@@ -198,7 +200,7 @@
         }
 
         function deleteEntry(element) {
-          const currRow = element.parentElement.parentElement;
+          const currRow = element.parentElement.parentElement.parentElement;
           const currTable = currRow.parentElement.parentElement;
           todoListData.splice(currRow.id, 1);
           localStorage.setItem("todoList", JSON.stringify(todoListData));
@@ -207,7 +209,7 @@
 
         function editEntry(element) {
           document.querySelector('.delete').disabled = true
-          const currRow = element.parentElement.parentElement;
+          const currRow = element.parentElement.parentElement.parentElement;
           const entry = currRow.firstElementChild;
           const entryValue = entry.innerText.trim();
 
