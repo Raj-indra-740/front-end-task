@@ -1,193 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
     <title>Image Slider</title>
 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="image-slider">
-        <h1 class="heading">Task-1 Image Slider</h1>
-        <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      <h1 class="heading">Task-1 Image Slider</h1>
+      <h2 class="sub-heading">Date:23 Sep 2024</h2>
 
-        <div class="slider-container">
-            <div class="img-container smooth-transition shrink">
-                <img src="./slider-images/img-1.webp" class="imgs" id="one" alt="images" width="200px" height="400px" >
-            </div>
-            <div class="img-container smooth-transition shrink">
-                <img src="./slider-images/img-2.jpeg" class="imgs" id="two" alt="images" width="200px" height="400px">
-            </div>
-            <div class="img-container smooth-transition shrink expand">
-                <img src="./slider-images/img-3.webp" class="imgs" id="three" alt="images" width="200px" height="400px">
-            </div>
-            <div class="img-container smooth-transition shrink">
-                <img src="./slider-images/img-4.jpeg" class="imgs" id="four" alt="images" width="200px" height="400px">
-            </div>
-            <div class="img-container smooth-transition shrink">
-                <img src="./slider-images/img-5.jpeg" class="imgs" id="five" alt="images" width="200px" height="400px">
-            </div>
+      <div class="slider-container">
+        <div class="img-container smooth-transition shrink">
+          <img
+            src="./slider-images/img-1.webp"
+            class="imgs"
+            id="one"
+            alt="images"
+            width="200px"
+            height="400px"
+          />
         </div>
+        <div class="img-container smooth-transition shrink">
+          <img
+            src="./slider-images/img-2.jpeg"
+            class="imgs"
+            id="two"
+            alt="images"
+            width="200px"
+            height="400px"
+          />
+        </div>
+        <div class="img-container smooth-transition shrink expand">
+          <img
+            src="./slider-images/img-3.webp"
+            class="imgs"
+            id="three"
+            alt="images"
+            width="200px"
+            height="400px"
+          />
+        </div>
+        <div class="img-container smooth-transition shrink">
+          <img
+            src="./slider-images/img-4.jpeg"
+            class="imgs"
+            id="four"
+            alt="images"
+            width="200px"
+            height="400px"
+          />
+        </div>
+        <div class="img-container smooth-transition shrink">
+          <img
+            src="./slider-images/img-5.jpeg"
+            class="imgs"
+            id="five"
+            alt="images"
+            width="200px"
+            height="400px"
+          />
+        </div>
+      </div>
     </div>
-
 
     <script>
-        const sliderContainer =  document.querySelector('.slider-container')
-        function toggleClass(element){
-            Array.from(element.parentElement.parentElement  .children).forEach((item) => {
-                item.classList.remove('expand')
-            })
-            console.log(element.parentElement)
-            element.parentElement.classList.toggle('expand')
+      const sliderContainer = document.querySelector(".slider-container");
+      function toggleClass(element) {
+        Array.from(element.parentElement.parentElement.children).forEach(
+          (item) => {
+            item.classList.remove("expand");
+          }
+        );
+        console.log(element.parentElement);
+        element.parentElement.classList.toggle("expand");
+      }
+      sliderContainer.addEventListener("click", function (e) {
+        console.log(e.target.tagName === "IMG");
+        if (e.target.parentElement.classList.contains("shrink")) {
+          toggleClass(e.target);
         }
-        sliderContainer.addEventListener('click', function(e){
-            console.log(e.target.tagName === 'IMG')
-            if(e.target.parentElement.classList.contains('shrink')){
-                toggleClass(e.target)
-            }
-            return
-        })
+        return;
+      });
     </script>
 
-    <hr>
+    <hr />
 
     <div class="todo-list">
-        <h1 class="heading">Task-2 todo list</h1>
-        <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      <h1 class="heading">Task-2 todo list</h1>
+      <h2 class="sub-heading">Date:23 Sep 2024</h2>
 
-        <div class="todo-container">
-            <div class="search-bar">
-                <input type="text" class="input-bar"  placeholder="search here" id="searchBar">
-            </div> 
-            <table border="1" class="todo-table" id="todoList">
-                <thead>
-                    <tr>
-                        <td width="70%">Task</td>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
+      <div class="todo-container">
+        <div class="search-bar">
+          <input
+            type="text"
+            class="input-bar"
+            placeholder="search here"
+            id="searchBar"
+          />
+        </div>
+        <table border="1" class="todo-table" id="todoList">
+          <thead>
+            <tr>
+              <td width="70%">Task</td>
+              <td>Action</td>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <form action="#" class="todoForm" id="inputForm">
+          <div class="input-section">
+            <input
+              type="text"
+              id="task"
+              class="input-bar"
+              placeholder="Enter Todo"
+            />
+          </div>
+          <br />
+          <input type="submit" id="todoSubmit" class="btn blue" />
+        </form>
 
-                </tbody>
-            </table>
-            <form action="#" class="todoForm" id="inputForm">
-                <div class="input-section">
-                    <input type="text" id="task" class="input-bar" placeholder="Enter Todo">
-                </div>
-                <br>
-                <input type="submit" id="todoSubmit" class="btn blue">
-            </form>
-        
         <div class="loader" id="loader">
-                <div class="fill"></div>
-                <br>
-                <div class="progress"></div>
+          <div class="fill"></div>
+          <br />
+          <div class="progress"></div>
         </div>
-        </div>
+      </div>
 
+      <script>
+        const todoListData = JSON.parse(localStorage.getItem("todoList")) || [
+          "Read book",
+          "Create budget of this month",
+        ];
+        const todoInput = document.querySelector("#task");
+        console.log(todoInput.value);
+        if (!localStorage.getItem("todoList")) {
+          localStorage.setItem("todoList", JSON.stringify(todoListData));
+        }
 
-        <button  class="btn clear-storage" onclick="localStorage.clear()">
-            Clear Local storage
-        </button>
-        
-        
-        <script>
-                const todoListData =  JSON.parse(localStorage.getItem('todoList')) || ['Read book', 'Create budget of this month'];
-                const todoInput = document.querySelector('#task')
-                console.log(todoInput.value)
-                if (!localStorage.getItem('todoList')) {
-                    localStorage.setItem('todoList', JSON.stringify(todoListData));
-                }
+        window.addEventListener("DOMContentLoaded", function () {
+          displayData(JSON.parse(localStorage.getItem("todoList")));
+        });
 
-                window.addEventListener('DOMContentLoaded', function(){
-                    displayData(JSON.parse(localStorage.getItem('todoList')))
-                })
-
-                function displayData(list){
-                    const tableBody = document.querySelector('#tableBody')
-                    tableBody.innerHTML =''
-                    list.length && list.forEach((item, i) => {
-                        const tr =  document.createElement('tr');
-                        tr.id = i
-                        tr.innerHTML = (
-                                        `
+        function displayData(list) {
+          const tableBody = document.querySelector("#tableBody");
+          tableBody.innerHTML = "";
+          list.length &&
+            list.forEach((item, i) => {
+              const tr = document.createElement("tr");
+              tr.id = i;
+              tr.innerHTML = `
                                         <td width="70%">${item}</td>
                                         <td class='flex-center'>
-                                            <button class="edit green btn">Edit</button>
+                                            <button class="edit green btn" onclick="editEntry(this)">Edit</button>
                                             <button class="delete red btn" onclick="deleteEntry(this)">Delete</button>
                                         </td>
-                                        `    
-                                    )
-                        tableBody.append(tr)
-                    })
-                }
+                                        `;
+              tableBody.append(tr);
+            });
+        }
 
-                function afterSubmit(e){
-                    const todoInput = document.querySelector('#task')
-                    todoInput.value && todoListData.push(todoInput.value)
-                    todoInput.value = ''
-                    console.log(todoListData)
-                    localStorage.setItem('todoList', JSON.stringify(todoListData))
-                }
+        function afterSubmit(e) {
+          const todoInput = document.querySelector("#task");
+          todoInput.value && todoListData.push(todoInput.value);
+          todoInput.value = "";
+          console.log(todoListData);
+          localStorage.setItem("todoList", JSON.stringify(todoListData));
+        }
 
-                function promiseArr() {
-                    return new Promise((resolve, reject) => {
-                            setTimeout(() => {
-                                try {
-                                    document.querySelector('#loader').style.visibility = 'visible'
-                                    let i = 1;
-                                    let loader = document.querySelector('.fill')
-                                    let progressPercentage = document.querySelector('.progress')
-                                    let loaderInterval = setInterval(() => {
-                                        loader.style.width = `${i}%`
-                                        progressPercentage.innerHTML = `${i}%` 
-                                        i++;
-                                        if(i > 100) {
-                                            clearInterval(loaderInterval)
-                                            resolve();
-                                        }
-                                    },(Math.random() + 20))    
-                                } catch (error) {
-                                    reject(error);
-                                }
-                            })
-                    });
-                }
+        function promiseArr() {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              try {
+                document.querySelector("#loader").style.visibility = "visible";
+                let i = 1;
+                let loader = document.querySelector(".fill");
+                let progressPercentage = document.querySelector(".progress");
+                let loaderInterval = setInterval(() => {
+                  loader.style.width = `${i}%`;
+                  progressPercentage.innerHTML = `${i}%`;
+                  i++;
+                  if (i > 100) {
+                    clearInterval(loaderInterval);
+                    resolve();
+                  }
+                }, Math.random() + 20);
+              } catch (error) {
+                reject(error);
+              }
+            });
+          });
+        }
 
-                function deleteEntry(element){
-                    const currRow = element.parentElement.parentElement
-                    const currTable = currRow.parentElement.parentElement
-                    todoListData.splice(currRow.id, 1)
-                    localStorage.setItem('todoList', JSON.stringify(todoListData))
-                    displayData(JSON.parse(localStorage.getItem('todoList')))
-                }
+        function deleteEntry(element) {
+          const currRow = element.parentElement.parentElement;
+          const currTable = currRow.parentElement.parentElement;
+          todoListData.splice(currRow.id, 1);
+          localStorage.setItem("todoList", JSON.stringify(todoListData));
+          displayData(JSON.parse(localStorage.getItem("todoList")));
+        }
 
-                document.querySelector('#inputForm').addEventListener('submit', function(e){
-                    e.preventDefault();
-                    document.querySelector('#todoSubmit').disabled = true;
-                    const todoInput = document.querySelector('#task')
-                    if(todoInput.value.trim()){
-                        promiseArr()
-                            .then(() => {
-                                document.querySelector('#loader').style.visibility = 'hidden'
-                                afterSubmit()
-                                displayData(JSON.parse(localStorage.getItem('todoList')))
-                                this.disabled = false;
-                            })
-                            .then(() => document.querySelector('#todoSubmit').disabled = false)
-                    }else{
-                        alert('Enter valid input')
-                        document.querySelector('#todoSubmit').disabled = false
-                    }
+        function editEntry(element) {
+          const currRow = element.parentElement.parentElement;
+          const entry = currRow.firstElementChild;
+          const entryValue = entry.innerText.trim();
+
+          const index = todoListData.findIndex((item) => item === entryValue);
+
+          entry.innerHTML = `
+                        <div class='flex-side'>
+                        <input type="text" value="${entryValue}" class='input-bar'/> 
+                        <button onclick="update(this.previousElementSibling, ${index})" class='btn green'>Update</button>
+                        </div>
+                        `;
+        }
+
+        function update(inputElement, index) {
+          const newValue = inputElement.value.trim();
+          if (newValue) {
+            todoListData.splice(index, 1, newValue);
+            localStorage.setItem("todoList", JSON.stringify(todoListData));
+            displayData(todoListData);
+          } else {
+            alert("Task cannot be empty");
+          }
+        }
+
+        function searchTask(value) {
+          console.log(todoListData);
+          let filterList = todoListData.filter((item) =>
+            item.toLowerCase().includes(value.toLowerCase())
+          );
+          filterList.length
+            ? displayData(filterList)
+            : (document.querySelector("#tableBody").innerHTML =
+                '<tr><td colspan="2" class="heading"><h2>Task Not Found</h2></td></tr>');
+        }
+
+        document
+          .querySelector("#searchBar")
+          .addEventListener("input", function (e) {
+            const searchValue = this.value.trim();
+            if (searchValue.length) {
+              searchTask(searchValue);
+            } else {
+              displayData(JSON.parse(localStorage.getItem("todoList")));
+            }
+          });
+
+        document
+          .querySelector("#inputForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            document.querySelector("#todoSubmit").disabled = true;
+            const todoInput = document.querySelector("#task");
+            if (todoInput.value.trim()) {
+              promiseArr()
+                .then(() => {
+                  document.querySelector("#loader").style.visibility = "hidden";
+                  afterSubmit();
+                  displayData(JSON.parse(localStorage.getItem("todoList")));
+                  this.disabled = false;
                 })
-
-                // displayData(JSON.parse(localStorage.getItem('todoList')))
-        </script>
-
+                .then(
+                  () => (document.querySelector("#todoSubmit").disabled = false)
+                );
+            } else {
+              alert("Enter valid input");
+              document.querySelector("#todoSubmit").disabled = false;
+            }
+          });
+      </script>
     </div>
-
-
-
-</body>
+  </body>
 </html>
