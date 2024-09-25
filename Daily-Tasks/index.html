@@ -9,8 +9,10 @@
   </head>
   <body>
     <div class="image-slider">
-      <h1 class="heading">Task-1 Image Slider</h1>
-      <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      <div class="title">
+        <h1 class="heading">Task-1 Image Slider</h1>
+        <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      </div>
 
       <div class="slider-container">
         <div class="img-container smooth-transition shrink">
@@ -90,8 +92,10 @@
     <hr/>
 
     <div class="todo-list">
-      <h1 class="heading">Task-2 todo list</h1>
-      <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      <div class="title">
+        <h1 class="heading">Task-2 todo list</h1>
+        <h2 class="sub-heading">Date:23 Sep 2024</h2>
+      </div>
 
       <div class="todo-container">
         <div class="search-bar">
@@ -283,10 +287,140 @@
 
     <hr/>
 
-    <div>
+    <div class="infinite-scroll-contianer">
+      <div class="title">
+        <h1 class="heading">Task-3 Infinite Scroll with search bar</h1>
+        <h2 class="sub-heading">Date:24 Sep 2024</h2>
+      </div>
       <h1 class="heading">
         <a href="infiniteScroll.html" >Go To Inifite Scroll page</a>
       </h1>
+    </div>
+
+    <hr>
+
+    <div class="tip-section">
+      <div class="title">
+        <h1 class="heading">Task-4 Tip Calculator</h1>
+        <h2 class="sub-heading">Date:25 Sep 2024</h2>
+      </div>
+      <div class="tip-container">
+        <div class="tip-calculator">
+          <div class="center">
+            <label for="bill" class="relative">
+                Bill
+                <br />
+                <input type="number" class="tip-input" id="billAmmount" value=""/>
+                <span class="rupeeSymbol">₹</span>
+            </label>
+          </div>
+
+          <div class="center">
+            <label for="tip"> Select Tip </label>
+            <div class="tip-selector">
+              <div class="tip-option" data-value="5">5%</div>
+              <div class="tip-option" data-value="10">10%</div>
+              <div class="tip-option" data-value="15">15%</div>
+              <div class="tip-option" data-value="25">25%</div>
+              <div class="tip-option" data-value="50">50%</div>
+              <div class="tip-option" data-value="75">75%</div>
+              <input type="text" class="tip-input" id="tipPercent" placeholder="Custom Tip" value="" />
+            </div>
+          </div>
+
+          <div class="center">
+            <label for="noOfPeople">No Of People</label>
+            <br />
+            <input type="number" class="tip-input" id="noOfPeople" />
+          </div>
+        </div>
+        <div class="tip-calculation-result">
+          <div class="result-data-cotainer">
+            <div class="result-data">
+              <p class="calc-tag">Tip amount</p>
+              <p class="calc-nums"><span>₹</span><span id="tipAmmount">0</span></p>
+            </div>
+            <div class="result-data">
+              <p class="calc-tag">Total</p>
+              <p class="calc-nums"><span>₹</span><span id="totalBill">0</span></p>
+            </div>
+            <div class="result-data">
+              <p class="calc-tag">Each Person Bill</p>
+              <p class="calc-nums"><span>₹</span><span id="splitAmmount">0</span></p>
+            </div>
+          </div>
+          <div class="result-data-btn">
+            <button class="calc-btn" id="print">Print</button>
+            <button class="calc-btn" id="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+      <script>
+          const billAmmount = document.querySelector('#billAmmount');
+          const tipPercent = document.querySelector('#tipPercent');
+          const noOfPeople = document.querySelector('#noOfPeople');
+          const tipAmmountElem = document.querySelector('#tipAmmount');
+          const totalBillElem = document.querySelector('#totalBill');
+          const splitAmmountElem = document.querySelector('#splitAmmount');
+          const printbtn = document.querySelector('#print');
+          const resiltDiv = document.querySelector('.result-data-cotainer');
+          const resetbtn = document.querySelector('#reset');
+          const billingData = {};
+
+          [billAmmount, tipPercent, noOfPeople].forEach((item) => {
+              item.addEventListener('input', function (e) {
+                  console.log(billingData)
+                  const value = parseFloat(this.value);
+                  if (!isNaN(value) && value > 0) {
+                      billingData[this.id] = value;
+                  } else {
+                      billingData[this.id] = 0;  
+                  }
+
+                  if (billingData.billAmmount !== undefined && !isNaN(billingData.tipPercent) && billingData.tipPercent !== undefined) {
+                      const tip =calcPartOfpercent(billingData.billAmmount, billingData.tipPercent);
+                      tipAmmountElem.innerText = tip;
+                  
+                      const totalBill = tip + billingData.billAmmount;
+                      totalBillElem.innerText = totalBill.toFixed(2);
+                  
+                      if (billingData.noOfPeople && billingData.noOfPeople > 0) {
+                          const splitAmount = totalBill / billingData.noOfPeople;
+                          splitAmmountElem.innerText = splitAmount.toFixed(2);
+                      }
+                  }
+              });
+          });
+
+          document.querySelectorAll('.tip-option').forEach(item => {
+              item.addEventListener('click', function(e){
+                  tipPercent.value = e.target.dataset.value   
+                  const event = new Event('input', { bubbles: true });
+                  tipPercent.dispatchEvent(event);
+              })
+          })
+          printbtn.addEventListener('click', function(e){
+              let mywindow = window.open("", "PRINT", 
+                  "height=400,width=600");
+
+              mywindow.document.write(resiltDiv.innerHTML);
+
+              mywindow.document.close();
+              mywindow.focus();
+
+              mywindow.print();
+              mywindow.close();
+
+              return true;
+          })
+          resetbtn.addEventListener('click', function(e){
+              const inputElemList = document.querySelectorAll('input')
+              inputElemList.forEach((item) => item.value = '')
+          })
+          function calcPartOfpercent(total, percentage) {
+              return parseFloat(((percentage / 100) * total).toFixed(2));
+          }
+      </script>
     </div>
   </body>
 </html>
