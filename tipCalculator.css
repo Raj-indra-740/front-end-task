@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
   }
+  body{
+    background-color: #181a1b;
+  }
 
   .tip-section {
     --primary-bg-color: #181a1b;
@@ -13,6 +16,14 @@
     --secondary-bg-color: #370092;
 
     font-family: sans-serif;
+  }
+  .tip-section{
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: rgba(255, 255, 255, 0.3) 0px 19px 38px, rgba(255, 255, 255, 0.22) 0px 15px 12px;
   }
   .tip-container {
     width: 100%;
@@ -133,6 +144,7 @@
     gap: 10px;
   }
   .btn {
+
     font-size: 14px;
     color: white;
     background-color: var(--primary-bg-color);
