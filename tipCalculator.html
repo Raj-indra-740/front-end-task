@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .tip-section{
+            --primary-bg-color: #181a1b;
+            --input-bg-color:#35393b ;
+            --fade-bg-color: #2a456f;
+            --primary-font-color:#4f38f8 ;
+            --secondary-font-color: #b589ff;
+            --secondary-bg-color:#370092;
+
+            font-family: sans-serif;
+        }
+        .tip-container{
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            background-color: var(--primary-bg-color);
+            color: var(--primary-font-color);
+        }
+        .tip-calculator{
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            font-size: 20px;
+        }
+        .center{
+            width: 80%;
+            max-width: 295px;
+            margin: 0 auto;
+        }
+        .tip-selector{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .tip-option{
+            width: 100%;
+            max-width: 30%;
+            background-color: var(--secondary-bg-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .tip-option:hover{
+            outline: 3px solid orange;
+        }
+
+        .tip-input{
+            width: 100%;
+            padding: 7px;
+            border: 2px solid var(--input-bg-color);
+            border-radius: 5px;
+            background-color: transparent;
+            color: var(--primary-font-color);
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .tip-input:focus{
+            all: none;
+            outline: none;
+            background-color: var(--input-bg-color);
+        }
+
+
+        .tip-calculation-result{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+
+            width: 45%;
+            height: fit-content;
+            color: white;
+            background-color: var(--fade-bg-color);
+            border-radius: 20px;
+            padding: 20px 40px;
+        }
+        .result-data-cotainer{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .result-data{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .calc-nums{
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--secondary-font-color);
+        }
+        .calc-tag{
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .result-data-btn{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn{
+            font-size: 14px;
+            color: white;
+            background-color: var(--primary-bg-color);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        } 
+        .btn:hover{
+            background-color: #343739;
+        }
+    </style>
+</head>
+<body>
+    <div class="tip-section">
+       
+        <div class="tip-container">
+            <div class="tip-calculator">
+                <div class="center">
+                    <label for="bill">Bill</label>
+                    <br>
+                    <input type="text" class="tip-input" id="bill" value="₹">
+                </div>
+
+                <div class="center">
+                    <label for="tip">
+                        Select Tip
+                    </label>
+                    <div class="tip-selector">
+                        <div class="tip-option">5%</div>
+                        <div class="tip-option">10%</div>
+                        <div class="tip-option">15%</div>
+                        <div class="tip-option">25%</div>
+                        <div class="tip-option">50%</div>
+                        <div class="tip-option">75%</div>
+                        <input type="text" class="tip-input" placeholder="Custom Tip">
+                    </div>
+                </div>
+
+                <div class="center">
+                    <label for="noOfPeople">No Of People</label>
+                    <br>
+                    <input type="text" class="tip-input" id="noOfPeople">
+                </div>
+            </div>
+            <div class="tip-calculation-result">
+                <div class="result-data-cotainer">
+                    <div class="result-data">
+                        <p class="calc-tag">Tip amount</p>
+                        <p class="calc-nums"><span>₹</span><span>2145.30</span></p>
+                    </div>
+                    <div class="result-data">
+                        <p class="calc-tag">Total</p>
+                        <p class="calc-nums"><span>₹</span><span>23598.30</span></p>
+                    </div>
+                    <div class="result-data">
+                        <p class="calc-tag">Each Person Bill</p>
+                        <p class="calc-nums"><span>₹</span><span>11799.15</span></p>
+                    </div>
+                </div>
+                <div class="result-data-btn">
+                    <button class="btn">Print</button>
+                    <button class="btn">Reset</button>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</body>
+</html>
