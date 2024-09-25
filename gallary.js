@@ -1,17 +1,14 @@
-const imageCount = 20;
+const imageCount = 60;
 
 const API_KEY = 'bbDyJUBnFCoHK5L_oZ4BV6JWxoBhYOdOZb8iHAkuPiA'
 const NEW_API_KEY = 'WLf8g2PBLI-bqrlGLHpN9C4kVmUfRVjLB2gxG8HuTsw'
 const API_URL = `https://api.unsplash.com/photos/random?client_id=${NEW_API_KEY}&count=${imageCount}`
 
 
-const imageData = []
+let imageData = []
+const imageDataAll = [];
 const gallaryContainer = document.querySelector('.gallary-container')
-const fetchBtn = document.querySelector('.fetchBtn')
 
-fetchBtn.addEventListener('click', function(){
-    fetchData(API_URL)
-})
 
 function displayData(data, parentElement){
     data.forEach((item, i) => {
@@ -19,7 +16,6 @@ function displayData(data, parentElement){
         img.src = item.urls.full; 
         img.classList.add('img-container');
         parentElement.appendChild(img);
-        console.log('Image added:', i);
     })
 }
 
@@ -31,8 +27,9 @@ function fetchData(url) {
         })
         .then(data => {
             console.log(data.length);
-            imageData.push(...data);   
-            // console.log(imageData);   
+            imageData = data;  
+            imageDataAll.push(...imageData) 
+            console.log(imageDataAll);   
         })
         .then(() => displayData(imageData, gallaryContainer))
         .catch(err => console.error('Error fetching data:', err));
@@ -40,17 +37,13 @@ function fetchData(url) {
 
 fetchData(API_URL)
 
-window.addEventListener('scroll',()=>{
-    console.log("scrolled", window.scrollY)
-    console.log(window.innerHeight) 
-    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
-        fetchData(API_URL)
-    }
-})
-
-
-
-
+// window.addEventListener('scroll',()=>{
+//     console.log("scrolled", window.scrollY)
+//     console.log(window.innerHeight) 
+//     if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
+//         fetchData(API_URL)
+//     }
+// })
 
 const item = {
     id: 'BfCooHxOI1E',

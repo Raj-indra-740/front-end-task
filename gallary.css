@@ -3,21 +3,35 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+body{
+    background-color:  rgb(38 38 38);
+    color:aliceblue;
+}
+.container{
+    text-align: center;
+}
+.input-bar{
+    width: 400px;
+    background-color: #dedddd;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 15px;
+    margin: 20px 0;
+}
 .gallary-container{
     width: 100%;
     /* max-width: 400px; */
-    margin: 0 auto;
+    margin: 40px auto;
     text-align: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 50px;
 }
 
 .img-container{
     width: 100%;
     max-width: 300px;
     border-radius: 20px;
-    margin: 20px 0;
+    box-shadow:  rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
