@@ -414,7 +414,8 @@
               return true;
           })
           resetbtn.addEventListener('click', function(e){
-              const inputElemList = document.querySelectorAll('input')
+              const tipConatianer =  document.querySelector('.tip-container');
+              const inputElemList = tipConatianer.querySelectorAll('input')
               inputElemList.forEach((item) => item.value = '')
           })
           function calcPartOfpercent(total, percentage) {
