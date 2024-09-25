@@ -1,13 +1,15 @@
 let pokTab = [];
 const pokTabDataBase = []
 
-const dataCount = 20
-const API_URL = `https://pokeapi.co/api/v2/pokemon?count=${dataCount}`
+const limit = 20
+const API_URL = `https://pokeapi.co/api/v2/pokemon`
 
-
+let offset = 0;
 
 function fetchKantoPokemon() {
-    fetch(API_URL)
+
+    const paginatedUrl = `${API_URL}?offset=${offset}&limit=${limit}`;
+    fetch(paginatedUrl)
      .then(response => response.json())
      .then((allpokemon) => {
         const pokemonPromises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon));
@@ -19,6 +21,7 @@ function fetchKantoPokemon() {
             pokTab.forEach(item => {
                 renderPokemon(item);  
             });
+            offset += limit;
         });
      })
      .catch(err => console.error('Error fetching Pokémon:', err));
