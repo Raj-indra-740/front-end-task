@@ -58,7 +58,7 @@ function renderPokemon(pokeData) {
 
 
 window.addEventListener('scroll',()=>{
-    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
+    if(window.scrollY + window.innerHeight + 200 >= document.documentElement.scrollHeight){
         fetchKantoPokemon(API_URL)
     }
 })

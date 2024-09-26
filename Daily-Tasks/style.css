@@ -7,7 +7,9 @@ body{
     background-color: rgb(38 38 38);
     color: aliceblue;
 }
-
+button{
+  cursor: pointer;
+}
 /* Image Slider */
 .image-slider{
     width: 100%;
