@@ -310,7 +310,7 @@
             <label for="bill" class="relative">
                 Bill
                 <br />
-                <input type="number" class="tip-input" id="billAmmount" value=""/>
+                <input type="number" class="tip-input" id="billAmmount" value="" autocomplete="off"/>
                 <span class="rupeeSymbol">₹</span>
             </label>
           </div>
@@ -324,29 +324,29 @@
               <div class="tip-option" data-value="25">25%</div>
               <div class="tip-option" data-value="50">50%</div>
               <div class="tip-option" data-value="75">75%</div>
-              <input type="text" class="tip-input" id="tipPercent" placeholder="Custom Tip" value="" />
+              <input type="text" class="tip-input" id="tipPercent" placeholder="Custom Tip" value="" autocomplete="off" />
             </div>
           </div>
 
           <div class="center">
             <label for="noOfPeople">No Of People</label>
             <br />
-            <input type="number" class="tip-input" id="noOfPeople" />
+            <input type="number" class="tip-input" id="noOfPeople" autocomplete="off"/>
           </div>
         </div>
         <div class="tip-calculation-result">
           <div class="result-data-cotainer">
             <div class="result-data">
               <p class="calc-tag">Tip amount</p>
-              <p class="calc-nums"><span>₹</span><span id="tipAmmount">0</span></p>
+              <p class="calc-nums"><span>₹</span><span class="ammount" id="tipAmmount">0</span></p>
             </div>
             <div class="result-data">
               <p class="calc-tag">Total</p>
-              <p class="calc-nums"><span>₹</span><span id="totalBill">0</span></p>
+              <p class="calc-nums"><span>₹</span><span class="ammount" id="totalBill">0</span></p>
             </div>
             <div class="result-data">
               <p class="calc-tag">Each Person Bill</p>
-              <p class="calc-nums"><span>₹</span><span id="splitAmmount">0</span></p>
+              <p class="calc-nums"><span>₹</span><span class="ammount" id="splitAmmount">0</span></p>
             </div>
           </div>
           <div class="result-data-btn">
@@ -378,8 +378,9 @@
                   }
 
                   if (billingData.billAmmount !== undefined && !isNaN(billingData.tipPercent) && billingData.tipPercent !== undefined) {
-                      const tip =calcPartOfpercent(billingData.billAmmount, billingData.tipPercent);
-                      tipAmmountElem.innerText = tip;
+                      let tip = 0; 
+                      tip = calcPartOfpercent(billingData.billAmmount, billingData.tipPercent);
+                      tipAmmountElem.innerText = tip.toFixed(2);
                   
                       const totalBill = tip + billingData.billAmmount;
                       totalBillElem.innerText = totalBill.toFixed(2);
@@ -414,10 +415,21 @@
               return true;
           })
           resetbtn.addEventListener('click', function(e){
+
+              for(let key in billingData){
+                billingData[key] = 0
+              }
               const tipConatianer =  document.querySelector('.tip-container');
               const inputElemList = tipConatianer.querySelectorAll('input')
-              inputElemList.forEach((item) => item.value = '')
-          })
+              inputElemList.forEach((item) => {
+                item.innerText = ''
+                item.value = ''
+              })
+
+              const ammountFields = document.querySelectorAll('.ammount')
+              console.log(ammountFields)
+              ammountFields.forEach((item) => item.innerHTML = '0')
+            })
           function calcPartOfpercent(total, percentage) {
               return parseFloat(((percentage / 100) * total).toFixed(2));
           }

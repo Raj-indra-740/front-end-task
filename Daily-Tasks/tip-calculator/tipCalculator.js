@@ -20,8 +20,9 @@ const billingData = {};
         }
 
         if (billingData.billAmmount !== undefined && !isNaN(billingData.tipPercent) && billingData.tipPercent !== undefined) {
-            const tip =calcPartOfpercent(billingData.billAmmount, billingData.tipPercent);
-            tipAmmountElem.innerText = tip;
+            let tip = 0; 
+            tip = calcPartOfpercent(billingData.billAmmount, billingData.tipPercent);
+            tipAmmountElem.innerText = tip.toFixed(2);
         
             const totalBill = tip + billingData.billAmmount;
             totalBillElem.innerText = totalBill.toFixed(2);
@@ -56,9 +57,21 @@ printbtn.addEventListener('click', function(e){
     return true;
 })
 resetbtn.addEventListener('click', function(e){
-    const inputElemList = document.querySelectorAll('input')
-    inputElemList.forEach((item) => item.value = '')
-})
+
+    for(let key in billingData){
+      billingData[key] = 0
+    }
+    const tipConatianer =  document.querySelector('.tip-container');
+    const inputElemList = tipConatianer.querySelectorAll('input')
+    inputElemList.forEach((item) => {
+      item.innerText = ''
+      item.value = ''
+    })
+
+    const ammountFields = document.querySelectorAll('.ammount')
+    console.log(ammountFields)
+    ammountFields.forEach((item) => item.innerHTML = '0')
+  })
 function calcPartOfpercent(total, percentage) {
     return parseFloat(((percentage / 100) * total).toFixed(2));
 }
