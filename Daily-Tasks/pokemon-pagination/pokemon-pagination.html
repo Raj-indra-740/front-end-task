@@ -108,13 +108,21 @@
         .hide{
             visibility: hidden;
         }
+
+
+        .filter-select{
+            padding: 5px 10px;
+            background-color: #DEDDDD;
+            border-radius: 5px;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Pokemon gallary</h1>
         <input class="input-bar" id="searchBar" type="text" placeholder="search here">
-        <div class="filter-type" id="filterTypes">
+        <!-- <div class="filter-type" id="filterTypes">
             <span class="filter-option" id="heightType" data-value="height">
                 Height 
                 <span>
@@ -139,10 +147,35 @@
             <span class="filter-option" id="reset">
                 reset
             </span>
-        </div>
-        <div class="pokeCards" id="pokeCardsContainer">
+        </div> -->
         
+        <select name="filter" class="filter-select" id="filterList">
+            <option value="">
+                Select
+            </option>
+            <option value="height" data-order="asc" > 
+                Height: low to high
+            </option>
+            <option value="height" data-order="desc"> 
+                Height: high to low
+            </option>
+            <option value="weight" data-order="asc"> 
+                Weight: low to high
+            </option>
+            <option value="weight" data-order="desc"> 
+                Weight: high to low 
+            </option>
+            <option value="order" data-order="asc"> 
+                Order: low to high
+            </option>
+            <option value="order" data-order="desc"> 
+                Order: high to low
+            </option>
+        </select>
+
+        <div class="pokeCards" id="pokeCardsContainer">
         </div>
+
         <div class="pagination-bar" id="paginationBar">
             <button id="prevButton">Previous</button>
             <span id="pageNumbers"></span>
@@ -152,6 +185,7 @@
    
 
     <script src="pokemonPagination.js"></script>
+    <!-- <script src="pokemo-pagination-2.js"></script> -->
 
 </body>
 </html>
