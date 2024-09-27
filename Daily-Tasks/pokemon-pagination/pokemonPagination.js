@@ -32,9 +32,9 @@ function fetchKantoPokemon(pageNumber = 1) {
                 allPokeData.forEach((poke) => {
                     pokTabDataBase.set(poke.name, poke);
                 });
-                document.querySelector('#pokeCardsContainer').innerHTML = ''; 
-                pokTab.forEach(item => createPokemonCard(item)); 
                 
+                renderListOfPokemon(pokTab) 
+
                 renderPaginationBar(currentPage, totalPages);
             });
         })
