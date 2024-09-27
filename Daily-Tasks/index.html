@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Slider</title>
 
     <link rel="stylesheet" href="style.css" />
@@ -66,8 +66,14 @@
           />
         </div>
       </div>
+      <div style="text-align: center; margin: 50px 0;">
+        <input type="number" class="input-bar" id="durationInput" max="10" placeholder="Enter Animation Duration">
+      </div>
     
     <script>
+      const durationInput = document.querySelector('#durationInput')
+      const smoothTransitionDivs = document.querySelectorAll('.smooth-transition')
+      console.log(durationInput)
       const sliderContainer = document.querySelector(".slider-container");
       function toggleClass(element) {
         Array.from(element.parentElement.parentElement.children).forEach(
@@ -85,6 +91,13 @@
         }
         return;
       });
+      durationInput.addEventListener('change', function(e){
+        let duration = e.target.value.trim()
+        smoothTransitionDivs.forEach(item => {
+          item.style.transitionDuration = `${duration > 10 ? 10 : duration}s`
+          // console.log(item.style)
+        })
+      })
     </script>
 
     </div>
