@@ -1,8 +1,8 @@
 let pokTab = [];
-const pokTabDataBase = [];
+const pokTabDataBase = new Map();
 
 const limit = 10; 
-let totalPages = null; 
+let totalPages = 1; 
 const API_URL = `https://pokeapi.co/api/v2/pokemon`;
 
 let currentPage = 1;
@@ -19,10 +19,19 @@ function fetchKantoPokemon(pageNumber = 1) {
         .then((allpokemon) => {
             totalPages = totalPages === Math.ceil(allpokemon.count / limit) ? totalPages : Math.ceil(allpokemon.count / limit);
 
-            const pokemonPromises = allpokemon.results.map((pokemon) => fetchPokemonData(pokemon));
+            const pokemonPromises = allpokemon.results.map((pokemon) => {
+                if(!pokTabDataBase.has(pokemon.name)){
+                    return fetchPokemonData(pokemon)
+                }
+                else{
+                    return Promise.resolve(pokTabDataBase.get(pokemon.name))
+                }  
+            });
             Promise.all(pokemonPromises).then((allPokeData) => {
                 pokTab = allPokeData;
-                pokTabDataBase.push(...pokTab)
+                allPokeData.forEach((poke) => {
+                    pokTabDataBase.set(poke.name, poke);
+                });
                 document.querySelector('#pokeCardsContainer').innerHTML = ''; 
                 pokTab.forEach(item => createPokemonCard(item)); 
                 
@@ -42,6 +51,9 @@ async function fetchPokemonData(pokemon) {
         .then((pokeData) => pokeData);
 }
 
+function parseArrOfObj(){
+    return data.length ? Array.from(data).map(item => JSON.parse(item)) : []
+}
 
 function createPokemonCard(pokeData) {
     const container = document.querySelector('#pokeCardsContainer');
@@ -50,7 +62,7 @@ function createPokemonCard(pokeData) {
 
     let pokeImg = document.createElement('img');
     pokeImg.classList.add('img');
-    pokeImg.src = pokeData.sprites.front_default;
+    pokeImg.src = pokeData.sprites.front_default ?? 'https://i.pinimg.com/736x/bf/d8/d7/bfd8d7704cf357fdc06f003e8bfdc272.jpg';
 
     let cardDetail = document.createElement('div')
     cardDetail.classList.add('card-detail')
@@ -178,12 +190,12 @@ fetchKantoPokemon(1);
 
 document.querySelectorAll('.filter-option').forEach((item, i) => {
     item.addEventListener('click', function(e){
+        document.querySelectorAll('i').forEach(item => item.classList.remove('hide'))
         if(e.target.id === 'reset'){
+
             renderListOfPokemon(pokTab)
             return
         }else{
-            document.querySelectorAll('i').forEach(item => item.classList.remove('hide'))
-            
             let sortedData = sortItems(pokTab, e.target.dataset.value)
             ascendingFlag = !ascendingFlag;
             console.log(ascendingFlag)
