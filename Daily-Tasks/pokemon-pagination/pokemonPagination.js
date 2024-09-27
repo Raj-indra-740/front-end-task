@@ -7,9 +7,29 @@ const API_URL = `https://pokeapi.co/api/v2/pokemon`;
 let totalPages = 1;
 let currentPage = 1;
 let ascendingFlag = true;
+let filterFlag = false;
+
+
+//update the URL
+function updateUrlParams(params){
+    const url = new URL(window.location.href)
+    Object.keys(params).forEach((key) => url.searchParams.set(key, params[key]));
+    history.pushState(null, "", url.toString());
+}
+
+function getUrlParams(){
+    const urlParams = new URLSearchParams(window.location.search);
+    return{
+        currpage: urlParams.get("page") || 1,
+        filter: urlParams.get("filter") || null,
+        sort: urlParams.get("sort") || null,
+        order: urlParams.get("order") || 'asc', // asc or desc
+        search: urlParams.get("search") || null
+    }
+}
 
 // Fetch Pokémon Data
-function fetchKantoPokemon(pageNumber = 1) {
+function fetchKantoPokemon(pageNumber = 1, sortType = null, order = 'asc', searchValue = null) {
     const offset = (pageNumber - 1) * limit;
     const paginatedUrl = `${API_URL}?offset=${offset}&limit=${limit}`;
 
@@ -37,8 +57,11 @@ function fetchKantoPokemon(pageNumber = 1) {
                     pokTabDataBase.set(poke.name, poke);
                 });
 
-                renderListOfPokemon(pokTab);
-
+                if(sortType){
+                    renderListOfPokemon(sortItems(pokTab, sortType, order))
+                }else{
+                    renderListOfPokemon(pokTab);
+                }
                 renderPaginationBar(currentPage, totalPages);
             });
         })
@@ -153,7 +176,9 @@ function addEllipsis() {
 //function updating page on change in page number 
 function updatePage(pageNumber, totalPages) {
     currentPage = pageNumber;
-    fetchKantoPokemon(pageNumber);
+    const { sort, order } = getUrlParams();
+    updateUrlParams({currpage:currentPage, sort, order})
+    fetchKantoPokemon(currentPage, sort, order);
     renderPaginationBar(currentPage, totalPages);
 }
 
@@ -179,34 +204,46 @@ document.querySelector("#searchBar").addEventListener("input", function () {
 });
 
 //filter opetions
-document.querySelectorAll(".filter-option").forEach((item, i) => {
-    item.addEventListener("click", function (e) {
-        document
-            .querySelectorAll("i")
-            .forEach((item) => item.classList.remove("hide"));
-        if (e.target.id === "reset") {
-            renderListOfPokemon(pokTab);
-            return;
-        } else {
-            let sortedData = sortItems(pokTab, e.target.dataset.value);
-            ascendingFlag = !ascendingFlag;
-            console.log(ascendingFlag);
-            if (ascendingFlag) {
-                this.querySelector(".down").classList.add("hide");
-                this.querySelector(".up").classList.remove("hide");
-                renderListOfPokemon(sortedData.toReversed());
-            } else {
-                this.querySelector(".up").classList.add("hide");
-                this.querySelector(".down").classList.remove("hide");
-                renderListOfPokemon(sortedData);
-            }
-        }
-    });
-});
+// document.querySelectorAll(".filter-option").forEach((item, i) => {
+//     item.addEventListener("click", function (e) {
+//         document
+//             .querySelectorAll("i")
+//             .forEach((item) => item.classList.remove("hide"));
+//         if (e.target.id === "reset") {
+//             renderListOfPokemon(pokTab);
+//             return;
+//         } else {
+//             let sortedData = sortItems(pokTab, e.target.dataset.value);
+//             localStorage.setItem('sortedData', JSON.stringify(sortedData))
+//             ascendingFlag = !ascendingFlag;
+//             console.log(ascendingFlag);
+//             if (ascendingFlag) {
+//                 this.querySelector(".down").classList.add("hide");
+//                 this.querySelector(".up").classList.remove("hide");
+               
+//                 renderListOfPokemon(JSON.parse(localStorage.getItem('sortedData')).toReversed());
+//             } else {
+//                 this.querySelector(".up").classList.add("hide");
+//                 this.querySelector(".down").classList.remove("hide");
+//                 renderListOfPokemon(JSON.parse(localStorage.getItem('sortedData')));
+//             }
+//         }
+//     });
+// });
 
+document.querySelector('#filterList').addEventListener('change', function(e){
+    const sortType = this.value;
+    ascendingFlag = !ascendingFlag
+    const order = ascendingFlag ? 'asc' : 'desc';
+
+    updateUrlParams({sort: sortType, order, page:currentPage});
+
+    fetchKantoPokemon(currentPage, sortType, order)
+})
 //sorting function, return sorted array defending give data and property
-function sortItems(data, sortType) {
-    return data.toSorted((a, b) => a[sortType] - b[sortType]);
+function sortItems(data, sortType, order) {
+    const sortedData = data.sort((a, b) => a[sortType] - b[sortType]);
+    return order === 'asc' ? sortedData : sortedData.reverse();
 }
 
 //Render enire list of data fetch from api
@@ -215,6 +252,24 @@ function renderListOfPokemon(list) {
     list.forEach((item) => createPokemonCard(item));
 }
 
+window.onload = function () {
+    const { currpage, sort, order, search } = getUrlParams();
+
+    // Update the currentPage and ascendingFlag based on the URL
+    currentPage = parseInt(currpage, 10); // Convert the page to an integer
+    ascendingFlag = order === 'asc'; // Set ascendingFlag based on the order in the URL
+
+    // Set input fields based on the URL parameters
+    if (sort) document.querySelector('#filterList').value = sort;
+    if (search) document.querySelector("#searchBar").value = search;
+
+    // Fetch Pokémon based on URL parameters and update pagination
+    fetchKantoPokemon(currentPage, sort, order, search);
+    renderPaginationBar(currentPage, totalPages);
+};
+
+
 //intial render of data and pagination bar
 renderPaginationBar(1, totalPages);
 fetchKantoPokemon(1);
+
