@@ -4,8 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>form validation</title>
+    <link rel="stylesheet" href="formStyle.css">
 </head>
 <body>
-    <h1>Form validation</h1>
+    <div class="form-container">
+        <form action="" id="userInfoForm" class="userForm">
+
+            <div class="input-container" >
+                <label for="firstName" >First Name:</label>
+                <br>
+                <input type="text" id="firstName" class="input-field" name="firstName">
+                <div class="error-message"></div>
+            </div>  
+
+            <div class="input-container">
+                <label for="lastName">Last Name:</label>
+                <br>
+                <input type="text" id="lastName" class="input-field"  name="lastName">
+                <div class="error-message"></div>
+            </div>
+
+            <div class="input-container" >
+                <label for="userEmail">Email Address:</label>
+                <br>
+                <input type="text" id="userEmail" class="input-field"  name="email">
+                <div class="error-message"></div>
+            </div>
+
+            <div class="input-container" >
+                <label for="phoneNumber" >Phone No:</label>
+                <br>
+                <input type="text" id="phoneNumber" class="input-field" name="phoneNumber">
+                <div class="error-message"></div>
+            </div>
+            
+            <div class="non-text-input">
+                <div class="input-container" name="gender">
+                    <label for="">Gender:</label>
+                    <br>
+                    <input type="radio" name="gender" value="male" id="male">
+                    <label for="male" >Male</label>
+                    <br>
+                    <input type="radio" name="gender" value="female" id="female">
+                    <label for="female">Female</label>
+                    <br>
+                    <input type="radio" name="gender" value="other" id="other">
+                    <label for="other">Other</label>
+                    <div class="error-message"></div>
+                </div>
+        
+                <div class="input-container" name="degree/checkbox">
+
+                    <label for="degree">Educational Degree:</label>
+                    <br>
+                    <select id="eduInfo" name="education" class="select-list">
+                        <option value="">select</option>
+                        <option value="10th">10th</option>
+                        <option value="12th">12th</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Bachelor">Bachelor's</option>
+                        <option value="Master">Master's</option>
+                        <option value="Other">Other's</option>
+                    </select>
+                    <br>
+                    <div class="error-message"></div>
+                </div>
+            </div>
+                
+
+            <div class="btns">
+                <input type="submit" id="sumitBtn" class="btn">
+                <input type="reset" id="resetBtn" class="btn">
+            </div>
+        </form>
+    </div>
+
+
+    <script src="form-validation.js"></script>
 </body>
 </html>

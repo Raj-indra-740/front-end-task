@@ -1,30 +1,91 @@
 const form = document.querySelector('#userInfoForm')
 const inputTextField = document.querySelectorAll('input[type="text"]')
+const genderRadio = document.querySelectorAll('input[type="radio"]')
+const selectionList = document.querySelectorAll('select')
 
-// Validate each input field on input event
-inputTextField.forEach(item => {
-    console.log(item)
-    item.addEventListener('input', function () {
-        validateInputTextField(this)
-    })
-})
 
 // Validate all input fields on form submit
 form.addEventListener('submit', function (e) {
     e.preventDefault()
     let flag = true
     inputTextField.forEach(item => {
-        if (!validateInputTextField(item)) {
+        if (!validateInputTextField(item) || !validRadioBtn() || !validateSelectionList()) {
+            console.log(!validateInputTextField(item) , !validRadioBtn() , !validateSelectionList())
             flag = false
         }
     })
     console.log(flag)
     if (flag) {
-        // Form is valid, you can proceed here
         console.log('Form submitted successfully')
+        const formData =  new FormData(form)
+        storeData(formData)
+
+        this.reset()
     }
 })
 
+//form reset functionality
+form.addEventListener('reset', function(e){
+    inputTextField.forEach(item => {
+        item.classList.remove('success')
+        item.classList.remove('error')
+        item.nextElementSibling.innerText = ''
+        item.value = ''
+    })
+    genderRadio[0].parentElement.lastElementChild.innerText = ''
+})
+
+
+//Validate each radio button on change event
+genderRadio.forEach(item =>  {
+    item.addEventListener('change', function(e){
+        validRadioBtn()
+    })
+})
+
+// Validate each input field on input event
+inputTextField.forEach(item => {
+    item.addEventListener('input', function () {
+        validateInputTextField(this)
+    })
+})
+
+//Validate each Selection list 
+selectionList.forEach(item => {
+    item.addEventListener('change', function(e){
+        validateSelectionList()
+    })
+})
+
+//function to validate selection lisst
+function validateSelectionList(){
+    const selectListOfElments = Array.from(document.querySelectorAll('select'))
+    let validFlag = selectListOfElments.some(item =>  item.value.length)
+
+    if(!validFlag){
+        setError(selectListOfElments[0].parentElement.lastElementChild, 'Need to select Educational qualification')
+        return false
+    }else{   
+        clearError(selectListOfElments[0].parentElement.lastElementChild)
+        return true
+    }
+}
+
+//function to validate radio button
+function validRadioBtn(){
+    const radioBtnArr = Array.from(document.querySelectorAll('input[type="radio"]'))
+    let validFlag = radioBtnArr.some(item => item.checked)
+    if(!validFlag){
+        setError(radioBtnArr[0].parentElement.lastElementChild, 'Need to select gender')
+        return false
+    }else{
+        clearError(radioBtnArr[0].parentElement.lastElementChild)
+        return true
+    }
+
+}
+
+//function to validate text field
 function validateInputTextField(element) {
     switch (element.id) {
         case 'firstName':
@@ -65,12 +126,15 @@ function validateInputTextField(element) {
     return true
 }
 
+//functoion to set error message
 function setError(element, errorMessage) {
     element.classList.remove('success')
     element.classList.add('error')
     const parent = element.parentElement
     parent.querySelector('.error-message').innerText = errorMessage
 }
+
+//function clear error message on validatiom
 function clearError(element) {
     element.classList.remove('error')
     element.classList.add('success')
@@ -78,6 +142,7 @@ function clearError(element) {
     parent.querySelector('.error-message').innerText = ''
 }
 
+//validation functon
 function isInputEmpty(value) {
     return value.trim().length === 0;
 }
@@ -95,4 +160,12 @@ function isEmailValid(value) {
 function isNumberValid(value) {
     const pattern = /^\d{10}$/
     return pattern.test(value)
+}
+
+
+
+function storeData(formData){
+    let userData = Object.fromEntries(formData)
+    localStorage.setItem('userInfo', JSON.stringify(userData))
+    console.log(userData)
 }
