@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Form Card here</h1>
+    <div>
+        <div>
+            <div class="card">
+            </div>
+            <button id="edit">Edit</button>
+        </div>
+        <div></div>
+    </div>
+    <script>
+        const userData = JSON.parse(localStorage.getItem('userInfo')) || {}
+        console.log(userData)
+        function createCard(data){
+            const card =  document.querySelector('.card')
+            card.innerHTML = `
+                              <h3>Name:${data.firstName} ${data.lastName}</h3>  
+                              <h3>Email:${data.email}</h3>  
+                              <h3>Phone Number:${data.phoneNumber}</h3>  
+                              <h3>Gender:${data.Gender}</h3>  
+                              <h3>Educational Qulification:${data.education}</h3>  
+                             `
+        }
+
+        createCard(userData)
+
+
+        document.querySelector('#edit').addEventListener('click', function(e){
+            window.location.href = `http://127.0.0.1:5501/Daily-Tasks/from-validation/form-validation.html?edit=true`
+        })
+    </script>
+</body>
+</html>
