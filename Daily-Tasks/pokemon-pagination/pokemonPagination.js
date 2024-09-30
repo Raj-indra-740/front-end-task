@@ -238,7 +238,7 @@ window.onload = function () {
 };
 
 // Handle total page selection
-document.querySelector('#totalPageSelectionList').addEventListener('change', function (e) {
+document.querySelector('#totalCardPerPageSelectionList').addEventListener('change', function (e) {
     limit = parseInt(this.value, 10); // Convert limit to an integer
     const { currpage, filter, sort, search, order } = getUrlParams();
 
