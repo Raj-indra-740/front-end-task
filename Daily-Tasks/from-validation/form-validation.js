@@ -1,123 +1,98 @@
 const form = document.querySelector('#userInfoForm')
 const inputTextField = document.querySelectorAll('input[type="text"]')
 
-
+// Validate each input field on input event
 inputTextField.forEach(item => {
     console.log(item)
-    item.addEventListener('input', function(e){
+    item.addEventListener('input', function () {
         validateInputTextField(this)
     })
 })
 
-form.addEventListener('submit', function(e){
+// Validate all input fields on form submit
+form.addEventListener('submit', function (e) {
     e.preventDefault()
     let flag = true
-    document.querySelectorAll('input[type="text"]').forEach(item => {
-       console.log(validateInputTextField(item))
+    inputTextField.forEach(item => {
+        if (!validateInputTextField(item)) {
+            flag = false
+        }
     })
     console.log(flag)
-    if(flag) return
+    if (flag) {
+        // Form is valid, you can proceed here
+        console.log('Form submitted successfully')
+    }
 })
 
-
-function validateInputTextField(element){
-    let validFlag = true;
-    switch(element.id){
+function validateInputTextField(element) {
+    switch (element.id) {
         case 'firstName':
-            if(isInputEmpty(element.value.trim())){
-                setError(element, 'Input field can\' be empty')
+        case 'lastName':
+            if (isInputEmpty(element.value.trim())) {
+                setError(element, 'Input field can\'t be empty')
                 return false
-            }else if(!isStringValid(element.value.trim())){
+            } else if (!isStringValid(element.value.trim())) {
                 setError(element, 'Input is not valid')
                 return false
-            }else{
+            } else {
                 clearError(element)
                 return true
             }
-            break;
-        case 'lastName': 
-            if(isInputEmpty(element.value.trim())){
-                setError(element, 'Input field can\' be empty')
-                return false
-            }else if(!isStringValid(element.value.trim())){
-                setError(element, 'Input is not valid')
-                return false
-            }else{
-                clearError(element)
-                return true
-            }
-            break;
         case 'userEmail':
-            if(isInputEmpty(element.value.trim())){
+            if (isInputEmpty(element.value.trim())) {
                 setError(element, 'Email field can\'t be empty')
                 return false
-            }else if(!isEmailValid(element.value.trim())){
+            } else if (!isEmailValid(element.value.trim())) {
                 setError(element, 'Email is not valid')
                 return false
-            }else{
+            } else {
                 clearError(element)
                 return true
             }
-            break;
         case 'phoneNumber':
-            if(isInputEmpty(element.value.trim())){
+            if (isInputEmpty(element.value.trim())) {
                 setError(element, 'Phone number field can\'t be empty')
                 return false
-            }else if(!isNumberValid(element.value.trim())){
+            } else if (!isNumberValid(element.value.trim())) {
                 setError(element, 'Phone number is not valid')
                 return false
-            }else{
+            } else {
                 clearError(element)
                 return true
             }
-            break;
     }
-
-    return  true
+    return true
 }
 
-
-function setError(element, errorMessage){
+function setError(element, errorMessage) {
     element.classList.remove('success')
     element.classList.add('error')
     const parent = element.parentElement
     parent.querySelector('.error-message').innerText = errorMessage
 }
-function clearError(element){
+function clearError(element) {
     element.classList.remove('error')
     element.classList.add('success')
     const parent = element.parentElement
     parent.querySelector('.error-message').innerText = ''
 }
 
-
-
-
-function isInputEmpty(value){
-    return value.trim().length ? false : true;
+function isInputEmpty(value) {
+    return value.trim().length === 0;
 }
 
-function isStringValid(value){
+function isStringValid(value) {
     const pattern = /^[a-zA-Z ]{2,30}$/;
     return pattern.test(value)
 }
 
-function isEmailValid(value){
+function isEmailValid(value) {
     const pattern = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
     return pattern.test(value)
 }
 
-function isNumberValid(value){
+function isNumberValid(value) {
     const pattern = /^\d{10}$/
     return pattern.test(value)
 }
-
-
-// document.querySelector('#userEmail').addEventListener('input', function(e){
-//     if(!isEmailValid(this.value)){
-//         this.style.border = '5px solid red';
-//     }else{
-//         this.style.border = '5px solid green';
-//     }
-// })
-
