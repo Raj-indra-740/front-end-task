@@ -15,12 +15,19 @@ form.addEventListener('submit', function (e) {
         }
     })
     console.log(flag)
+
     if (flag) {
         console.log('Form submitted successfully')
         const formData =  new FormData(form)
         storeData(formData)
+        document.querySelector('#loaderContainer').style.display = 'block'
 
-        this.reset()
+        setTimeout(() => {
+            document.querySelector('#loaderContainer').style.display = 'none'
+            console.log(window.location.origin)
+            this.reset()
+            window.location.href = `http://127.0.0.1:5501/Daily-Tasks/from-validation/form-card.html`
+        }, 3000)
     }
 })
 
@@ -169,3 +176,40 @@ function storeData(formData){
     localStorage.setItem('userInfo', JSON.stringify(userData))
     console.log(userData)
 }
+
+
+document.addEventListener('DOMContentLoaded', function(e){
+    const url = new URL(window.location.href)
+    const quertParams = new URLSearchParams(url.search)
+
+    console.log(quertParams)
+    if(quertParams.get('edit')){
+        console.log(localStorage.getItem('userInfo'))
+        let userInfo =  JSON.parse(localStorage.getItem('userInfo'));
+
+        inputTextField.forEach(item => {
+            if(item.name == 'firstName'){
+                item.value = userInfo.firstName
+            } 
+            else if(item.name == 'lastName'){
+                item.value = userInfo.lastName
+            } 
+            if(item.name == 'email'){
+                item.value = userInfo.email
+            } 
+            if(item.name == 'phoneNumber'){
+                item.value = userInfo.phoneNumber
+            } 
+        })
+
+        genderRadio.forEach(item => {
+            if(item.value === userInfo.gender){
+                item.checked = true
+            }
+        })
+
+        selectionList.forEach(item => {
+            item.value = userInfo.education;
+        })
+    }
+})

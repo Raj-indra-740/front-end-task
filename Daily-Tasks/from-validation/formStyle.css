@@ -88,3 +88,32 @@ input[type=checkbox]:checked{
 .select-list:focus{
     outline: none;
 }
+
+.loader-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(250, 250, 250, 0.452);
+    display: none;
+}
+
+.loader {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid lightblue;
+    border-right-color: dodgerblue;
+    animation: l2 1s infinite linear;
+    transform: translate(-50%, -50%); 
+}
+
+@keyframes l2 {
+    to {
+        transform: translate(-50%, -50%) rotate(1turn); 
+    }
+}
