@@ -41,6 +41,11 @@ card.addEventListener('dragstart', function (e) {
 droppableArea.addEventListener('drop', function (e) {
     e.preventDefault();
 
+    if (droppableArea.querySelector('#deleteSectionCard')) {
+        alert('Delete section already contains a card!');
+        return;
+    }
+
     const cardHTML = e.dataTransfer.getData('text/html');
     const container = document.createElement('div');
     container.innerHTML = cardHTML;
