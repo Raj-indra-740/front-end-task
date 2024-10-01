@@ -14,6 +14,16 @@ form.addEventListener('submit', function (e) {
             flag = false
         }
     })
+    selectionList.forEach(item => {
+        if(validateSelectionList()){
+            item.classList.remove('error')
+            item.classList.add('success')
+        }else{
+            item.classList.remove('success')
+            item.classList.add('error')
+            flag = false
+        }
+    })
     console.log(flag)
 
     if (flag) {
@@ -25,9 +35,8 @@ form.addEventListener('submit', function (e) {
         setTimeout(() => {
             document.querySelector('#loaderContainer').style.display = 'none'
             console.log(window.location.origin)
-           
             this.reset()
-            
+
             const currentPath = window.location.pathname;
             const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
             window.location.href = `${window.location.origin}${basePath}/form-card.html`; 
@@ -41,6 +50,12 @@ form.addEventListener('reset', function(e){
         item.classList.remove('success')
         item.classList.remove('error')
         item.nextElementSibling.innerText = ''
+        item.value = ''
+    })
+    selectionList.forEach(item => {
+        item.nextElementSibling.innerText = ''
+        item.classList.remove('success')
+        item.classList.remove('error')
         item.value = ''
     })
     genderRadio[0].parentElement.lastElementChild.innerText = ''
@@ -64,7 +79,14 @@ inputTextField.forEach(item => {
 //Validate each Selection list 
 selectionList.forEach(item => {
     item.addEventListener('change', function(e){
-        validateSelectionList()
+        if(validateSelectionList()){
+            item.classList.remove('error')
+            item.classList.add('success')
+        }else{
+            item.classList.remove('success')
+            item.classList.add('error')
+        }
+        // validateSelectionList()
     })
 })
 
