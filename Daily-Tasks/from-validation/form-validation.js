@@ -26,7 +26,7 @@ form.addEventListener('submit', function (e) {
             document.querySelector('#loaderContainer').style.display = 'none'
             console.log(window.location.origin)
             this.reset()
-            window.location.href = `http://127.0.0.1:5501/Daily-Tasks/from-validation/form-card.html`
+            window.location.href = `${window.location.origin}/Daily-Tasks/from-validation/form-card.html`
         }, 3000)
     }
 })
@@ -183,33 +183,36 @@ document.addEventListener('DOMContentLoaded', function(e){
     const quertParams = new URLSearchParams(url.search)
 
     console.log(quertParams)
-    if(quertParams.get('edit')){
+    if(JSON.parse(quertParams.get('edit'))){
         console.log(localStorage.getItem('userInfo'))
         let userInfo =  JSON.parse(localStorage.getItem('userInfo'));
-
-        inputTextField.forEach(item => {
-            if(item.name == 'firstName'){
-                item.value = userInfo.firstName
-            } 
-            else if(item.name == 'lastName'){
-                item.value = userInfo.lastName
-            } 
-            if(item.name == 'email'){
-                item.value = userInfo.email
-            } 
-            if(item.name == 'phoneNumber'){
-                item.value = userInfo.phoneNumber
-            } 
-        })
-
-        genderRadio.forEach(item => {
-            if(item.value === userInfo.gender){
-                item.checked = true
-            }
-        })
-
-        selectionList.forEach(item => {
-            item.value = userInfo.education;
-        })
+        populateFormWithData(userInfo)
     }
 })
+
+function populateFormWithData(data){
+    inputTextField.forEach(item => {
+        if(item.name == 'firstName'){
+            item.value = data.firstName
+        } 
+        else if(item.name == 'lastName'){
+            item.value = data.lastName
+        } 
+        if(item.name == 'email'){
+            item.value = data.email
+        } 
+        if(item.name == 'phoneNumber'){
+            item.value = data.phoneNumber
+        } 
+    })
+
+    genderRadio.forEach(item => {
+        if(item.value === data.gender){
+            item.checked = true
+        }
+    })
+
+    selectionList.forEach(item => {
+        item.value = data.education;
+    })
+}

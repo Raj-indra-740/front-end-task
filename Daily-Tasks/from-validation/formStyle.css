@@ -13,6 +13,7 @@ body{
     max-width: fit-content;
     margin: 40px auto;
     padding: 30px;
+    border-radius: 10px;    
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     background-color: rgb(235, 235, 235) ;
 }
@@ -95,7 +96,6 @@ input[type=checkbox]:checked{
     height: 100%;
     top: 0;
     left: 0;
-    background-color: rgba(250, 250, 250, 0.452);
     display: none;
 }
 
@@ -116,4 +116,46 @@ input[type=checkbox]:checked{
     to {
         transform: translate(-50%, -50%) rotate(1turn); 
     }
+}
+
+
+
+
+/* Card page css */
+
+.card-container{
+    width: 100%;
+    max-width: 1600px;
+    padding: 30px;
+    margin: 30px auto;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-section, .delete-section{
+    padding: 20px;
+    width: 40%;
+    background-color: rgb(235, 235, 235) ;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.card-img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card-details{
+
 }
