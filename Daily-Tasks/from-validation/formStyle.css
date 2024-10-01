@@ -73,6 +73,7 @@ input[type=checkbox]:checked{
     background-color: rgb(38, 74, 234)
 }
 
+
 .non-text-input{
     display: flex;
     flex-direction: column;
@@ -98,7 +99,11 @@ input[type=checkbox]:checked{
     left: 0;
     display: none;
 }
-
+.optional-text{
+    color: gray;
+    font-size: 12px;
+    padding-left: 10px;
+}
 .loader {
     position: fixed; 
     top: 50%;
