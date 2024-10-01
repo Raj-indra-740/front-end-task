@@ -216,6 +216,7 @@ function isNumberValid(value) {
 
 function storeData(formData){
     console.log('storeData called')
+    let exsitingData = JSON.parse(localStorage.getItem('userInfo'))
     let userData = Object.fromEntries(formData)
     const imageFile = imageInput.files[0];
     if (imageFile) {
@@ -227,6 +228,7 @@ function storeData(formData){
         };
         reader.readAsDataURL(imageFile); 
     } else {
+        userData.image = exsitingData.image ? exsitingData.image : '';
         localStorage.setItem('userInfo', JSON.stringify(userData));
         console.log('Data stored without image:', userData);
     }
@@ -271,4 +273,6 @@ function populateFormWithData(data){
     selectionList.forEach(item => {
         item.value = data.education;
     })
+
+    imageInput.value = item.image
 }
