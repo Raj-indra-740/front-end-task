@@ -46,7 +46,7 @@ droppableArea.addEventListener('drop', function (e) {
         return;
     }
 
-    if(!isDataEmpty('userInfo')){
+    if(isDataEmpty('userInfo')){
         let confirmationToRedirectToForm = confirm('would you like to go to Form page?')
         if(confirmationToRedirectToForm){
             const currentPath = window.location.pathname;
@@ -131,7 +131,6 @@ deleteBtn.addEventListener('click', function (e) {
             })
 
             localStorage.setItem('userInfo', JSON.stringify(data))
-            // createCard(card, data)
             
             // Re-render the card and delete sections with updated data
             reRenderAllSections(data);
@@ -146,6 +145,8 @@ function reRenderAllSections(data) {
     const deleteSectionCard = droppableArea.querySelector('#deleteSectionCard');
     if (deleteSectionCard) {
         deleteSectionCard.remove();
+    }
+    if(isDataEmpty('userInfo')){
         document.querySelector('.delete-section-btn').style.display = 'none'
     }
 
@@ -173,6 +174,6 @@ function reRenderAllSections(data) {
 }
 
 function isDataEmpty(objName) {
-    let data = localStorage.getItem(objName)
+    let data = JSON.parse(localStorage.getItem(objName))
     return Object.values(data).every(value => !value.trim());
 }
