@@ -2,6 +2,7 @@ const form = document.querySelector('#userInfoForm')
 const inputTextField = document.querySelectorAll('input[type="text"]')
 const genderRadio = document.querySelectorAll('input[type="radio"]')
 const selectionList = document.querySelectorAll('select')
+const imageInput = document.querySelector('#imageInput');
 
 
 // Validate all input fields on form submit
@@ -61,6 +62,22 @@ form.addEventListener('reset', function(e){
     genderRadio[0].parentElement.lastElementChild.innerText = ''
 })
 
+//Image size validation
+imageInput.addEventListener('change', function() {
+    const file = this.files[0]; // Get the selected file
+    console.log
+    if (file) {
+        const maxSizeInKB = 300; 
+        const maxSizeInBytes = maxSizeInKB * 1024; 
+
+        if (file.size > maxSizeInBytes) {
+            setError(imageInput, `File size must be less than ${maxSizeInKB}KB.`);
+            this.value = ''; 
+        } else {
+            clearError(imageInput);
+        }
+    }
+});
 
 //Validate each radio button on change event
 genderRadio.forEach(item =>  {
@@ -198,8 +215,21 @@ function isNumberValid(value) {
 
 
 function storeData(formData){
+    console.log('storeData called')
     let userData = Object.fromEntries(formData)
-    localStorage.setItem('userInfo', JSON.stringify(userData))
+    const imageFile = imageInput.files[0];
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            userData.image = event.target.result; 
+            localStorage.setItem('userInfo', JSON.stringify(userData));
+            console.log('Data stored successfully:', userData);
+        };
+        reader.readAsDataURL(imageFile); 
+    } else {
+        localStorage.setItem('userInfo', JSON.stringify(userData));
+        console.log('Data stored without image:', userData);
+    }
     console.log(userData)
 }
 

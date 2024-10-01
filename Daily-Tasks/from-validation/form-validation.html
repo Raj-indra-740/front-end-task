@@ -13,7 +13,7 @@
             <div class="input-container" >
                 <label for="firstName" >First Name:</label>
                 <br>
-                <input type="text" id="firstName" class="input-field" name="firstName">
+                <input type="text" id="firstName" class="input-field" name="firstName" >
                 <div class="error-message"></div>
             </div>  
 
@@ -70,10 +70,12 @@
                     <br>
                 </div>
 
-                <!-- <div>
-                    <label for="userImage">Profile Image:</label>
-                    <input type="file" accept="image/*" id="userImage" name="userImage">
-                </div> -->
+                <div class="input-container">
+                    <label for="userImage">Profile Image:</label><span class="optional-text"><i>~Optional</i></span>
+                    <br>
+                    <input type="file" id="imageInput" accept="image/*" id="image">
+                    <div class="error-message"></div>
+                </div>
             </div>
                 
 
