@@ -8,10 +8,11 @@ console.log(userData)
 function createCard(parentElement, data) {
 
     const innerHTMLforCard = `
-                    <div>
+                    <div id="image">
                     <img 
                         class='card-img'
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_L2wiy5nonchopSVEph1GA_yJi_ExMRniXA&s" alt="user image"
+                        src=${data.image ? data.image : "https://img.freepik.com/premium-photo/stylish-man-flat-vector-profile-picture-ai-generated_606187-310.jpg"} 
+                        alt="user image"
                         draggable=false
                     />
                     </div>
@@ -110,7 +111,7 @@ selectAllBtn.addEventListener('click', function () {
 
 deleteBtn.addEventListener('click', function (e) {
     const checkbox = droppableArea.querySelectorAll('input[type="checkbox"]:checked')
-
+    console.log(checkbox)
     if (checkbox.length) {
         console.log('delete')
 
