@@ -143,6 +143,7 @@ input[type=checkbox]:checked{
 
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .card{
@@ -176,6 +177,7 @@ input[type=checkbox]:checked{
 .delete-section{
     background: #ffffff url('fileIcon.jpg') no-repeat center;
     background-size: 200px;
+    background-position-y: 200px;
     align-items: center;
     gap: 10%;
 
@@ -202,4 +204,7 @@ input[type=checkbox]:checked{
 
 .delete-section-btn{
     display: none;
+}
+.center{
+    text-align: center;
 }

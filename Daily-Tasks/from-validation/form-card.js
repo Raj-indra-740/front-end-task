@@ -1,13 +1,13 @@
-const card =  document.querySelector('.card')
+const card = document.querySelector('.card')
 const droppableArea = document.querySelector('.delete-section')
-const selectAllBtn =  droppableArea.querySelector('#selectAll')
-const deleteBtn =  droppableArea.querySelector('#delete')
+const selectAllBtn = droppableArea.querySelector('#selectAll')
+const deleteBtn = droppableArea.querySelector('#delete')
 const userData = JSON.parse(localStorage.getItem('userInfo')) || {}
 console.log(userData)
 
-function createCard(parentElement, data){
-   
-    const innerHTMLforCard =`
+function createCard(parentElement, data) {
+
+    const innerHTMLforCard = `
                     <div>
                     <img 
                         class='card-img'
@@ -22,23 +22,23 @@ function createCard(parentElement, data){
                     <h3 class = "card-details" id="education">Educational Qulification:${data.education}</h3>  
                 `
     parentElement.innerHTML = innerHTMLforCard
-                      
+
 }
 
 createCard(card, userData)
 
 
-document.querySelector('#edit').addEventListener('click', function(e){
+document.querySelector('#edit').addEventListener('click', function (e) {
     const currentPath = window.location.pathname;
     const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
-    window.location.href = `${window.location.origin}${basePath}/form-validation.html?edit=true`; 
+    window.location.href = `${window.location.origin}${basePath}/form-validation.html?edit=true`;
 })
 
 
-card.addEventListener('dragstart', function(e){
+card.addEventListener('dragstart', function (e) {
     e.dataTransfer.setData('text/html', e.target.outerHTML);
 })
-droppableArea.addEventListener('drop', function(e){
+droppableArea.addEventListener('drop', function (e) {
     e.preventDefault();
 
     const cardHTML = e.dataTransfer.getData('text/html');
@@ -47,8 +47,8 @@ droppableArea.addEventListener('drop', function(e){
 
 
     const newCard = container.firstElementChild
-    newCard.style.border = 'none';
     newCard.id = 'deleteSectionCard'
+    newCard.classList.add('card')
 
     const div = document.createElement('div')
 
@@ -76,38 +76,38 @@ droppableArea.addEventListener('dragover', (event) => {
     event.preventDefault();
 });
 
-  
-function onDropSucess(){
+
+function onDropSucess() {
     const btnSection = document.querySelector('.delete-section-btn')
     btnSection.style.display = 'block'
 
-    
+
 }
 
-function checkedAllCheckBox(parentDiv){
+function checkedAllCheckBox(parentDiv) {
     const checkbox = parentDiv.querySelectorAll('input[type="checkbox"]')
     checkbox.forEach(item => item.checked = !item.checked)
 }
 
 
-selectAllBtn.addEventListener('click', function(){
+selectAllBtn.addEventListener('click', function () {
     checkedAllCheckBox(droppableArea)
 })
 
-deleteBtn.addEventListener('click', function(e){
+deleteBtn.addEventListener('click', function (e) {
     const checkbox = droppableArea.querySelectorAll('input[type="checkbox"]:checked')
-    
-    if(checkbox.length){
+
+    if (checkbox.length) {
         console.log('delete')
 
         let userConfirmation = confirm('do you really want to delete?', false)
 
-        if(userConfirmation){
+        if (userConfirmation) {
             const data = JSON.parse(localStorage.getItem('userInfo'))
-           
-            checkbox.forEach(item =>{
-                if(data[item.name]){
-                    if(item.name == 'firstName'){
+
+            checkbox.forEach(item => {
+                if (data[item.name]) {
+                    if (item.name == 'firstName') {
                         data.lastName = ''
                         data[item.name] = ''
                     }
@@ -115,16 +115,46 @@ deleteBtn.addEventListener('click', function(e){
                 }
                 item.checked = false;
             })
-            
+
             localStorage.setItem('userInfo', JSON.stringify(data))
-            createCard(card, data)
-            createCard(document.querySelector('deleteSectionCard'), data)
+            // createCard(card, data)
+            
+            // Re-render the card and delete sections with updated data
+            reRenderAllSections(data);
+            
         }
 
     }
-
-    checkbox.forEach(item =>{ 
-        console.log(item.name)
-    })
-
 })
+
+function reRenderAllSections(data) {
+    card.innerHTML = '';
+    createCard(card, data);
+
+    const deleteSectionCard = droppableArea.querySelector('#deleteSectionCard');
+    if (deleteSectionCard) {
+        deleteSectionCard.remove();
+    }
+
+    if (Object.values(data).some(value => value.trim() !== '')) {
+        const newCard = document.createElement('div');
+        newCard.id = 'deleteSectionCard';
+        newCard.classList.add('card');
+
+        createCard(newCard, data);
+
+        Array.from(newCard.children).forEach(item => {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = item.id;
+
+            if (item.nodeName === 'DIV') {
+                item.firstElementChild.style.width = '100px';
+            }
+            item.classList.add('delete-section-card-elements');
+            item.appendChild(checkbox);
+        });
+
+        droppableArea.firstElementChild.after(newCard);
+    }
+}
