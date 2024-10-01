@@ -5,8 +5,14 @@ const deleteBtn = droppableArea.querySelector('#delete')
 const userData = JSON.parse(localStorage.getItem('userInfo')) || {}
 console.log(userData)
 
-function createCard(parentElement, data) {
+//Intial call for card rendering
+document.addEventListener('DOMContentLoaded',function(){
+    createCard(card, userData)
+})
 
+
+//healping function to create card using user data
+function createCard(parentElement, data) {
     const innerHTMLforCard = `
                     <div id="image">
                     <img 
@@ -26,9 +32,9 @@ function createCard(parentElement, data) {
 
 }
 
-createCard(card, userData)
 
 
+//Event to redirect to form page on edit
 document.querySelector('#edit').addEventListener('click', function (e) {
     const currentPath = window.location.pathname;
     const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
@@ -36,9 +42,11 @@ document.querySelector('#edit').addEventListener('click', function (e) {
 })
 
 
+// Drag and Drop Event Listener
 card.addEventListener('dragstart', function (e) {
     e.dataTransfer.setData('text/html', e.target.outerHTML);
 })
+
 droppableArea.addEventListener('drop', function (e) {
     e.preventDefault();
 
@@ -87,6 +95,7 @@ droppableArea.addEventListener('drop', function (e) {
 
     onDropSucess()
 })
+
 droppableArea.addEventListener('dragover', (event) => {
     event.preventDefault();
 });
@@ -95,20 +104,20 @@ droppableArea.addEventListener('dragover', (event) => {
 function onDropSucess() {
     const btnSection = document.querySelector('.delete-section-btn')
     btnSection.style.display = 'block'
-
-
 }
 
+//Event to select all check box in delete section
+selectAllBtn.addEventListener('click', function () {
+    checkedAllCheckBox(droppableArea)
+})
+
+//Helping function to check all check box
 function checkedAllCheckBox(parentDiv) {
     const checkbox = parentDiv.querySelectorAll('input[type="checkbox"]')
     checkbox.forEach(item => item.checked = !item.checked)
 }
 
-
-selectAllBtn.addEventListener('click', function () {
-    checkedAllCheckBox(droppableArea)
-})
-
+//Delete button click event
 deleteBtn.addEventListener('click', function (e) {
     const checkbox = droppableArea.querySelectorAll('input[type="checkbox"]:checked')
     console.log(checkbox)
@@ -132,13 +141,12 @@ deleteBtn.addEventListener('click', function (e) {
             })
 
             localStorage.setItem('userInfo', JSON.stringify(data))
-            
-            // Re-render the card and delete sections with updated data
             reRenderAllSections(data);
         }
     }
 })
 
+//Re-render function on deletion operation
 function reRenderAllSections(data) {
     card.innerHTML = '';
     createCard(card, data);
@@ -174,6 +182,7 @@ function reRenderAllSections(data) {
     }
 }
 
+//Function To check if if user info object value are empty or not
 function isDataEmpty(objName) {
     let data = JSON.parse(localStorage.getItem(objName))
     return Object.values(data).every(value => !value.trim());
