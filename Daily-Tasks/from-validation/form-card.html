@@ -43,7 +43,9 @@
 
 
         document.querySelector('#edit').addEventListener('click', function(e){
-            window.location.href = `${window.location.origin}/Daily-Tasks/from-validation/form-validation.html?edit=true`
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = `${window.location.origin}${basePath}/form-validation.html?edit=true`; 
         })
     </script>
 </body>

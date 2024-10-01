@@ -25,9 +25,13 @@ form.addEventListener('submit', function (e) {
         setTimeout(() => {
             document.querySelector('#loaderContainer').style.display = 'none'
             console.log(window.location.origin)
+           
             this.reset()
-            window.location.href = `${window.location.origin}/Daily-Tasks/from-validation/form-card.html`
-        }, 3000)
+            
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = `${window.location.origin}${basePath}/form-card.html`; 
+        }, 2000)
     }
 })
 
