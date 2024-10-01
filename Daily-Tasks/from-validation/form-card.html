@@ -4,49 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="formStyle.css">
 </head>
 <body>
     <div class="card-container">
         <div class="card-section">
-            <div class="card">
+            <div class="card" id="userCard" draggable="true">
             </div>
             <button id="edit" class="btn">Edit</button>
         </div>
         <div class="delete-section">
             <h1>Delete Section</h1>
+            <div class="delete-section-btn">
+                <button class="btn" id="delete">Delete</button>
+                <button class="btn" id="selectAll">Select all</bu`tton>
+            </div>
         </div>
        
     </div>
-    <script>
-        const userData = JSON.parse(localStorage.getItem('userInfo')) || {}
-        console.log(userData)
-        function createCard(data){
-            const card =  document.querySelector('.card')
-            card.innerHTML = `
-                              <img 
-                                class='card-img'
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_L2wiy5nonchopSVEph1GA_yJi_ExMRniXA&s" alt="user image"
-                              />
-                              <div class='card-details'>
-                                <h3>Name:${data.firstName} ${data.lastName}</h3>  
-                                <h3>Email:${data.email}</h3>  
-                                <h3>Phone Number:${data.phoneNumber}</h3>  
-                                <h3>Gender:${data.gender}</h3>  
-                                <h3>Educational Qulification:${data.education}</h3>  
-                              </div>
-                             `
-                              
-        }
-
-        createCard(userData)
-
-
-        document.querySelector('#edit').addEventListener('click', function(e){
-            const currentPath = window.location.pathname;
-            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
-            window.location.href = `${window.location.origin}${basePath}/form-validation.html?edit=true`; 
-        })
+    <script src="form-card.js"> 
     </script>
 </body>
 </html>

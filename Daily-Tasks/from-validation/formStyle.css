@@ -137,18 +137,25 @@ input[type=checkbox]:checked{
 .card-section, .delete-section{
     padding: 20px;
     width: 40%;
+    min-height: 500px;
     background-color: rgb(235, 235, 235) ;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .card{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 5px;
 
     width: 400px;
+    margin: 0 auto;
     border: 1px solid black;
     border-radius: 10px;
+    background-color: white;
 }
 
 .card-img{
@@ -157,5 +164,42 @@ input[type=checkbox]:checked{
 }
 
 .card-details{
+    padding: 5px 10px;
+}
 
+#edit{
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+.delete-section{
+    background: #ffffff url('fileIcon.jpg') no-repeat center;
+    background-size: 200px;
+    align-items: center;
+    gap: 10%;
+
+}
+
+.delete-section .file-icon{
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.delete-section-card-elements{
+    display: flex; 
+    justify-content: space-between; 
+    gap:20px; 
+    padding:5px 10px;
+    word-wrap: break-word;
+}
+
+.delete-section-btn{
+    display: none;
 }
