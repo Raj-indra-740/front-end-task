@@ -12,6 +12,7 @@ function createCard(parentElement, data){
                     <img 
                         class='card-img'
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_L2wiy5nonchopSVEph1GA_yJi_ExMRniXA&s" alt="user image"
+                        draggable=false
                     />
                     </div>
                     <h3 class = "card-details" id="firstName">Name:${data.firstName} ${data.lastName}</h3>  
