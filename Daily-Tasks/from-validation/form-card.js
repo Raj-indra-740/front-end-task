@@ -46,6 +46,15 @@ droppableArea.addEventListener('drop', function (e) {
         return;
     }
 
+    if(!isDataEmpty('userInfo')){
+        let confirmationToRedirectToForm = confirm('would you like to go to Form page?')
+        if(confirmationToRedirectToForm){
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            window.location.href = `${window.location.origin}${basePath}/form-validation.html?edit=true`;
+        }
+        return;  
+    }
     const cardHTML = e.dataTransfer.getData('text/html');
     const container = document.createElement('div');
     container.innerHTML = cardHTML;
@@ -126,9 +135,7 @@ deleteBtn.addEventListener('click', function (e) {
             
             // Re-render the card and delete sections with updated data
             reRenderAllSections(data);
-            
         }
-
     }
 })
 
@@ -139,6 +146,7 @@ function reRenderAllSections(data) {
     const deleteSectionCard = droppableArea.querySelector('#deleteSectionCard');
     if (deleteSectionCard) {
         deleteSectionCard.remove();
+        document.querySelector('.delete-section-btn').style.display = 'none'
     }
 
     if (Object.values(data).some(value => value.trim() !== '')) {
@@ -162,4 +170,9 @@ function reRenderAllSections(data) {
 
         droppableArea.firstElementChild.after(newCard);
     }
+}
+
+function isDataEmpty(objName) {
+    let data = localStorage.getItem(objName)
+    return Object.values(data).every(value => !value.trim());
 }
