@@ -29,11 +29,32 @@ function createCard(parentElement, data) {
                         draggable=false
                     />
                     </div>
-                    <h3 class = "card-details" id="firstName">Name:${data.firstName} ${data.lastName}</h3>  
-                    <h3 class = "card-details"  id="email">Email:${data.email}</h3>  
-                    <h3 class = "card-details" id="phoneNumber">Phone Number:${data.phoneNumber}</h3>  
-                    <h3 class = "card-details" id="gender">Gender:${data.gender}</h3>  
-                    <h3 class = "card-details" id="education">Educational Qulification:${data.education}</h3>  
+                    <p class = "card-details" id="firstName">
+                        <span>
+                            <b>Name:</b> ${data.firstName} ${data.lastName}
+                        </span>
+                    </p>  
+                            
+                    <p class = "card-details"  id="email">
+                        <span>
+                            <b>Email:</b> ${data.email}
+                        </span>        
+                    </p>  
+                    <p class = "card-details" id="phoneNumber">
+                        <span>
+                            <b>Phone Number:</b> ${data.phoneNumber}
+                        </span>
+                    </p>  
+                    <p class = "card-details" id="gender">
+                        <span>
+                            <b>Gender:</b> ${data.gender}
+                        </span>    
+                    </p>  
+                    <p class = "card-details" id="education">
+                        <span>
+                            <b>Educational Qulification:</b> ${data.education}
+                        </span>
+                    </p>  
                 `
     parentElement.innerHTML = innerHTMLforCard
 
