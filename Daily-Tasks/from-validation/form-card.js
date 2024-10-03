@@ -123,8 +123,17 @@ selectAllBtn.addEventListener('click', function () {
 //Helping function to check all check box
 function checkedAllCheckBox(parentDiv) {
     const checkbox = parentDiv.querySelectorAll('input[type="checkbox"]')
-    checkbox.forEach(item => item.checked = !item.checked)
+    const allChecked = parentDiv.querySelectorAll('input[type="checkbox"]:checked')
+    checkbox.forEach(item => {
+        if(allChecked.length < checkbox.length){
+            item.checked = true
+        }
+        else{
+            item.checked = !item.checked
+        }
+    })
 }
+
 
 //Delete button click event
 deleteBtn.addEventListener('click', function (e) {
