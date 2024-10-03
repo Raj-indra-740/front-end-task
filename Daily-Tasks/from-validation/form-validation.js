@@ -38,6 +38,8 @@ form.addEventListener('submit', function (e) {
             console.log(window.location.origin)
             this.reset()
 
+            localStorage.setItem('isCardDrop', false)
+
             const currentPath = window.location.pathname;
             const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
             window.location.href = `${window.location.origin}${basePath}/form-card.html`; 

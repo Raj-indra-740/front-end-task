@@ -8,6 +8,13 @@ console.log(userData)
 //Intial call for card rendering
 document.addEventListener('DOMContentLoaded',function(){
     createCard(card, userData)
+
+    let isCardDrop = JSON.parse(localStorage.getItem('isCardDrop'))
+
+    if(isCardDrop){
+        reRenderAllSections(userData)
+        onDropSuccess()
+    }
 })
 
 
@@ -49,6 +56,8 @@ card.addEventListener('dragstart', function (e) {
 
 droppableArea.addEventListener('drop', function (e) {
     e.preventDefault();
+
+    localStorage.setItem('isCardDrop', true)
 
     if (droppableArea.querySelector('#deleteSectionCard')) {
         alert('Delete section already contains a card!');
@@ -93,7 +102,7 @@ droppableArea.addEventListener('drop', function (e) {
 
     e.target.firstElementChild.after(newCard)
 
-    onDropSucess()
+    onDropSuccess()
 })
 
 droppableArea.addEventListener('dragover', (event) => {
@@ -101,7 +110,7 @@ droppableArea.addEventListener('dragover', (event) => {
 });
 
 
-function onDropSucess() {
+function onDropSuccess() {
     const btnSection = document.querySelector('.delete-section-btn')
     btnSection.style.display = 'block'
 }
