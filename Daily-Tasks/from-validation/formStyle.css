@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.iti__search-input{
+    padding: 10px;
+}
+
 body{
     background-color: #434343;
 }
