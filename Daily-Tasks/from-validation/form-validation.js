@@ -135,6 +135,22 @@ function validRadioBtn(){
 
 }
 
+//Country code plugin
+const input = document.querySelector("#phoneNumber");
+const phoneNumber = window.intlTelInput(input, {
+    initialCountry: "in",
+    geoIpLookup: 'in',
+    countryOrder: ["in","us", "uk" , "de"],
+    separateDialCode: true,
+    validationNumberType:'MOBILE',
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.1/build/js/utils.js",
+});
+
+// const phoneNumber = intlTelInput(input);
+const extension = phoneNumber.getExtension();
+console.log(extension)
+
+
 //function to validate text field
 function validateInputTextField(element) {
     switch (element.id) {
@@ -162,10 +178,11 @@ function validateInputTextField(element) {
                 return true
             }
         case 'phoneNumber':
+            // console.log([phoneNumber.getNumber(), phoneNumber.isValidNumber()])
             if (isInputEmpty(element.value.trim())) {
                 setError(element, 'Phone number field can\'t be empty')
                 return false
-            } else if (!isNumberValid(element.value.trim())) {
+            } else if (!phoneNumber.isValidNumber()) {
                 setError(element, 'Phone number is not valid')
                 return false
             } else {
@@ -176,12 +193,17 @@ function validateInputTextField(element) {
     return true
 }
 
-//functoion to set error message
+//function to set error message
 function setError(element, errorMessage) {
     element.classList.remove('success')
     element.classList.add('error')
     const parent = element.parentElement
-    parent.querySelector('.error-message').innerText = errorMessage
+    console.log(element.id)
+    if(element.id == 'phoneNumber'){
+        document.querySelector('#phoneNumberError').innerText = errorMessage
+    }else{
+        parent.querySelector('.error-message').innerText = errorMessage
+    }
 }
 
 //function clear error message on validatiom
@@ -189,7 +211,11 @@ function clearError(element) {
     element.classList.remove('error')
     element.classList.add('success')
     const parent = element.parentElement
-    parent.querySelector('.error-message').innerText = ''
+    if(element.id == 'phoneNumber'){
+        document.querySelector('#phoneNumberError').innerText = ''
+    }else{
+        parent.querySelector('.error-message').innerText = ''
+    }
 }
 
 //validation functon
@@ -218,6 +244,11 @@ function storeData(formData){
     console.log('storeData called')
     let exsitingData = JSON.parse(localStorage.getItem('userInfo'))
     let userData = Object.fromEntries(formData)
+    
+    userData.phoneNumber = `+${phoneNumber.getSelectedCountryData().dialCode} ${userData.phoneNumber}`
+    
+    console.log(userData)
+    
     const imageFile = imageInput.files[0];
     if (imageFile) {
         const reader = new FileReader();
