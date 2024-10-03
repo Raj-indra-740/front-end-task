@@ -24,12 +24,15 @@ function getUrlParams() {
         order: urlParams.get("order") || 'asc', // Default to ascending order
         search: urlParams.get("search") || null,
         limit: parseInt(urlParams.get('limit'), 10) || limit,
-        totalPageslimit: parseInt(urlParams.get('totalPageLimit')) || 10,
+        totalPageLimit: parseInt(urlParams.get('totalPageLimit')) || null,
     };
 }
 
 // Fetch Pokemon Data
-function fetchKantoPokemon(pageNumber = 1, sortType = null, order = 'asc', searchValue = null) {
+function fetchKantoPokemon(pageNumber = 1, sortType = null, order = 'asc', searchValue = null,limit,totalPageLimit) {
+
+    console.log('totalPageLimit',totalPageLimit)
+
     const offset = (pageNumber - 1) * limit;
     const paginatedUrl = `${API_URL}?offset=${offset}&limit=${limit}`;
 
@@ -41,8 +44,7 @@ function fetchKantoPokemon(pageNumber = 1, sortType = null, order = 'asc', searc
             return response.json();
         })
         .then((allpokemon) => {
-            totalPages = Math.ceil(allpokemon.count / limit);
-            totalPages = 100;
+            totalPages = totalPageLimit || Math.ceil(allpokemon.count / limit)
             const pokemonPromises = allpokemon.results.map((pokemon) => {
                 if (!pokTabDataBase.has(pokemon.name)) {
                     return fetchPokemonData(pokemon);
@@ -166,9 +168,9 @@ function addEllipsis() {
 function updatePage(pageNumber) {
     if (pageNumber < 1 || pageNumber > totalPages) return; // Prevent invalid pages
     currentPage = pageNumber;
-    const { sort, order, limit } = getUrlParams();
+    const { sort, order, limit, totalPageLimit } = getUrlParams();
     updateUrlParams({ currpage: currentPage, sort, order, limit });
-    fetchKantoPokemon(currentPage, sort, order, undefined, limit);
+    fetchKantoPokemon(currentPage, sort, order, undefined, limit, totalPageLimit);
 }
 
 // Handle search input and filter data based on search term
@@ -202,9 +204,9 @@ document.querySelector('#filterList').addEventListener('change', function (e) {
     console.log(selectedOption.dataset.order)
     
     const order = selectedOption.dataset.order == 'asc' ? 'asc' : 'desc';
-    
+    const { currpage, sort, search, limit: urlLimit, totalPageLimit } = getUrlParams();
     updateUrlParams({ sort: sortType, order, currpage: currentPage });
-    fetchKantoPokemon(currentPage, sortType, order);
+    fetchKantoPokemon(currentPage, sortType, order,search, limit, totalPageLimit);
 });
 
 // Sorting function, returns sorted array based on sort type and order
@@ -229,33 +231,35 @@ function renderListOfPokemon(list) {
 
 // Initialize the page and restore the state from URL parameters on load
 window.onload = function () {
-    const { currpage, sort, order, search, limit: urlLimit } = getUrlParams();
+    const { currpage, sort, order, search, limit: urlLimit, totalPageLimit } = getUrlParams();
     currentPage = currpage;
     limit = urlLimit;
-
+    totalPages = totalPageLimit
     if (sort) document.querySelector('#filterList').value = sort;
     if (search) document.querySelector("#searchBar").value = search;
 
-    fetchKantoPokemon(currentPage, sort, order, search, limit);
+    fetchKantoPokemon(currentPage, sort, order, search, limit, totalPages);
 };
 
 // Handle total page selection
 document.querySelector('#totalCardPerPageSelectionList').addEventListener('change', function (e) {
     limit = parseInt(this.value, 10); // Convert limit to an integer
-    const { currpage, filter, sort, search, order } = getUrlParams();
+    const { currpage, filter, sort, search, order, totalPageLimit } = getUrlParams();
 
     // Update URL params and fetch Pokemon with the new limit
     updateUrlParams({ limit });
-    fetchKantoPokemon(currpage, sort, order, search, limit);
+    fetchKantoPokemon(currpage, sort, order, search, limit, totalPageLimit);
 });
 
 document.querySelector('#totalPageSelectionList').addEventListener('change', function (e) {
     if(this.value != 'default') {
         totalPages = parseInt(this.value, 10);
-    }
-    const { currpage, filter, sort, search, order } = getUrlParams();
-
+    }else{
+        totalPages = null
+    } 
     // Update URL params and fetch Pokemon with the new limit
-    updateUrlParams({ limit });
-    fetchKantoPokemon(currpage, sort, order, search, limit);
+    updateUrlParams({ totalPageLimit : totalPages });
+    const { currpage, filter, sort, search, order , limit, totalPageLimit} = getUrlParams();
+    console.log(totalPageLimit)
+    fetchKantoPokemon(currpage, sort, order, search, limit,totalPageLimit);
 });
