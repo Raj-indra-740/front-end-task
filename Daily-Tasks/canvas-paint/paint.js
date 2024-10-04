@@ -1,31 +1,76 @@
-const canvas = document.querySelector('#paintDiv')
+const canvas = document.querySelector('#paintDiv');
+const toolPanel_1 = document.querySelector('#toolPanel-1')
+const changeColorBtnFill = document.querySelector('#changeColorFill')
+const changeColorBtnStroke = document.querySelector('#changeColorStroke')
+const colorPickerFill = document.querySelector('#colorPickerFill')
+const colorPickerStroke = document.querySelector('#colorPickerStroke')
+const colorPalateDivFill =  document.querySelector('#colorPalate')
+const colorPalateDivStroke =  document.querySelector('#colorPalateStroke')
+const clearCanvasBtn = document.querySelector('#clear')
+const strokeWidthInput = document.querySelector('#strokeWidth')
+const rangeInputValue = document.querySelector('#rangeValue')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+const colors = ['#002642','#840032','#E59500','#7C00FE','#FFFFFF']
 
+let drawStatus = false;
+let lineWidth = 10;
+let lineCap = 'round'
+let strokeColor = 'black';
+let eraserColor = 'white';
+
+// Initial setup
 let ctx = canvas.getContext("2d")
+ctx.lineWidth = lineWidth;
+ctx.lineCap = lineWidth;
+ctx.strokeStyle = strokeColor;
 
 
 
-const toolPanel = document.querySelector('#toolPanel')
-const changeColorBtn = document.querySelector('#changeColor')
-const colorPicker = document.querySelector('#colorPicker')
+// window.addEventListener('resize', changeCanvasSize)
+window.addEventListener('load', function(e){
+    changeCanvasSize()
+})
 
-colorPicker.addEventListener('input', function(e){
-    changeColorBtn.style.backgroundColor = this.value
+changeCanvasSize()
+
+function changeCanvasSize(){
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+}
+
+// Stoke size 
+strokeWidthInput.addEventListener('input', function(e){
+    lineWidth = this.value
+    rangeInputValue.innerText = `${this.value}px`
+})
+
+//fill tool
+colorPickerFill.addEventListener('input', function(e){
+    // changeColorBtnFill.style.backgroundColor = this.value
     document.querySelector('#pickerCard').style.backgroundColor = this.value
 })
-changeColorBtn.addEventListener('click', function(e){
-    canvas.style.backgroundColor = colorPicker.value
+changeColorBtnFill.addEventListener('click', function(e){
+    changeCanvasColor(colorPickerFill.value)
+})
+
+//stroke tool
+colorPickerStroke.addEventListener('input', function(e){
+    // changeColorBtnStroke.style.backgroundColor = this.value
+    document.querySelector('#pickerCardStroke').style.backgroundColor = this.value
+})
+changeColorBtnStroke.addEventListener('click', function(e){
+    changeStrokeColor(colorPickerStroke.value) 
+})
+
+//clear canvas button
+clearCanvasBtn.addEventListener('click', function(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 })
 
 
 
-const colorPalateDiv =  document.querySelector('#colorPalate')
-
-const colors = ['#002642','#840032','#E59500','#E5DADA','#02040F']
-
-function createColorCircle(parentEle, colorsArr){  
+//function to create color circle
+function createColorCircle(parentEle, colorsArr, func){  
     colorsArr.forEach(item => {
         const div = document.createElement('div')
         div.classList.add('color-card')
@@ -34,18 +79,60 @@ function createColorCircle(parentEle, colorsArr){
         parentEle.appendChild(div)
     })
    
-    addEventToCircles(parentEle)
+    addEventToCircles(parentEle, func)
 }
 
-function addEventToCircles(parentEle){
+//function to add event listener on each color circle
+function addEventToCircles(parentEle, callBack){
     const box = parentEle.querySelectorAll('.color-card')
     console.log(parentEle.children,box)
     box.forEach(item => {
         item.addEventListener('click', function(e){
-            console.log(`#${item.id}`)
-            canvas.style.backgroundColor = `${item.id}`
+            callBack(item.id)
         })
     })
 }
 
-createColorCircle(colorPalateDiv, colors)
+createColorCircle(colorPalateDivFill, colors, changeCanvasColor)
+createColorCircle(colorPalateDivStroke, colors, changeStrokeColor)
+
+//function to change stroke color
+function changeStrokeColor(color){
+    strokeColor = color
+}
+
+//function to change canvas color
+function changeCanvasColor(color){
+    canvas.style.backgroundColor = color
+}
+
+//functions to perform drawing
+
+function startDrawing(e){
+    drawStatus = true;
+    draw(e)
+}
+function finishDrawing(){
+    drawStatus = false
+    ctx.beginPath()
+}
+
+function draw(e){
+    // console.log('drawing started')
+    if(!drawStatus) return;
+
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = strokeColor;
+    ctx.lineTo(e.clientX, e.clientY)
+    ctx.stroke()
+    ctx.beginPath()
+    ctx.moveTo(e.clientX, e.clientY)
+}
+
+//event listener on canvas for mouse events
+canvas.addEventListener('mousedown', startDrawing)
+canvas.addEventListener('mousemove', draw)
+canvas.addEventListener('mouseup', finishDrawing)
+
+console.log(ctx)

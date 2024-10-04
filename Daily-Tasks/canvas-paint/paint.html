@@ -5,33 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>canvas Paint</title>
     <link rel="stylesheet" href="paint.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+
+
 </head>
 <body>
     <canvas id="paintDiv"></canvas>
     
     
-    <div class="tool-panel pos-1" id="toolPanel">    
-        <h3>Fill</h3> 
-        <div class="color-palate " id="colorPalate">          
-        </div>
-        <div class=" flex">
-            <div class="color-card picker-card " id="pickerCard">
-                <input type="color" id="colorPicker">
+    <div class="tool-container">
+        <div class="tool-panel pos-1" id="toolPanel-1">    
+            <h3>Fill</h3> 
+            <div class="color-palate" id="colorPalate">          
             </div>
-            <button class="change-color-btn" id="changeColor">Apply</button>    
+            <div class=" flex">
+                <div class="color-card picker-card " id="pickerCard">
+                    <input type="color" class="colorPicker" id="colorPickerFill" value="#4169e1">
+                </div>
+                <button class="change-color-btn royal-blue-color" id="changeColorFill">Apply</button>    
+            </div>
+        </div>
+        <div class="tool-panel pos-2" id="toolPanel-2">    
+            <h3>Stroke</h3> 
+            <div class="color-palate" id="colorPalateStroke">          
+            </div>
+            <div class="flex">
+                <div class="color-card picker-card " id="pickerCardStroke">
+                    <input type="color" class="colorPicker" id="colorPickerStroke" value="#4169e1">
+                </div>
+                <button class="change-color-btn royal-blue-color" id="changeColorStroke">Apply</button>    
+                <button class="change-color-btn red-color" id="clear">Clear</button>
+            </div>
+            <div class="flex item-center justify-btw gap-10">
+                <input type="range" min="1" max="100" id="strokeWidth">
+                <span id="rangeValue">10px</span>
+            </div>
         </div>
     </div>
-    <div class="tool-panel pos-2" id="toolPanel">    
-        <h3>Stroke</h3> 
-        <div class="color-palate " id="colorPalate">          
-        </div>
-        <div class=" flex">
-            <div class="color-card picker-card " id="pickerCard">
-                <input type="color" id="colorPicker">
-            </div>
-            <button class="change-color-btn" id="changeColor">Apply</button>    
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script src="paint.js"></script>
+    
 </body>
 </html>
