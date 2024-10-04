@@ -65,9 +65,25 @@ body{
     border-radius: 50%;
     opacity: 0.01;
 }
+.stroke-input{
+    width: 15px;
+    background-color: transparent;
+    border: none;
+    color: white;
 
+}
+.stroke-input:focus{
+    outline: none;
+    width: 28px;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px; 
+}
 .w-50{
     width: 50%;
+}
+.w-fit{
+    width: fit-content;
 }
 .flex{
     display: flex;

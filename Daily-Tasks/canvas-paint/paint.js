@@ -41,7 +41,12 @@ function changeCanvasSize(){
 // Stoke size 
 strokeWidthInput.addEventListener('input', function(e){
     lineWidth = this.value
-    rangeInputValue.innerText = `${this.value}px`
+    rangeInputValue.value = `${this.value}`
+})
+
+rangeInputValue.addEventListener('input', function(){
+    lineWidth = this.value.trim();
+    strokeWidthInput.value = this.value.trim()
 })
 
 //fill tool
