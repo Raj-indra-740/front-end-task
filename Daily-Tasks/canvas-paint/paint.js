@@ -9,14 +9,17 @@ const colorPalateDivStroke =  document.querySelector('#colorPalateStroke')
 const clearCanvasBtn = document.querySelector('#clear')
 const strokeWidthInput = document.querySelector('#strokeWidth')
 const rangeInputValue = document.querySelector('#rangeValue')
+const eraserDiv = document.querySelector('#eraser')
 
 const colors = ['#002642','#840032','#E59500','#7C00FE','#FFFFFF']
 
 let drawStatus = false;
+let eraseStatus = false;
 let lineWidth = 10;
 let lineCap = 'round'
 let strokeColor = 'black';
 let eraserColor = 'white';
+
 
 // Initial setup
 let ctx = canvas.getContext("2d")
@@ -93,6 +96,7 @@ function addEventToCircles(parentEle, callBack){
     console.log(parentEle.children,box)
     box.forEach(item => {
         item.addEventListener('click', function(e){
+            eraseStatus = false
             callBack(item.id)
         })
     })
@@ -125,6 +129,10 @@ function finishDrawing(){
 function draw(e){
     // console.log('drawing started')
     if(!drawStatus) return;
+    if(eraseStatus){
+        eraser(e)
+        return
+    }
 
     ctx.lineWidth = lineWidth;
     ctx.lineCap = 'round';
@@ -141,3 +149,12 @@ canvas.addEventListener('mousemove', draw)
 canvas.addEventListener('mouseup', finishDrawing)
 
 console.log(ctx)
+
+//Eraser function
+function eraser(e){
+    ctx.clearRect(e.clientX, e.clientY, lineWidth, lineWidth)
+}
+
+eraserDiv.addEventListener('click', function()  {
+    eraseStatus = true
+})
