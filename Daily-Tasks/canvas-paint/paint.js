@@ -47,7 +47,6 @@ function undo() {
 
         const previousState = undoSnapShot[undoSnapShot.length - 1];
 
-        console.log(lastUpdate)
         rePaintImg(previousState); 
     }
 }
