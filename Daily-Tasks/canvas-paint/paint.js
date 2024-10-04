@@ -72,7 +72,10 @@ changeColorBtnStroke.addEventListener('click', function(e){
 
 //clear canvas button
 clearCanvasBtn.addEventListener('click', function(){
+    localStorage.setItem('canvasBg', 'white')
+    localStorage.setItem('canvasImage', '')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
 })
 
 
@@ -112,6 +115,7 @@ function changeStrokeColor(color){
 
 //function to change canvas color
 function changeCanvasColor(color){
+    localStorage.setItem('canvasBg', color); 
     canvas.style.backgroundColor = color
 }
 
@@ -146,15 +150,38 @@ function draw(e){
 //event listener on canvas for mouse events
 canvas.addEventListener('mousedown', startDrawing)
 canvas.addEventListener('mousemove', draw)
-canvas.addEventListener('mouseup', finishDrawing)
+canvas.addEventListener('mouseup', function(){
+    finishDrawing()
+    saveCanvas()
+})
 
 console.log(ctx)
 
 //Eraser function
 function eraser(e){
-    ctx.clearRect(e.clientX, e.clientY, lineWidth, lineWidth)
+    ctx.clearRect(e.clientX, e.clientY, lineWidth * 1.5, lineWidth * 1.5)
 }
 
 eraserDiv.addEventListener('click', function()  {
     eraseStatus = true
 })
+
+
+function saveCanvas() {
+    const dataURL = canvas.toDataURL(); 
+    localStorage.setItem('canvasImage', dataURL); 
+}
+
+window.addEventListener('load', function() {
+    changeCanvasSize();
+    const savedImage = localStorage.getItem('canvasImage');
+    let bgColor =   localStorage.getItem('canvasBg')
+    canvas.style.backgroundColor = bgColor
+    if (savedImage) {
+        const img = new Image();
+        img.src = savedImage; 
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+        };
+    }
+});
