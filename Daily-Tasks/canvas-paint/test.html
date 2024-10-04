@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+
+</head>
+<body>
+    <canvas id="canvasDiv"></canvas>
+</body>
+<script>
+    const canvas = document.querySelector('#canvasDiv');
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    const ctx = canvas.getContext('2d');
+    console.log(ctx)
+    // ctx.fillStyle = 'red'
+    function draw(){
+        if(ctx){
+            ctx.fillRect(25, 25, 400, 400);
+            ctx.clearRect(45, 45, 200, 200);
+            ctx.strokeRect(75, 75, 100, 100);
+        }   
+    }
+
+    draw()
+
+    function drawArc(){
+        ctx.beginPath();
+        ctx.arc(300, 300, 50, 0, 2 * Math.PI);  
+        ctx.fillStyle = "green";
+        ctx.fill();
+    }
+
+    drawArc()
+
+    function digonalLine(){
+        ctx.beginPath();
+        ctx.moveTo(25, 25);
+        ctx.lineTo(425, 425);
+        ctx.strokeStyle = '#F5004F'
+        ctx.lineWidth = '4'
+        ctx.stroke();
+    }
+
+    digonalLine()
+
+    function linearGradient(){
+        let gradient = ctx.createLinearGradient(0, 0, 200, 0);
+        gradient.addColorStop(0, "red");
+        gradient.addColorStop(1, "yellow");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(25, 300, 200, 50);
+        ctx.fillRect(300, 25, 50, 200);
+    }
+
+    linearGradient()
+
+    function createRadicalGradient(){
+        let radialGradient = ctx.createRadialGradient(300, 400, 20, 300, 400, 100);
+        radialGradient.addColorStop(0, "blue");
+        radialGradient.addColorStop(1, "white");
+        ctx.fillStyle = radialGradient;
+        ctx.fillRect(25, 500, 200, 100);
+    }
+
+    createRadicalGradient()
+
+    function createText(){
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText("Hello Canvas", 100, 500);
+
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.strokeText("Hello Canvas", 100, 550);
+    }
+    createText()
+
+    function createImg(){
+        const img = new Image();
+        img.src = "img-1.webp";
+        img.onload = () => {
+        ctx.drawImage(img, 50, 50, 200, 200);
+        };
+    }
+
+    createImg()
+
+    let x = 0;
+    function animate() {
+        // ctx.clearRect(0, 0, 50, 50);  // Clear canvas
+        ctx.fillStyle = "blue";
+        ctx.fillRect(x, 600, 50, 50);
+        x += 2;  // Update position
+
+        requestAnimationFrame(animate);  // Call animate again
+    }
+    animate()
+
+    let imageData = ctx.getImageData(0, 0, 100, 100);  
+    console.log(imageData)
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        imageData.data[i] = '245';  // Set red channel to full
+    }
+    ctx.putImageData(imageData, 0, 0);
+
+
+    ctx.save();  // Save current state
+    ctx.fillStyle = "orange";
+    ctx.fillRect(10, 700, 50, 50);
+
+    ctx.restore();  // Restore to the previous state
+    ctx.fillRect(100, 700, 50, 50);
+
+
+    ctx.globalAlpha = 0.5;  // 50% transparency
+    ctx.fillStyle = "red";
+    ctx.fillRect(300, 700, 100, 100);
+
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = "blue";
+    ctx.fillRect(320, 720, 100, 100);
+</script>
+
+
+</html>
