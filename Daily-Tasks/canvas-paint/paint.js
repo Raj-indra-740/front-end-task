@@ -10,6 +10,8 @@ const clearCanvasBtn = document.querySelector('#clear')
 const strokeWidthInput = document.querySelector('#strokeWidth')
 const rangeInputValue = document.querySelector('#rangeValue')
 const eraserDiv = document.querySelector('#eraser')
+const undoBtn =  document.querySelector('#undo')
+const redoBtn =  document.querySelector('#redo')
 
 const colors = ['#002642','#840032','#E59500','#7C00FE','#FFFFFF']
 
@@ -20,6 +22,9 @@ let lineCap = 'round'
 let strokeColor = 'black';
 let eraserColor = 'white';
 
+const undoSnapShot = JSON.parse(localStorage.getItem('undoStack')) || [];
+const redoSnapShot = [];
+
 
 // Initial setup
 let ctx = canvas.getContext("2d")
@@ -27,6 +32,38 @@ ctx.lineWidth = lineWidth;
 ctx.lineCap = lineWidth;
 ctx.strokeStyle = strokeColor;
 
+// undo and redo
+function updateUndoStack(){
+    let currData = canvas.toDataURL()
+    undoSnapShot.push(currData)
+    localStorage.setItem('undoStack', JSON.stringify(undoSnapShot))
+    redoSnapShot.length = 0;
+}
+
+function undo() {
+    if (undoSnapShot.length > 1) {
+        const lastUpdate = undoSnapShot.pop(); 
+        redoSnapShot.push(lastUpdate); 
+
+        const previousState = undoSnapShot[undoSnapShot.length - 1];
+
+        console.log(lastUpdate)
+        rePaintImg(previousState); 
+    }
+}
+function redo() {
+    if (redoSnapShot.length > 0) {
+        const redoState = redoSnapShot.pop();
+        undoSnapShot.push(redoState);
+        rePaintImg(redoState); 
+    }
+}
+undoBtn.addEventListener('click', function(e){
+    undo()
+})
+redoBtn.addEventListener('click', function(e){
+    redo()
+})
 
 
 // window.addEventListener('resize', changeCanvasSize)
@@ -153,6 +190,7 @@ canvas.addEventListener('mousemove', draw)
 canvas.addEventListener('mouseup', function(){
     finishDrawing()
     saveCanvas()
+    updateUndoStack()
 })
 
 console.log(ctx)
@@ -177,11 +215,23 @@ window.addEventListener('load', function() {
     const savedImage = localStorage.getItem('canvasImage');
     let bgColor =   localStorage.getItem('canvasBg')
     canvas.style.backgroundColor = bgColor
-    if (savedImage) {
+    // if (savedImage) {
+    //     const img = new Image();
+    //     img.src = savedImage; 
+    //     img.onload = function() {
+    //         ctx.drawImage(img, 0, 0);
+    //     };
+    // }
+    rePaintImg(savedImage)
+});
+
+function rePaintImg(data){
+    if (data) {
         const img = new Image();
-        img.src = savedImage; 
+        img.src = data; 
         img.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(img, 0, 0);
         };
-    }
-});
+    } 
+}
