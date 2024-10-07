@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nested-comments</title>
+    <link rel="stylesheet" href="nested-comments.css">
+</head>
+<body>
+   
+    <div class="container m-lr-auto p-20">
+
+        <div class="input-section w-600 m-lr-auto flex flex-col gap-10 border-rounded p-10">
+            <textarea class="input-field border-rounded p-20 text-area" id="comment" name="comment" rows="1" cols="10" placeholder="Add a comment"></textarea>
+            
+            <div class="justify-space-btw item-center display-none" id="userIdInput">        
+                <input class="input-field border-rounded" type="text" name="userName" id="userName" placeholder="User Name">
+
+                <div class="btns" id="commentBtns">
+                    <button class="btn bg-gray font-600">Cancel</button>
+                    <button class="btn bg-black white font-600" id="addCommentBtn">Comment</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comment-section-component m-lr-auto" id="commentSection">
+            <div class="comment-card">
+
+            </div>
+        </div>
+
+    </div>
+    <script src="nested-comments.js"></script>
+</body>
+</html>
