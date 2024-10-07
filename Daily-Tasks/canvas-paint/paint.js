@@ -12,9 +12,10 @@ const rangeInputValue = document.querySelector('#rangeValue')
 const eraserDiv = document.querySelector('#eraser')
 const undoBtn =  document.querySelector('#undo')
 const redoBtn =  document.querySelector('#redo')
-
+const cursorSmall = document.querySelector('.cursorSmall')
 const colors = ['#002642','#840032','#E59500','#7C00FE','#FFFFFF']
 
+let paintStartFlag = false;
 let drawStatus = false;
 let eraseStatus = false;
 let lineWidth = 10;
@@ -22,7 +23,7 @@ let lineCap = 'round'
 let strokeColor = 'black';
 let eraserColor = 'white';
 
-const undoSnapShot = JSON.parse(localStorage.getItem('undoStack')) || [];
+const undoSnapShot = JSON.parse(localStorage.getItem('undoStack')) || []; 
 const redoSnapShot = [];
 
 
@@ -111,7 +112,6 @@ clearCanvasBtn.addEventListener('click', function(){
     localStorage.setItem('canvasBg', 'white')
     localStorage.setItem('canvasImage', '')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-
 })
 
 
@@ -137,6 +137,11 @@ function addEventToCircles(parentEle, callBack){
         item.addEventListener('click', function(e){
             eraseStatus = false
             callBack(item.id)
+            canvas.classList.remove('cursor-eraser')
+            canvas.classList.add('cursor-pen')
+            paintStartFlag = true;
+            console.log('pen added')
+
         })
     })
 }
@@ -158,6 +163,7 @@ function changeCanvasColor(color){
 //functions to perform drawing
 
 function startDrawing(e){
+    if(!paintStartFlag) return
     drawStatus = true;
     draw(e)
 }
@@ -186,14 +192,22 @@ function draw(e){
 //event listener on canvas for mouse events
 canvas.addEventListener('mousedown', startDrawing)
 canvas.addEventListener('mousemove', draw)
-canvas.addEventListener('mouseup', function(){
+canvas.addEventListener('mouseup', function(e){
     finishDrawing()
     saveCanvas()
     updateUndoStack()
 })
 
 console.log(ctx)
-
+const positionElement = (e)=> {
+    const mouseY = e.clientY;
+    const mouseX = e.clientX;
+     
+    cursorSmall.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    
+    // cursorBig.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+   
+}
 //Eraser function
 function eraser(e){
     ctx.clearRect(e.clientX, e.clientY, lineWidth * 1.5, lineWidth * 1.5)
@@ -201,6 +215,9 @@ function eraser(e){
 
 eraserDiv.addEventListener('click', function()  {
     eraseStatus = true
+    canvas.classList.add('cursor-eraser')
+    canvas.classList.remove('cursor-pen')
+    console.log('eraser added')
 })
 
 
@@ -214,13 +231,6 @@ window.addEventListener('load', function() {
     const savedImage = localStorage.getItem('canvasImage');
     let bgColor =   localStorage.getItem('canvasBg')
     canvas.style.backgroundColor = bgColor
-    // if (savedImage) {
-    //     const img = new Image();
-    //     img.src = savedImage; 
-    //     img.onload = function() {
-    //         ctx.drawImage(img, 0, 0);
-    //     };
-    // }
     rePaintImg(savedImage)
 });
 
