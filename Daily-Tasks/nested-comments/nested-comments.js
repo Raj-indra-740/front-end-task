@@ -22,50 +22,50 @@ let marginForNested = 0;
 
 const userIdCollection = new Map()
 const postComments = [
-       {
+    {
         userID: '831AR',
         userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
         userName: "BaByShark1",
-        commentDate:  'Mon Jan 07 2022',
-        content : 'Sharks are more tasty Emoooo! ',
+        commentDate: 'Mon Jan 07 2022',
+        content: 'Sharks are more tasty Emoooo! ',
         parentId: null,
         replies: [],
-       },
-       {
+    },
+    {
         userID: '211XW',
         userImg: 'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
         userName: "Squisy22",
-        commentDate:  'Mon Sep 12 2022',
-        content : 'No non-veg! only Veg',
+        commentDate: 'Mon Sep 12 2022',
+        content: 'No non-veg! only Veg',
         parentId: null,
         replies: [
-           {
-            userID: '321AW',
-            userName: "CaratBro",
-            content : 'See who is here!! Mr.veggy',
-            replies: [],
-              },
-           ]
-       },
+            {
+                userID: '321AW',
+                userName: "CaratBro",
+                content: 'See who is here!! Mr.veggy',
+                replies: [],
+            },
+        ]
+    },
 ]
 
-mainCommentInput.addEventListener('focus', function(e){
+mainCommentInput.addEventListener('focus', function (e) {
     userIdInputSection.classList.add('flex')
 })
 
-commentBtns.addEventListener('click', function(e){
-    if(e.target.tagName == 'BUTTON'){
+commentBtns.addEventListener('click', function (e) {
+    if (e.target.tagName == 'BUTTON') {
         toggleClass(userIdInputSection, 'flex')
-       
-        if(e.target.id == 'addCommentBtn'){
+
+        if (e.target.id == 'addCommentBtn') {
             const content = mainCommentInput.value
             const userName = userNameInput.value
-            const userID = randomIdGenerator({userName, content})
+            const userID = randomIdGenerator({ userName, content })
             const userImg = profileImageCollection[randomIndexBtwRange(9)]
             const commentDate = new Date()
 
 
-            let userObj = createUserCommentObj(userID,userImg, userName, commentDate.toDateString(), content)
+            let userObj = createUserCommentObj(userID, userImg, userName, commentDate.toDateString(), content)
             console.log(userObj)
             postComments.push(userObj)
 
@@ -77,18 +77,18 @@ commentBtns.addEventListener('click', function(e){
         }
         console.log(e.target.tagName)
 
-    }  
+    }
 })
 
 
-function toggleClass(element, className, ){
+function toggleClass(element, className,) {
     element.classList.toggle(className)
-}   
+}
 
-function randomIndexBtwRange(range){
+function randomIndexBtwRange(range) {
     return Math.floor(Math.random() * range)
 }
-function randomIdGenerator(userObject){
+function randomIdGenerator(userObject) {
     const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     let id = '';
     do {
@@ -102,8 +102,8 @@ function randomIdGenerator(userObject){
     return id;
 }
 
-function createUserCommentObj(userId = null, userImg = null, userName = null ,commentDate = null, content = '', parentId = null, replies=[]){
-    return {userId, userImg, userName,commentDate, parentId, content, replies}
+function createUserCommentObj(userId = null, userImg = null, userName = null, commentDate = null, content = '', parentId = null, replies = []) {
+    return { userId, userImg, userName, commentDate, parentId, content, replies }
 }
 
 function renderComments(comments, parentElement = commentSection) {
@@ -142,23 +142,23 @@ function renderComments(comments, parentElement = commentSection) {
 
 renderComments(postComments)
 
-commentSection.addEventListener('click', function(e) {
+commentSection.addEventListener('click', function (e) {
     if (e.target.classList.contains('btn')) {
         const parentId = e.target.id;
 
-        // Display input to add a reply
+
         const replyInput = document.createElement('textarea');
         replyInput.placeholder = 'Add a reply...';
         e.target.parentElement.appendChild(replyInput);
 
-        // Add button to submit reply
+
         const submitReplyBtn = document.createElement('button');
         submitReplyBtn.innerText = 'Submit Reply';
         e.target.parentElement.appendChild(submitReplyBtn);
 
-        submitReplyBtn.addEventListener('click', function() {
+        submitReplyBtn.addEventListener('click', function () {
             const content = replyInput.value;
-            const userName = userNameInput.value; // Get from an appropriate input or default value
+            const userName = userNameInput.value; 
             const userID = randomIdGenerator({ userName, content });
             const userImg = profileImageCollection[randomIndexBtwRange(9)];
             const commentDate = new Date();
@@ -173,16 +173,16 @@ commentSection.addEventListener('click', function(e) {
         });
     }
 });
-            // Find the parent comment in postComments and add the reply
-            function addReply(comments, reply) {
-                for (let comment of comments) {
-                    if (comment.userID === reply.parentId) {
-                        comment.replies.push(reply);
-                        renderComments(postComments)
-                        return;
-                    }
-                    if (comment.replies.length) {
-                        addReply(comment.replies, reply);
-                    }
-                }
-            }
+
+function addReply(comments, reply) {
+    for (let comment of comments) {
+        if (comment.userID === reply.parentId) {
+            comment.replies.push(reply);
+            renderComments(postComments)
+            return;
+        }
+        if (comment.replies.length) {
+            addReply(comment.replies, reply);
+        }
+    }
+}
