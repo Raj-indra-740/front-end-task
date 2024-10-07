@@ -1,0 +1,221 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.iti__search-input{
+    padding: 10px;
+}
+
+body{
+    background-color: #434343;
+}
+
+.form-container{
+    width: 100%;
+    max-width: fit-content;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 10px;    
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    background-color: rgb(235, 235, 235) ;
+}
+
+.userForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-field{
+    all: none;
+    width: 400px;
+    border: 3px solid gray;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+input:focus{
+    outline:none;
+}
+
+.focus{
+    outline: 2px solid greenyellow;    
+}
+.input-container .success{
+    border-color: #09c372;
+}
+.input-container .error{
+    border-color: #ff3860;
+}
+.input-container .error-message{
+    color: #ff3860;
+    font-size: 14px;
+}
+input[type=checkbox]{
+    color: white;
+}
+
+input[type=checkbox]:checked{
+    accent-color: dodgerblue;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-between;
+}
+.btn{
+    width: fit-content;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    color: aliceblue;
+    background-color: dodgerblue;
+}
+.btn:hover{
+    background-color: rgb(38, 74, 234)
+}
+
+
+.non-text-input{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.select-list{
+    width: 100%;
+    padding: 7px 15px;
+    margin-top: 10px;
+    border: 3px solid gray;
+    border-radius: 5px;
+}
+.select-list:focus{
+    outline: none;
+}
+
+.loader-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+}
+.optional-text{
+    color: gray;
+    font-size: 12px;
+    padding-left: 10px;
+}
+.loader {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid lightblue;
+    border-right-color: dodgerblue;
+    animation: l2 1s infinite linear;
+    transform: translate(-50%, -50%); 
+}
+
+@keyframes l2 {
+    to {
+        transform: translate(-50%, -50%) rotate(1turn); 
+    }
+}
+
+
+
+
+/* Card page css */
+
+.card-container{
+    width: 100%;
+    max-width: 1600px;
+    padding: 0 30px;
+    margin: 20px auto;
+ 
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-section, .delete-section{
+    padding: 20px;
+    width: 40%;
+    min-height: 500px;
+    background-color: rgb(235, 235, 235) ;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.card-img{
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card-details{
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+#edit{
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+}
+
+.delete-section{
+    background: #ffffff url('fileIcon.jpg') no-repeat center;
+    background-size: 200px;
+    background-position-y: 200px;
+    align-items: center;
+    gap: 10%;
+
+}
+
+.delete-section .file-icon{
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.delete-section-card-elements{
+    display: flex; 
+    justify-content: space-between; 
+    gap:20px; 
+    padding:5px 10px;
+    word-wrap: break-word;
+}
+
+.delete-section-btn{
+    display: none;
+}
+.center{
+    text-align: center;
+}

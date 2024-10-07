@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas Paint</title>
+    <link rel="stylesheet" href="paint.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+    <canvas id="paintDiv"></canvas>
+    
+    
+    <div class="tool-container">
+        <div class="tool-panel pos-1" id="toolPanel-1">    
+            <h3>Fill</h3> 
+            <div class="color-palate" id="colorPalate">          
+            </div>
+            <div class="flex item-center">
+                <div class="color-card picker-card cursor-pointer" id="pickerCard">
+                    <input type="color" class="colorPicker" id="colorPickerFill" value="#4169e1">
+                </div>
+                <button class="change-color-btn royal-blue-color cursor-pointer" id="changeColorFill">Apply</button>    
+            </div>
+        </div>
+        <div class="tool-panel pos-2" id="toolPanel-2">    
+            <h3>Stroke</h3> 
+            <div class="color-palate" id="colorPalateStroke">          
+            </div>
+            <div class="flex item-center">
+                <div class="color-card picker-card cursor-pointer " id="pickerCardStroke">
+                    <input type="color" class="colorPicker" id="colorPickerStroke" value="#4169e1">
+                </div>
+                <button class="change-color-btn royal-blue-color cursor-pointer" id="changeColorStroke">Apply</button>    
+                <button class="change-color-btn red-color cursor-pointer" id="clear">Clear</button>
+            </div>
+            <div class="flex item-center justify-btw gap-10">
+                <input type="range" value="10" min="1" max="100" id="strokeWidth">
+                <div>
+                    <input text="number" class="stroke-input" id="rangeValue" value="10" min="1" max="100">
+                    <span>px</span>
+                </div>
+            </div>
+        </div>
+        <div class="tool-panel cursor-pointer" id="eraser">
+            <i class="fa-solid fa-eraser"></i>
+        </div>
+        <div class="tool-panel cursor-pointer" id="undo">
+            <i class="fa-solid fa-rotate-left"></i>
+        </div>
+        <div class="tool-panel cursor-pointer" id="redo">
+            <i class="fa-solid fa-rotate-right"></i>
+        </div>
+    </div>
+    <!-- <img src="pen.svg" alt="" width="32" height="32" class="cursorSmall"> -->
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script src="paint.js"></script>
+    
+</body>
+</html>

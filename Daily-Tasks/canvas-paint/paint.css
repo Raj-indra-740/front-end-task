@@ -1,0 +1,163 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+}
+
+ .tool-container{
+    position: fixed;
+    bottom: 10%;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.tool-panel{
+    background: tomato;
+    color: aliceblue;
+
+    width: 100%;
+    max-width:fit-content;
+    border-radius: 10px;
+
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+
+    user-select: none;
+}
+
+/* .tool-panel button:hover{
+    background-color: rgb(0, 86, 139);
+} */
+
+.color-palate{
+    /* width: 300px; */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.color-card{
+    width: 35px;
+    height: 35px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+.picker-card{
+    position: relative;
+    background-color: royalblue;
+    border-radius: 20%;
+}
+.colorPicker{
+    all: unset;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    opacity: 0.01;
+}
+.stroke-input{
+    width: 15px;
+    background-color: transparent;
+    border: none;
+    color: white;
+
+}
+.stroke-input:focus{
+    outline: none;
+    width: 28px;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px; 
+}
+.w-50{
+    width: 50%;
+}
+.w-fit{
+    width: fit-content;
+}
+.flex{
+    display: flex;
+}
+.flex-col{
+    flex-direction: column;
+}
+.justify-center{
+    justify-content: center;
+}
+.justify-btw{
+    justify-content: space-between;
+}
+.item-center{
+    align-items: center;
+}
+.gap-10{
+    gap: 10px;
+}
+
+.px-10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.px-20{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.px-30{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.py-10{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.py-20{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.py-30{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.change-color-btn{
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    color: aliceblue;
+    padding: 10px 30px;
+    margin-left: 5px;
+    border-radius: 30px;
+}
+.royal-blue-color{
+    background-color: royalblue;
+}
+.red-color{
+    background-color: rgb(255, 217, 0);
+}
+.h-50{
+    height: 50px;
+}
+.cursor-eraser{
+    cursor: url('eraser.svg'), auto;
+}
+.cursor-pen{
+    cursor: url('pen.svg') 0 30, auto;
+}
+.cursorSmall{
+    position: absolute;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
