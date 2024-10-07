@@ -121,6 +121,7 @@ function createColorCircle(parentEle, colorsArr, func){
     colorsArr.forEach(item => {
         const div = document.createElement('div')
         div.classList.add('color-card')
+        div.classList.add('cursor-pointer')
         div.id = item
         div.style.backgroundColor = item
         parentEle.appendChild(div)

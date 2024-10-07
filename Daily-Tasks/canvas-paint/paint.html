@@ -18,23 +18,23 @@
             <h3>Fill</h3> 
             <div class="color-palate" id="colorPalate">          
             </div>
-            <div class=" flex">
-                <div class="color-card picker-card " id="pickerCard">
+            <div class="flex item-center">
+                <div class="color-card picker-card cursor-pointer" id="pickerCard">
                     <input type="color" class="colorPicker" id="colorPickerFill" value="#4169e1">
                 </div>
-                <button class="change-color-btn royal-blue-color" id="changeColorFill">Apply</button>    
+                <button class="change-color-btn royal-blue-color cursor-pointer" id="changeColorFill">Apply</button>    
             </div>
         </div>
         <div class="tool-panel pos-2" id="toolPanel-2">    
             <h3>Stroke</h3> 
             <div class="color-palate" id="colorPalateStroke">          
             </div>
-            <div class="flex">
-                <div class="color-card picker-card " id="pickerCardStroke">
+            <div class="flex item-center">
+                <div class="color-card picker-card cursor-pointer " id="pickerCardStroke">
                     <input type="color" class="colorPicker" id="colorPickerStroke" value="#4169e1">
                 </div>
-                <button class="change-color-btn royal-blue-color" id="changeColorStroke">Apply</button>    
-                <button class="change-color-btn red-color" id="clear">Clear</button>
+                <button class="change-color-btn royal-blue-color cursor-pointer" id="changeColorStroke">Apply</button>    
+                <button class="change-color-btn red-color cursor-pointer" id="clear">Clear</button>
             </div>
             <div class="flex item-center justify-btw gap-10">
                 <input type="range" value="10" min="1" max="100" id="strokeWidth">
@@ -44,16 +44,17 @@
                 </div>
             </div>
         </div>
-        <div class="tool-panel" id="eraser">
+        <div class="tool-panel cursor-pointer" id="eraser">
             <i class="fa-solid fa-eraser"></i>
         </div>
-        <div class="tool-panel" id="undo">
+        <div class="tool-panel cursor-pointer" id="undo">
             <i class="fa-solid fa-rotate-left"></i>
         </div>
-        <div class="tool-panel" id="redo">
+        <div class="tool-panel cursor-pointer" id="redo">
             <i class="fa-solid fa-rotate-right"></i>
         </div>
     </div>
+    <!-- <img src="pen.svg" alt="" width="32" height="32" class="cursorSmall"> -->
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script src="paint.js"></script>
     
