@@ -4,6 +4,23 @@ const commentBtns = document.querySelector('#commentBtns');
 const userIdInputSection = document.querySelector('#userIdInput');
 const commentSection = document.querySelector('#commentSection');
 
+const url = 'https://api.imgflip.com/get_memes';
+const memes = []
+
+async function fetchMemes() {   
+    try {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(result.data.memes);
+        memes.push(...result.data.memes)
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+fetchMemes()
+
+
 const profileImageCollection = [
     'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
     'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
@@ -131,13 +148,21 @@ function renderComments(comments, parentElement = commentSection) {
                     <p class="comment-text">${comment.content}</p>
                 </div>
                 <button class="btn bg-black white reply-btn" data-id="${comment.userId}">Reply</button>
-            </div>
+                </div>
         `;
 
         comment.parentId &&  commentDiv.classList.add('reply-comment')
 
+        
         parentElement.appendChild(commentDiv); 
+        
+        if(!comment.parentId){
+            const hr = document.createElement('hr')
+            hr.style.color = '#c1c6cc';
+            hr.style.margin = '30px 0px'
 
+            parentElement.appendChild(hr)
+        }
         if (comment.replies.length > 0) {
             const repliesContainer = document.createElement('div');
             repliesContainer.classList.add('replies-container');
