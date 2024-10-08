@@ -1,29 +1,21 @@
-const mainCommentInput = document.querySelector('#comment')
-const userNameInput = document.querySelector('#userName')
-const commentBtns = document.querySelector('#commentBtns')
-const userIdInputSection = document.querySelector('#userIdInput')
-const commentSection = document.querySelector('#commentSection')
+const mainCommentInput = document.querySelector('#comment');
+const userNameInput = document.querySelector('#userName');
+const commentBtns = document.querySelector('#commentBtns');
+const userIdInputSection = document.querySelector('#userIdInput');
+const commentSection = document.querySelector('#commentSection');
 
 const profileImageCollection = [
     'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
-    'https://preview.redd.it/my-old-profile-pic-on-discord-that-i-made-is-now-in-the-v0-mmxyfo61pds81.jpg?width=640&crop=smart&auto=webp&s=1d82da4169e12186c0aa106df1af6de2a7568c85',
-    'https://preview.redd.it/dog-de-cria-v0-pef5ivm603gc1.jpeg?auto=webp&s=b48b4155f1f2b009ec503467a80fac14783a710e',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW_XBS7dHQ6aEPYGS6jIdR7ufF-rMRdHgGEFLPOWmR2MNReEX-RIrZP-nOXRIIknVwuxE&usqp=CAU',
     'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtCSm6agZqyRLmnjpqxC29SVLkqZB6b1snOS2qkxpV0if2CuMZgmg4i9A5Ixt4ynNe_C0&usqp=CAU',
-    'https://media.licdn.com/dms/image/v2/D5612AQFlR6CXtEk3og/article-inline_image-shrink_1000_1488/article-inline_image-shrink_1000_1488/0/1709355454835?e=1733356800&v=beta&t=n5vaOZ3zvd-gnZKBkWDse2Xsph8fij3Usuj3Zcc6zeU',
-    'https://media.licdn.com/dms/image/v2/D5612AQHV7OQuC-dRvQ/article-inline_image-shrink_400_744/article-inline_image-shrink_400_744/0/1709355461942?e=1733356800&v=beta&t=w1OE__AXRqCmZRq9z9ADGHBbhgYNH0YgT8qQzmfVjog',
     'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW_XBS7dHQ6aEPYGS6jIdR7ufF-rMRdHgGEFLPOWmR2MNReEX-RIrZP-nOXRIIknVwuxE&usqp=CAU',
     'https://play-lh.googleusercontent.com/5vFtxLadFS4y0a4b6Wm3QU39-0QHrm858Xx58FfWRCsMA5JAgqKFbyTsZCb3A3E-iw=w526-h296-rw',
-
-]
-
-let marginForNested = 0;
+];
 
 const userIdCollection = new Map()
 const postComments = [
     {
-        userID: '831AR',
+        userId: '831AR',
         userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
         userName: "BaByShark1",
         commentDate: 'Mon Jan 07 2022',
@@ -32,7 +24,7 @@ const postComments = [
         replies: [],
     },
     {
-        userID: '211XW',
+        userId: '211XW',
         userImg: 'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
         userName: "Squisy22",
         commentDate: 'Mon Sep 12 2022',
@@ -40,56 +32,73 @@ const postComments = [
         parentId: null,
         replies: [
             {
-                userID: '321AW',
+                userId: '321AW',
+                userImg: 'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
                 userName: "CaratBro",
+                commentDate: 'Mon Sep 12 2022',
                 content: 'See who is here!! Mr.veggy',
-                replies: [],
+                parentId: '211XW',
+                replies: [
+                    {
+                        userId: '831AR',
+                        userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
+                        userName: "BaByShark1",
+                        commentDate: 'Mon Jan 07 2022',
+                        content: 'Sharks are more tasty Emoooo! ',
+                        parentId: '321AW',
+                        replies: [],
+                    },
+                ],
+            },
+            {
+                userId: '321AW',
+                userImg: 'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
+                userName: "CaratBro",
+                commentDate: 'Mon Sep 12 2022',
+                content: 'See who is here!! Mr.veggy',
+                parentId: '211XW',
+                replies: [
+                    {
+                        userId: '831AR',
+                        userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
+                        userName: "BaByShark1",
+                        commentDate: 'Mon Jan 07 2022',
+                        content: 'Sharks are more tasty Emoooo! ',
+                        parentId: '321AW',
+                        replies: [],
+                    },
+                ],
             },
         ]
     },
 ]
 
+// const postComments = []
 mainCommentInput.addEventListener('focus', function (e) {
     userIdInputSection.classList.add('flex')
 })
 
 commentBtns.addEventListener('click', function (e) {
-    if (e.target.tagName == 'BUTTON') {
-        toggleClass(userIdInputSection, 'flex')
+    if (e.target.tagName === 'BUTTON') {
+        toggleClass(userIdInputSection, 'flex');
 
-        if (e.target.id == 'addCommentBtn') {
-            const content = mainCommentInput.value
-            const userName = userNameInput.value
-            const userID = randomIdGenerator({ userName, content })
-            const userImg = profileImageCollection[randomIndexBtwRange(9)]
-            const commentDate = new Date()
-
-
-            let userObj = createUserCommentObj(userID, userImg, userName, commentDate.toDateString(), content)
-            console.log(userObj)
-            postComments.push(userObj)
-
-            mainCommentInput.value = '';
-            userNameInput.value = '';
-
-            renderComments(postComments)
-
+        if (e.target.id === 'addCommentBtn') {
+            addCommentOrReply();
         }
-        console.log(e.target.tagName)
-
     }
-})
+});
 
-
-function toggleClass(element, className,) {
-    element.classList.toggle(className)
+function toggleClass(element, className) {
+    element.classList.toggle(className);
 }
 
 function randomIndexBtwRange(range) {
-    return Math.floor(Math.random() * range)
+    return Math.floor(Math.random() * range);
 }
+
+//function to genrate Ranndom User Id
 function randomIdGenerator(userObject) {
-    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let id = '';
     do {
         id = '';
@@ -102,87 +111,129 @@ function randomIdGenerator(userObject) {
     return id;
 }
 
-function createUserCommentObj(userId = null, userImg = null, userName = null, commentDate = null, content = '', parentId = null, replies = []) {
-    return { userId, userImg, userName, commentDate, parentId, content, replies }
+//function to create user object
+function createUserCommentObj(userId, userImg, userName, commentDate, content, parentId = null, replies = []) {
+    return { userId, userImg, userName, commentDate, content, parentId, replies };
 }
 
+// function to add comments
+function addCommentOrReply() {
+    const content = mainCommentInput.value.trim();
+    const userName = userNameInput.value.trim();
+    
+    if (!content || !userName) {
+        alert("Please provide both a username and a comment.");
+        return;
+    }
+
+    const userID = randomIdGenerator({ userName, content });
+    const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    const commentDate = new Date().toDateString();
+
+    let userCommentObj = createUserCommentObj(userID, userImg, userName, commentDate, content);
+
+    postComments.push(userCommentObj);
+
+    clearInputs();
+    renderComments(postComments);
+}
+
+function clearInputs() {
+    mainCommentInput.value = '';
+    userNameInput.value = '';
+}
+
+//recursive rendering of comments, including replies
 function renderComments(comments, parentElement = commentSection) {
-    parentElement.innerHTML = '';
+    parentElement.innerHTML = ''; 
 
-    comments.forEach((item) => {
-        const mainDiv = document.createElement('div');
-        const div = document.createElement('div');
-        div.classList.add('comment-card');
-        div.id = item.userID;
+    comments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.id = comment.userId;
+        commentDiv.classList.add('all-comments');
 
-        div.innerHTML = `
-            <img src=${item.userImg} class='comment-card-image' alt="" width=50 height=50>
-            <div class="comment-content">
-                <h3 class='comment-heading'>${item.userName}</h3>
-                <p class='comment-date'>${item.commentDate}</p>
-                <p class='comment-text'>${item.content}</p>
+
+        commentDiv.innerHTML = `
+            <div class="comment-card">
+                <img src="${comment.userImg}" class="comment-card-image" alt="user image" width="50" height="50">
+                <div class="comment-content">
+                    <h3 class="comment-heading">${comment.userName}</h3>
+                    <p class="comment-date">${comment.commentDate}</p>
+                    <p class="comment-text">${comment.content}</p>
+                </div>
+                <button class="btn bg-black white reply-btn" data-id="${comment.userId}">Reply</button>
             </div>
-            <button class='btn item-end bg-black white' id=${item.userID}>Reply</button>
         `;
-        mainDiv.appendChild(div)
-        parentElement.appendChild(mainDiv);
 
-        if (item.replies.length) {
+        comment.parentId &&  commentDiv.classList.add('reply-comment')
+
+        parentElement.appendChild(commentDiv); 
+
+        if (comment.replies.length > 0) {
             const repliesContainer = document.createElement('div');
             repliesContainer.classList.add('replies-container');
-            repliesContainer.style.marginLeft = marginForNested + 40
-            mainDiv.appendChild(repliesContainer);
+            // repliesContainer.style.marginLeft = '20px';
 
-            renderComments(item.replies, repliesContainer);
+            renderComments(comment.replies, repliesContainer);
+            commentDiv.appendChild(repliesContainer);
         }
     });
 }
 
-
-
-renderComments(postComments)
-
+//reply button clicks event
 commentSection.addEventListener('click', function (e) {
-    if (e.target.classList.contains('btn')) {
-        const parentId = e.target.id;
-
-
-        const replyInput = document.createElement('textarea');
-        replyInput.placeholder = 'Add a reply...';
-        e.target.parentElement.appendChild(replyInput);
-
-
-        const submitReplyBtn = document.createElement('button');
-        submitReplyBtn.innerText = 'Submit Reply';
-        e.target.parentElement.appendChild(submitReplyBtn);
-
-        submitReplyBtn.addEventListener('click', function () {
-            const content = replyInput.value;
-            const userName = userNameInput.value; 
-            const userID = randomIdGenerator({ userName, content });
-            const userImg = profileImageCollection[randomIndexBtwRange(9)];
-            const commentDate = new Date();
-
-            let replyObj = createUserCommentObj(userID, userImg, userName, commentDate.toDateString(), content, this.parentElement.id);
-            console.log(replyObj);
-
-
-            addReply(postComments, replyObj);
-
-            renderComments(postComments);
-        });
+    if (e.target.classList.contains('reply-btn')) {
+        const parentId = e.target.getAttribute('data-id');
+        renderReplyInput(parentId, e.target.parentElement);
     }
 });
 
-function addReply(comments, reply) {
+function renderReplyInput(parentId, parentElement) {
+    const inputDiv = document.createElement('div');
+    inputDiv.innerHTML = `
+        <textarea class="input-field border-rounded p-10 text-area" id="replyInput" placeholder="Add a reply..."></textarea>
+        <div class="reply-controls">
+            <input class="input-field" type="text" id="replyUserName" placeholder="Your Name">
+            <button class="btn bg-black white" id="submitReplyBtn" data-parent-id="${parentId}">Submit Reply</button>
+        </div>
+    `;
+
+    parentElement.appendChild(inputDiv);
+
+    const submitReplyBtn = document.querySelector(`#submitReplyBtn[data-parent-id='${parentId}']`);
+    submitReplyBtn.addEventListener('click', () => submitReply(parentId));
+}
+
+function submitReply(parentId) {
+    const replyContent = document.querySelector('#replyInput').value.trim();
+    const replyUserName = document.querySelector('#replyUserName').value.trim();
+
+    if (!replyContent || !replyUserName) {
+        alert("Please provide both a username and a reply.");
+        return;
+    }
+
+    const userID = randomIdGenerator({ replyUserName, replyContent });
+    const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    const commentDate = new Date().toDateString();
+
+    let replyObj = createUserCommentObj(userID, userImg, replyUserName, commentDate, replyContent, parentId);
+
+    addReply(postComments, replyObj);
+    renderComments(postComments);
+}
+
+function addReply(comments, replyObj) {
     for (let comment of comments) {
-        if (comment.userID === reply.parentId) {
-            comment.replies.push(reply);
-            renderComments(postComments)
+        if (comment.userId === replyObj.parentId) {
+            comment.replies.push(replyObj);
             return;
         }
         if (comment.replies.length) {
-            addReply(comment.replies, reply);
+            addReply(comment.replies, replyObj);  
         }
     }
 }
+
+// Intial Rander of comment
+renderComments(postComments);
