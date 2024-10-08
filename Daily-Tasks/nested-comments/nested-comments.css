@@ -126,6 +126,15 @@
     margin-top: 30px;
     
     position: relative;
+    z-index: 5;
+}
+.reply-comment > .comment-card::before{
+    content: '';
+    border-bottom: 2px solid #c1c6cc;
+    width: 30px;
+    position: absolute;
+    left: -28px;
+    z-index: -1;
 }
 
 .comment-card-image{
@@ -150,6 +159,7 @@
 .all-comments{
     position: relative;
     background-color: white;
+    z-index: 5;
 }
 
 .replies-container{
@@ -159,7 +169,7 @@
 .all-comments::before{
     content: '';
     border-left: 2px solid #c1c6cc;
-    height: 100%;
+    height: calc(100% - 35px);
     position: absolute;
     top: 0;
     left: 35px;
@@ -173,11 +183,3 @@
     top: 132px;
 } */
  
-.reply-comment > .comment-card::before{
-    content: '';
-    border-bottom: 2px solid #c1c6cc;
-    width: 30px;
-    position: absolute;
-    left: -28px;
-    z-index: 1;
-}
