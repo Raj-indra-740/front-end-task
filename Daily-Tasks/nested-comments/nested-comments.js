@@ -13,9 +13,10 @@ const profileImageCollection = [
 ];
 
 const userIdCollection = new Map()
+
 const postComments = [
     {
-        userId: '831AR',
+        userId: '83C121AR',
         userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
         userName: "BaByShark1",
         commentDate: 'Mon Jan 07 2022',
@@ -24,56 +25,24 @@ const postComments = [
         replies: [],
     },
     {
-        userId: '211XW',
+        userId: '21RR31XW',
         userImg: 'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
         userName: "Squisy22",
         commentDate: 'Mon Sep 12 2022',
         content: 'No non-veg! only Veg',
         parentId: null,
         replies: [
-            {
-                userId: '321AW',
-                userImg: 'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
-                userName: "CaratBro",
-                commentDate: 'Mon Sep 12 2022',
-                content: 'See who is here!! Mr.veggy',
-                parentId: '211XW',
-                replies: [
-                    {
-                        userId: '831AR',
-                        userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
-                        userName: "BaByShark1",
-                        commentDate: 'Mon Jan 07 2022',
-                        content: 'Sharks are more tasty Emoooo! ',
-                        parentId: '321AW',
-                        replies: [],
-                    },
-                ],
-            },
-            {
-                userId: '321AW',
-                userImg: 'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
-                userName: "CaratBro",
-                commentDate: 'Mon Sep 12 2022',
-                content: 'See who is here!! Mr.veggy',
-                parentId: '211XW',
-                replies: [
-                    {
-                        userId: '831AR',
-                        userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
-                        userName: "BaByShark1",
-                        commentDate: 'Mon Jan 07 2022',
-                        content: 'Sharks are more tasty Emoooo! ',
-                        parentId: '321AW',
-                        replies: [],
-                    },
-                ],
-            },
         ]
     },
 ]
 
 // const postComments = []
+
+postComments.forEach(comment => {
+    let userObj = {userName : comment['userName'],userName : comment['content']}
+    userIdCollection.set(comment.userId, userObj)
+})
+
 mainCommentInput.addEventListener('focus', function (e) {
     userIdInputSection.classList.add('flex')
 })
@@ -183,6 +152,8 @@ function renderComments(comments, parentElement = commentSection) {
 //reply button clicks event
 commentSection.addEventListener('click', function (e) {
     if (e.target.classList.contains('reply-btn')) {
+        console.log(document.querySelectorAll('#replyInputDiv'))
+        document.querySelectorAll('#replyInputDiv').forEach(item => item.remove())
         const parentId = e.target.getAttribute('data-id');
         renderReplyInput(parentId, e.target.parentElement);
     }
@@ -190,18 +161,37 @@ commentSection.addEventListener('click', function (e) {
 
 function renderReplyInput(parentId, parentElement) {
     const inputDiv = document.createElement('div');
+    inputDiv.id = 'replyInputDiv';
+
+
     inputDiv.innerHTML = `
-        <textarea class="input-field border-rounded p-10 text-area" id="replyInput" placeholder="Add a reply..."></textarea>
-        <div class="reply-controls">
-            <input class="input-field" type="text" id="replyUserName" placeholder="Your Name">
-            <button class="btn bg-black white" id="submitReplyBtn" data-parent-id="${parentId}">Submit Reply</button>
+        <div class="input-section w-600 m-lr-auto flex flex-col gap-10 border-rounded p-10" style='margin: 10px 0 10px;'>
+            <textarea class="input-field on-focus-input border-rounded p-20 text-area" id="replyInput" name="comment" rows="1" cols="10" placeholder="Add a comment"></textarea>
+            
+            <div class="flex justify-space-btw item-center">        
+                <input class="input-field on-focus-input border-rounded" type="text" name="userName" id="replyUserName" placeholder="User Name">
+
+                <div class="btns">
+                    <button class="btn bg-gray font-600" id='replyCancel'>Cancel</button>
+                    <button class="btn bg-black white font-600" id="submitReplyBtn" data-parent-id="${parentId}">Comment</button>
+                </div>
+            </div>
         </div>
     `;
 
-    parentElement.appendChild(inputDiv);
+    console.log(parentElement)
+
+    parentElement.after(inputDiv);
+    // parentElement.parentElement.appendChild(inputDiv);
+
+    inputDiv.parentElement.style.marginLeft = '0';
+    inputDiv.style.backgroundColor = 'white';
 
     const submitReplyBtn = document.querySelector(`#submitReplyBtn[data-parent-id='${parentId}']`);
     submitReplyBtn.addEventListener('click', () => submitReply(parentId));
+    document.querySelector('#replyCancel').addEventListener('click',function(){ 
+        this.closest('#replyInputDiv').remove()
+    })
 }
 
 function submitReply(parentId) {
