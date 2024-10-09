@@ -31,27 +31,7 @@ const profileImageCollection = [
 
 const userIdCollection = new Map()
 
-const postComments = [
-    {
-        userId: '83C121AR',
-        userImg: 'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
-        userName: "BaByShark1",
-        commentDate: 'Mon Jan 07 2022',
-        content: 'Sharks are more tasty Emoooo! ',
-        parentId: null,
-        replies: [],
-    },
-    {
-        userId: '21RR31XW',
-        userImg: 'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
-        userName: "Squisy22",
-        commentDate: 'Mon Sep 12 2022',
-        content: 'No non-veg! only Veg',
-        parentId: null,
-        replies: [
-        ]
-    },
-]
+const postComments =    JSON.parse(localStorage.getItem('postComments')) || [] 
 
 // const postComments = []
 
@@ -119,6 +99,7 @@ function addCommentOrReply() {
     let userCommentObj = createUserCommentObj(userID, userImg, userName, commentDate, content);
 
     postComments.push(userCommentObj);
+    localStorage.setItem('postComments', JSON.stringify(postComments))
 
     clearInputs();
     renderComments(postComments);
@@ -147,7 +128,10 @@ function renderComments(comments, parentElement = commentSection) {
                     <p class="comment-date">${comment.commentDate}</p>
                     <p class="comment-text">${comment.content}</p>
                 </div>
-                <button class="btn bg-black white reply-btn" data-id="${comment.userId}">Reply</button>
+                <button class="btn reply-btn" data-id="${comment.userId}">
+                    <i class="fa-regular fa-message"></i>    
+                    Reply
+                </button>
                 </div>
         `;
 
@@ -158,8 +142,9 @@ function renderComments(comments, parentElement = commentSection) {
         
         if(!comment.parentId){
             const hr = document.createElement('hr')
-            hr.style.color = '#c1c6cc';
-            hr.style.margin = '30px 0px'
+            hr.style.backgroundColor = '#c1c6cc';
+            hr.style.opacity = '0.3';
+            hr.style.margin = '15px 0px'
 
             parentElement.appendChild(hr)
         }
@@ -242,6 +227,7 @@ function addReply(comments, replyObj) {
     for (let comment of comments) {
         if (comment.userId === replyObj.parentId) {
             comment.replies.push(replyObj);
+            localStorage.setItem('postComments', JSON.stringify(postComments))
             return;
         }
         if (comment.replies.length) {
