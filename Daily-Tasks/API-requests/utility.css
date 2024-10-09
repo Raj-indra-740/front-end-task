@@ -1,0 +1,118 @@
+.m-lr-auto{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn{
+    width: fit-content;
+    padding: 7px 14px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.bg-black{
+    background-color: #474849;
+}
+.bg-gray{
+    background-color: #E7E8E8;
+}
+
+.white{
+    color: white;
+}
+.font-600{
+    font-weight: 600;
+}
+
+
+.w-600{
+    width: 100%;
+    max-width: 600px;
+}
+.w-100{
+    width: 90%;
+}
+
+.display-none{
+    display: none;
+}
+
+
+.flex{
+    display: flex;
+}
+.flex-col{
+    flex-direction: column;
+}
+.justify-center{
+    justify-content: center;
+}
+.justify-space-btw{
+    justify-content: space-between;
+}
+.item-center{
+    align-items: center;
+}
+.item-start{
+    align-items: start;
+}
+.item-end{
+    align-self: end;
+}
+.gap-10{
+    gap: 10px;
+}
+.gap-20{
+    gap: 20px;
+}
+
+.p-10{
+    padding: 10px;
+}
+.p-20{
+    padding: 20px;
+}
+.p-30{
+    padding: 30px;
+}
+
+.px-30{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.m-10{
+    margin: 10px;
+}
+.text-align-end{
+    text-align: end;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.border-rounded{
+    border-radius:30px;
+}
+
+.container-border{
+    border: 3px solid #E7E8E8;
+    border-radius: 20px;
+}
+.card{
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+.user-container{
+    width: 100%;
+    max-width: 1300px;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
