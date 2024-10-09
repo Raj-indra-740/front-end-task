@@ -4,30 +4,27 @@ const commentBtns = document.querySelector('#commentBtns');
 const userIdInputSection = document.querySelector('#userIdInput');
 const commentSection = document.querySelector('#commentSection');
 
-const url = 'https://api.imgflip.com/get_memes';
-const memes = []
 
-async function fetchMemes() {   
-    try {
-        const response = await fetch(url);
-        const result = await response.json();
-        console.log(result.data.memes);
-        memes.push(...result.data.memes)
-    } catch (error) {
-        console.error(error);
-    }
+const API_KEY = 'bbDyJUBnFCoHK5L_oZ4BV6JWxoBhYOdOZb8iHAkuPiA'
+const NEW_API_KEY = 'WLf8g2PBLI-bqrlGLHpN9C4kVmUfRVjLB2gxG8HuTsw'
+const API_URL = `https://api.unsplash.com/photos/random?client_id=${NEW_API_KEY}&count=30`
+
+let imageData = []
+
+function fetchData(url) {
+    fetch(url)
+        .then(res =>{
+            return res.json()
+        })
+        .then(data => {
+            console.log(data.length);
+            imageData = data;  
+            console.log(imageData);   
+        })
+        .catch(err => console.error('Error fetching data:', err));
 }
 
-fetchMemes()
-
-
-const profileImageCollection = [
-    'https://a.thumbs.redditmedia.com/Klk3OD9m_TfcfI1nMWxG2NByj5EtcWfLDBD-eb3P9R0.jpg',
-    'https://media.tenor.com/3uMtKR_aKh4AAAAe/dog-walter.png',
-    'https://play-lh.googleusercontent.com/oAdsB4clAlg85k_X2IVtmVr5pxr0RlJ14JGr6yXUbSJ4XZCWCrUcPXRmKk12fKnLm0M',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW_XBS7dHQ6aEPYGS6jIdR7ufF-rMRdHgGEFLPOWmR2MNReEX-RIrZP-nOXRIIknVwuxE&usqp=CAU',
-    'https://play-lh.googleusercontent.com/5vFtxLadFS4y0a4b6Wm3QU39-0QHrm858Xx58FfWRCsMA5JAgqKFbyTsZCb3A3E-iw=w526-h296-rw',
-];
+fetchData(API_URL)
 
 const userIdCollection = new Map()
 
@@ -93,7 +90,9 @@ function addCommentOrReply() {
     }
 
     const userID = randomIdGenerator({ userName, content });
-    const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    // const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    // const userImg = `https://picsum.photos/id/random=${randomIndexBtwRange(200)}/info`;
+    const userImg = imageData[randomIndexBtwRange(30)].urls.full;
     const commentDate = new Date().toDateString();
 
     let userCommentObj = createUserCommentObj(userID, userImg, userName, commentDate, content);
@@ -214,7 +213,9 @@ function submitReply(parentId) {
     }
 
     const userID = randomIdGenerator({ replyUserName, replyContent });
-    const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    // const userImg = `https://picsum.photos/200/300?random=${randomIndexBtwRange(200)}`;
+    // const userImg = `https://picsum.photos/id/random=${randomIndexBtwRange(200)}/info`;
+    const userImg = imageData[randomIndexBtwRange(30)].urls.full;
     const commentDate = new Date().toDateString();
 
     let replyObj = createUserCommentObj(userID, userImg, replyUserName, commentDate, replyContent, parentId);
@@ -236,5 +237,14 @@ function addReply(comments, replyObj) {
     }
 }
 
-// Intial Rander of comment
-renderComments(postComments);
+
+
+window.addEventListener('load', function(){
+    // Intial Rander of comment
+    renderComments(JSON.parse(localStorage.getItem('postComments')));
+})
+
+
+document.querySelector('#resetLocal').addEventListener('click', function(e){
+    localStorage.clear()
+})
