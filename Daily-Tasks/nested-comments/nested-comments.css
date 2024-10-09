@@ -145,7 +145,10 @@
     height: 70px;
     border-radius: 100%;
 }
-
+.comment-content{
+    width: 100%;
+    max-width: 70%;
+}
 .comment-heading{
     font-size: 16px;
 }
@@ -172,9 +175,9 @@
 .all-comments::before{
     content: '';
     border-left: 2px solid #c1c6cc;
-    height: calc(100% - 35px);
+    height: calc(100% - 70px);
     position: absolute;
-    top: 0;
+    top: 35px;
     left: 35px;
     z-index: -1;
 }
