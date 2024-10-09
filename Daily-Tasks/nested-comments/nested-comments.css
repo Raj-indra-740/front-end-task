@@ -199,3 +199,11 @@
 .on-focus-input:focus {
     background-color: #47484923;
 }
+
+.reply-btn{
+    align-self: flex-end;
+    font-size: 10px;
+}
+.reply-btn:hover{
+    background-color: #bdc1c5;
+}
