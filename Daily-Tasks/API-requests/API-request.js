@@ -4,6 +4,10 @@ const ALL_USER_API_URL = `https://jsonplaceholder.typicode.com/users`
 
 const userData = JSON.parse(localStorage.getItem('userData')) || [];
 
+window.addEventListener('load', function(e){
+    localStorage.setItem('userPostData', null);
+})
+
 window.addEventListener('DOMContentLoaded', function(e){
     if(!userData.length){
         fetchData(ALL_USER_API_URL, {}, userData)
@@ -53,6 +57,6 @@ userContainer.addEventListener('click', function(e){
         const currentPath = window.location.pathname
         const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'))
         console.log(basePath)
-        window.location.href = `${window.origin}/${basePath}/userPage.html?id=${userDataId}&userName=${userId}`;
+        window.location.href = `${window.origin}/${basePath}/user-page.html?id=${userDataId}&userName=${userId}`;
     }
 })
