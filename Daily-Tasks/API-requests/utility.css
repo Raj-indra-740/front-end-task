@@ -17,7 +17,9 @@
 .bg-gray{
     background-color: #E7E8E8;
 }
-
+.black{
+    color: #474849;
+}
 .white{
     color: white;
 }
@@ -31,7 +33,7 @@
     max-width: 600px;
 }
 .w-100{
-    width: 90%;
+    width: 100%;
 }
 
 .display-none{
@@ -87,6 +89,7 @@
     padding-left: 30px;
     padding-right: 30px;
 }
+
 .m-10{
     margin: 10px;
 }
@@ -119,7 +122,6 @@
     position: relative;
     width: 300px;
     padding: 10px;
-    padding-bottom: 60px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
@@ -139,4 +141,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+.pb-60{
+    padding-bottom: 60px;
+}
+.pb-30{
+    padding-bottom: 30px;
 }
