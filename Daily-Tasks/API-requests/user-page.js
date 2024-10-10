@@ -72,6 +72,9 @@ createPostBtn.addEventListener('click', function (e) {
 
         fetchData(POST_USER_API_URL, postHeaderObj, userPostData, { newPostId });
     }
+    else{
+        alert('enter valid data in input field')
+    }
     titleInput.value = '';
     contentInput.value = '';
 });
@@ -207,9 +210,6 @@ function goToEditForm(postId) {
             });
     });
 }
-
-
-
 
 async function fetchData(url, optionalObj = {}, dataContainer, extraData = {}) {
     console.log('fetch called');
