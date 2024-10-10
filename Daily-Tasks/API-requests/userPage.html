@@ -23,6 +23,16 @@
         <div class="user-container justify-center  container container-border" id="userPostcontainer">
     
         </div>
+        
+    </div>
+    <div class="modal" id="deleteConfirmModal">
+        <div class="modal-content">
+            <h3>Are you sure you want to delete this post?</h3>
+            <div class="modal-actions">
+                <button class="btn bg-black white" id="confirmDeleteBtn">Yes, Delete It.</button>
+                <button class="btn bg-gray black" id="cancelDeleteBtn">Cancel</button>
+            </div>
+        </div>
     </div>
 
 
@@ -128,18 +138,20 @@
         }
 
         function renderPosts() {
-            userPostcontainer.innerHTML = ''; // Clear current posts
+            userPostcontainer.innerHTML = ''; 
             userPostData.forEach(item => {
                 userPostcontainer.innerHTML += createUserPostCard(item);
             });
 
-            // Re-attach delete event listeners after re-rendering
+            // re-attach delete event listeners after re-rendering
             const deleteBtns = document.querySelectorAll('#deletePost');
             deleteBtns.forEach(item => {
                 item.addEventListener('click', function(e) {
                     const target = e.target;
                     if (target.closest('.card').dataset.id === target.dataset.id) {
-                        deletePost(target.dataset.id);
+
+
+                        showConfirmModal(target.dataset.id);
                     }
                 });
             });
@@ -178,6 +190,30 @@
             fetchData(DELE_POST_USER_API_URL, deleteHeaderObj, userPostData, {postId})
         }
         
+        function showConfirmModal(postId){
+            const modal = document.querySelector("#deleteConfirmModal");
+            const confirmDeleteBtn = document.querySelector("#confirmDeleteBtn");
+            const cancelDeleteBtn = document.querySelector("#cancelDeleteBtn");
+            
+
+            confirmDeleteBtn.addEventListener('click', function(){
+                deletePost(postId)
+                closeConfirmModal()
+            })
+            
+            cancelDeleteBtn.addEventListener('click', function(){
+                confirmFlag = false;
+                closeConfirmModal()
+            })
+
+            modal.style.display = 'flex';
+
+        }
+
+        function closeConfirmModal(){
+            const modal = document.querySelector("#deleteConfirmModal");
+            modal.style.display = 'none';
+        }
   
 
 
