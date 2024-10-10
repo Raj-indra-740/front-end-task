@@ -51,6 +51,12 @@
 .justify-space-btw{
     justify-content: space-between;
 }
+.justify-self-end{
+    justify-self: baseline;
+}
+.justify-space-btw{
+    justify-content: space-between;
+}
 .item-center{
     align-items: center;
 }
@@ -96,16 +102,34 @@
     border-radius:30px;
 }
 
+.four-line-ellipsis{
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
 .container-border{
     border: 3px solid #E7E8E8;
     border-radius: 20px;
 }
 .card{
+    position: relative;
     width: 300px;
     padding: 10px;
+    padding-bottom: 60px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
+}
+.card-btns{
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    padding: 10px;
 }
 .user-container{
     width: 100%;

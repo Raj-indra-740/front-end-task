@@ -33,7 +33,7 @@
         const userName = queryParams.get('userName');
         const USER_API_URL = `https://jsonplaceholder.typicode.com/users/${userId}/posts`
         
-        const userPostData = []
+        let userPostData = JSON.parse(localStorage.getItem('userPostData')) || []
 
 
         const userNameHeading = document.querySelector('#userName')
@@ -41,19 +41,20 @@
         const createPostBtn = document.querySelector('#createPostBtn')
         const titleInput = document.querySelector('#postTitle')
         const contentInput = document.querySelector('#postContent')
+       
 
  
         
         window.addEventListener('DOMContentLoaded', function(e){
             userNameHeading.innerText = userName;
             //intial render
-            fetchData(USER_API_URL, null, userPostData)
-            setTimeout(() => {
-                console.log(userPostData)
-                userPostData.forEach(item => {
-                    userPostcontainer.innerHTML += createUserPostCard(item)
-                })
-            }, 1000)
+            if(!userPostData.length){
+                console.log('API Called')
+                fetchData(USER_API_URL, {method:'GET'}, userPostData)
+            }else{
+                renderPosts()
+            }
+
         })
 
         createPostBtn.addEventListener('click', function(e){
@@ -77,44 +78,105 @@
                 }
 
                 fetchData(USER_API_URL, postHeaderObj, userPostData)
-
             }
+            titleInput.value = '';
+            contentInput.value = '';
              
         })
 
-        async function fetchData(url, optionalObj={}, dataContainer){
+        async function fetchData(url, optionalObj={}, dataContainer, extraData={}){
             console.log('fetch called')
             let res = await fetch(url, optionalObj)
             let data = await res.json()
             console.log(data)
-            if(Array.isArray(data)){
-                dataContainer.push(...[...dataContainer ,...data])
-            }else{
-                userPostData.push(data);
-                userPostcontainer.innerHTML += createUserPostCard(data);
+            console.log(extraData)
+            switch(optionalObj.method){
+                case 'GET':
+                    if(Array.isArray(data)){
+                        dataContainer.push(...[...dataContainer ,...data])
+                    }
+                    renderPosts();
+                    break;
+                
+                case 'POST':
+                    userPostData.push(data);
+                    userPostcontainer.innerHTML += createUserPostCard(data);
+                    break;
+
+                case 'DELETE':
+                    if (res.ok) {
+                        console.log('Post deleted successfully');
+                        userPostData = userPostData.filter(item => item.id != extraData.postId)
+                        renderPosts()
+                    } else {
+                        console.error('Failed to delete post');
+                        return { success: false }; // Handle failure
+                    }
+                    break;
+                
+                case 'PUT':
+                    console.log('Edit Post using Put method Successfull!')
+                    break;
+                    
+                case 'PATCH':
+                    console.log('Edit Post using Patch method Successfull!')
+                    break;
+
             }
+
             localStorage.setItem('userPostData', JSON.stringify(userPostData))
         }
 
+        function renderPosts() {
+            userPostcontainer.innerHTML = ''; // Clear current posts
+            userPostData.forEach(item => {
+                userPostcontainer.innerHTML += createUserPostCard(item);
+            });
+
+            // Re-attach delete event listeners after re-rendering
+            const deleteBtns = document.querySelectorAll('#deletePost');
+            deleteBtns.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const target = e.target;
+                    if (target.closest('.card').dataset.id === target.dataset.id) {
+                        deletePost(target.dataset.id);
+                    }
+                });
+            });
+        }
 
 
         function createUserPostCard(data){
             console.log('called')
             return (
                 `
-                <div class='card' id=${data.username} data-id=${data.id}>
+                <div class='card flex flex-col gap-10' id=${data.username} data-id=${data.id}>
                     <p class='flex justify-space-btw'>
                         <span><b>User ID:</b> ${data.userId}</span>
                         <span><b>Post ID:</b> ${data.id}</span>
                     </p>
                     <p><b>Title:</b> ${data.title}</p>
-                    <p>${data.body}</p>
+                    <p class="four-line-ellipsis">${data.body}</p>
+                    <div class="card-btns flex justify-space-btw justify-self-end">
+                        <button class="btn bg-black white px-30" id="editPost" data-id=${data.id}>Edit</button>
+                        <button class="btn bg-black white px-30" id="deletePost" data-id=${data.id}>Delete</button>
+                    </div>                
                 </div>
-                
                 `
             )
         }
 
+        function deletePost(postId){
+            console.log(postId)
+            const DELE_POST_USER_API_URL = `https://jsonplaceholder.typicode.com/users/posts?id=${postId}`;
+
+            const deleteHeaderObj = {
+                method: 'DELETE',
+                id: postId,
+            }
+
+            fetchData(DELE_POST_USER_API_URL, deleteHeaderObj, userPostData, {postId})
+        }
         
   
 
