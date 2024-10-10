@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User page</title>
+    <link rel="stylesheet" href="API-request.css" />
+    <link rel="stylesheet" href="utility.css" />
+  </head>
+  <body>
+    <h1 class="text-center p-20">Welcome back <i id="userName"></i></h1>
+
+    <div class="flex p-30 gap-10">
+      <form class="create-post form p-20" id="createPostForm">
+        <h3 class="text-center">Create Post</h3>
+        <input
+          class="input-field on-focus-input border-rounded p-20 m-10 bg-gray text-area"
+          id="postTitle"
+          type="text"
+          placeholder="Title"
+        />
+
+        <textarea
+          class="input-field on-focus-input border-rounded p-20 m-10 bg-gray text-area"
+          id="postContent"
+          name="post-content"
+          rows="4"
+          cols="10"
+          placeholder="Add a content"
+        ></textarea>
+
+        <button class="btn bg-black white p-10 px-30 m-10" id="createPostBtn">
+          Create
+        </button>
+      </form>
+
+      <form
+        class="create-post form p-20"
+        id="editPostForm"
+        style="display: none"
+      >
+        <h3 class="text-center pb-30">Edit Post</h3>
+        <div class="w-100 flex justify-space-btw gap-10">
+          <div>
+            <div class="lable-text">User ID:</div>
+            <input
+              class="input-field on-focus-input border-rounded p-20 bg-gray text-area"
+              id="userIdOfPost"
+              type="text"
+              placeholder="User ID"
+              value=""
+              disabled
+            />
+          </div>
+
+          <div>
+            <div class="lable-text">Post ID:</div>
+            <input
+              class="input-field on-focus-input border-rounded p-20 bg-gray text-area"
+              id="postIdOfPost"
+              type="text"
+              placeholder="Post ID"
+              value=""
+              disabled
+            />
+          </div>
+        </div>
+        <input
+          class="input-field on-focus-input border-rounded p-20 m-10 bg-gray text-area"
+          id="editPostTitle"
+          type="text"
+          placeholder="Title"
+        />
+
+        <textarea
+          class="input-field on-focus-input border-rounded p-20 m-10 bg-gray text-area"
+          id="editPostContent"
+          name="post-content"
+          rows="6"
+          cols="10"
+          placeholder="Add a content"
+        >
+        </textarea>
+
+        <div class="w-100 flex justify-space-btw gap-10">
+          <button class="btn bg-black white p-10 px-30 m-10" id="editPostBtn">
+            Update
+          </button>
+          <button
+            class="btn bg-black white p-10 px-30 m-10"
+            id="cancelPostEditBtn"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+
+      <div
+        class="user-container justify-center container container-border"
+        id="userPostcontainer"
+      ></div>
+    </div>
+    <div class="modal" id="deleteConfirmModal">
+      <div class="modal-content">
+        <h3>Are you sure you want to delete this post?</h3>
+        <div class="modal-actions">
+          <button class="btn bg-black white" id="confirmDeleteBtn">
+            Yes, Delete It.
+          </button>
+          <button class="btn bg-gray black" id="cancelDeleteBtn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="user-page.js"></script>
+  </body>
+</html>
