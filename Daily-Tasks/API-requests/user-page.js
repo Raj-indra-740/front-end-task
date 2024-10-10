@@ -1,6 +1,6 @@
 const url = new URL(window.location.href);
 const queryParams = new URLSearchParams(url.search);
-const userId = queryParams.get('id');
+const userId = queryParams.get('id') ?? 1;
 const userName = queryParams.get('userName');
 const USER_API_URL = `https://jsonplaceholder.typicode.com/users/${userId}/posts`
 
@@ -48,14 +48,19 @@ cancelPostEditBtn.addEventListener('click', function (e) {
 createPostBtn.addEventListener('click', function (e) {
     e.preventDefault();
     const POST_USER_API_URL = `https://jsonplaceholder.typicode.com/users/${userId}/posts`;
-    const userPostTitle = titleInput.value
-    const userPostContent = contentInput.value
+    const userPostTitle = titleInput.value;
+    const userPostContent = contentInput.value;
 
-    if (userPostContent && userPostContent) {
-        console.log({ userPostContent, userPostContent })
+    if (userPostTitle && userPostContent) {
+        const maxPostId = userPostData.length
+            ? Math.max(...userPostData.map(post => post.id)) 
+            : 0; 
+        const newPostId = maxPostId + 1;  
+
         const postHeaderObj = {
             method: 'POST',
-            body: JSON.stringify({  
+            body: JSON.stringify({
+                id: newPostId, 
                 title: userPostTitle,
                 body: userPostContent,
                 userId: userId,
@@ -63,14 +68,14 @@ createPostBtn.addEventListener('click', function (e) {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             }
-        }
+        };
 
-        fetchData(USER_API_URL, postHeaderObj, userPostData)
+        fetchData(POST_USER_API_URL, postHeaderObj, userPostData, { newPostId });
     }
     titleInput.value = '';
     contentInput.value = '';
+});
 
-})
 
 function renderPosts() {
     userPostcontainer.innerHTML = '';
@@ -93,6 +98,8 @@ function addClikEventForDeleEdit(){
         });
     });
 
+
+
     const editBtns = document.querySelectorAll('#editPost')
     console.log(editBtns)
     editBtns.forEach(item => {
@@ -101,6 +108,8 @@ function addClikEventForDeleEdit(){
         })
     })
 
+    console.log(editBtns.length, deleteBtns.length)
+
 
 }
 function createUserPostCard(data) {
@@ -108,12 +117,8 @@ function createUserPostCard(data) {
     return (
         `
         <div class='card flex flex-col gap-10 pb-60' id=${data.username} data-id=${data.id}>
-            <p class='flex justify-space-btw'>
-                <span><b>User ID:</b> ${data.userId}</span>
-                <span><b>Post ID:</b> ${data.id}</span>
-            </p>
             <p><b>Title:</b> ${data.title}</p>
-            <p class="four-line-ellipsis">${data.body}</p>
+            <p class="four-line-ellipsis"><b>Content:</b> ${data.body}</p>
             <div class="card-btns flex justify-space-btw justify-self-end">
                 <button class="btn bg-black white px-30" id="editPost" data-id=${data.id}>Edit</button>
                 <button class="btn bg-black white px-30" id="deletePost" data-id=${data.id}>Delete</button>
@@ -221,6 +226,9 @@ async function fetchData(url, optionalObj = {}, dataContainer, extraData = {}) {
             break;
 
         case 'POST':
+            if (extraData?.newPostId) {
+                data.id = extraData.newPostId;
+            }
             userPostData.push(data);
             userPostcontainer.innerHTML += createUserPostCard(data);
             addClikEventForDeleEdit()
