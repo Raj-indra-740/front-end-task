@@ -42,7 +42,9 @@ cancelPostEditBtn.addEventListener('click', function (e) {
     createPostForm.style.display = 'flex';
     editPostForm.style.display = 'none';
     editPostForm.dataset.id = '';
-
+    const cards = userPostcontainer.querySelectorAll('.card')
+    cards.forEach(card => card.style.backgroundColor = 'white')
+    
 })
 
 createPostBtn.addEventListener('click', function (e) {
@@ -173,6 +175,7 @@ function closeConfirmModal() {
 
 
 function goToEditForm(postId) {
+    window.scrollTo(0, 0);
     createPostForm.style.display = 'none';
     editPostForm.style.display = 'flex';
     editPostForm.dataset.id = postId;
@@ -181,6 +184,12 @@ function goToEditForm(postId) {
 
     const postData = userPostData.find(item => item.id == postId)
     console.log(postData)
+
+    const cards = userPostcontainer.querySelectorAll('.card')
+    cards.forEach(card => card.style.backgroundColor = 'white')
+
+    const activeCard = userPostcontainer.querySelector(`[data-id="${postId}"]`)
+    activeCard.style.backgroundColor = 'rgb(226, 226, 226)'
 
     editPostTitle.value = postData.title;
     editPostContent.value = postData.body;
