@@ -78,6 +78,10 @@ function renderPosts() {
         userPostcontainer.innerHTML += createUserPostCard(item);
     });
 
+    addClikEventForDeleEdit()
+}
+
+function addClikEventForDeleEdit(){
     // re-attach delete event listeners after re-rendering
     const deleteBtns = document.querySelectorAll('#deletePost');
     deleteBtns.forEach(item => {
@@ -99,8 +103,6 @@ function renderPosts() {
 
 
 }
-
-
 function createUserPostCard(data) {
     console.log('called')
     return (
@@ -221,6 +223,7 @@ async function fetchData(url, optionalObj = {}, dataContainer, extraData = {}) {
         case 'POST':
             userPostData.push(data);
             userPostcontainer.innerHTML += createUserPostCard(data);
+            addClikEventForDeleEdit()
             break;
 
         case 'DELETE':

@@ -2,7 +2,7 @@ const userContainer = document.querySelector('#userContainer');
 const ALL_USER_API_URL = `https://jsonplaceholder.typicode.com/users`
 
 
-const userData = JSON.parse(localStorage.getItem('userData')) || [];
+const userData = JSON.parse(localStorage.getItem('userData')) ?? [];
 
 window.addEventListener('load', function(e){
     localStorage.setItem('userPostData', null);
