@@ -96,6 +96,9 @@ function addClikEventForDeleEdit(){
         item.addEventListener('click', function (e) {
             const target = e.target;
             if (target.closest('.card').dataset.id === target.dataset.id) {
+                createPostForm.style.display = 'flex';
+                editPostForm.style.display = 'none';
+                
                 showConfirmModal(target.dataset.id);
             }
         });
