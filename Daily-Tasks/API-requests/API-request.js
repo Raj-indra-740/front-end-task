@@ -11,14 +11,12 @@ window.addEventListener('load', function(e){
 window.addEventListener('DOMContentLoaded', function(e){
     if(!userData.length){
         fetchData(ALL_USER_API_URL, {}, userData)
-
-    }
-    setTimeout(()=>{
+    }else{
         console.log(userData)
         userData.forEach(item => {
             userContainer.innerHTML += createUserCard(item)
         })
-    }, 500)
+    }
 })
 
 
@@ -29,6 +27,10 @@ async function fetchData(url, optionalObj={}, dataContainer){
 
     dataContainer.push(...data)
     localStorage.setItem('userData', JSON.stringify(userData))
+
+    data.forEach(item => {
+        userContainer.innerHTML += createUserCard(item);
+    });
 }
 
 function createUserCard(data){
