@@ -53,6 +53,7 @@ export default function NavBar(){
     applyStyle(menuIcon, {
         margin: '12px',
         cursor:'pointer',
+        opacity:'0.7',
     })
     menuIconDiv.appendChild(menuIcon);
 
