@@ -1,6 +1,7 @@
 import applyStye from "./utilities/applyStyle.js";
 import NavBar from "./components/NavBar.js";
-import MainSection from "./components/mainSection.js";
+import MainSection from "./components/MainSection.js";
+
 
 
 const styleElement = document.createElement('style');
