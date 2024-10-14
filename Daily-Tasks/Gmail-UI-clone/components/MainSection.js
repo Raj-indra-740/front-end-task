@@ -1,4 +1,4 @@
-import SideBar from "../ui/sideBar.js";
+import SideBar from "../ui/SideBar.js";
 import applyStyle from "../utilities/applyStyle.js";
 
 const createElement = document.createElement.bind(document)
