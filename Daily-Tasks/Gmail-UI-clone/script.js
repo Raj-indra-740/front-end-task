@@ -1,5 +1,6 @@
 import applyStye from "./utilities/applyStyle.js";
 import NavBar from "./components/NavBar.js";
+import MainSection from "./components/mainSection.js";
 
 
 const styleElement = document.createElement('style');
@@ -26,3 +27,4 @@ document.body.appendChild(mainDiv)
 
 
 mainDiv.appendChild(NavBar())
+mainDiv.appendChild(MainSection())
