@@ -11,6 +11,10 @@ styleElement.innerHTML = `
         padding:0;
         box-sizing: border-box;
     }
+
+    html{
+        font-family: sans-serif;
+    }
 `;
 
 const mainDiv = document.createElement('div');
