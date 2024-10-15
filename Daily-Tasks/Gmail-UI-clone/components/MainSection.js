@@ -1,3 +1,4 @@
+import PopSideBar from "../ui/PopSideBar.js";
 import SideBar from "../ui/SideBar.js";
 import applyStyle from "../utilities/applyStyle.js";
 
@@ -31,11 +32,13 @@ export default function MainSection(){
     const mainSectionDiv = createElement('div');
     applyStyle(mainSectionDiv, {
         width:'100%',
-        height:'100%',
-
+        height:'calc(100% - 55px)',
+        display:'flex',
     })
 
-    mainSectionDiv.append(SideBar(gmailSpecificIconData))
+
+    mainSectionDiv.append(SideBar(gmailSpecificIconData), PopSideBar())
+
 
     
     return mainSectionDiv
