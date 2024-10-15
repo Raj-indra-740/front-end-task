@@ -11,7 +11,7 @@ export default function SideBar(iconData){
 
     applyStyle(sideBarDiv, {
         width:'fit-content',
-        height: '100%',
+        // height: '100%',
         backgroundColor: '#eaf1fb',
         display: 'flex',
         flexDirection: 'column',
