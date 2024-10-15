@@ -71,7 +71,8 @@ export default function NavBar(){
         padding: '8px 0',
         paddingLeft: '88px',
         display:'flex',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        gap: '10px'
     })
 
     // Search bar child divs
