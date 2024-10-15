@@ -1,10 +1,11 @@
 import applyStyle from "../utilities/applyStyle.js";
 import createImgContainer from "../utilities/createImgContainer.js";
+import addHoverEffect from "../utilities/addHoverEffect.js";
 
 const createElement = document.createElement.bind(document)
 
 
-export default function SideBar(iconData){
+export default function SideBar(iconData, additionInfo={}){
 
     const sideBarDiv = createElement('div');
     sideBarDiv.id = 'sideBarDiv';
@@ -12,7 +13,7 @@ export default function SideBar(iconData){
     applyStyle(sideBarDiv, {
         width:'fit-content',
         // height: '100%',
-        backgroundColor: '#eaf1fb',
+        backgroundColor: additionInfo.backgroundColor ? additionInfo.backgroundColor : '#eaf1fb',
         display: 'flex',
         flexDirection: 'column',
         justifyItems: 'center',
@@ -26,7 +27,7 @@ export default function SideBar(iconData){
         applyStyle(sideBarLink, {
             width:'40px',
             height:'40px',
-            padding:'34px',
+            padding: additionInfo.paddingIconBox ? additionInfo?.paddingIconBox : '34px',
             display: 'flex',
             flexDirection: 'column',
             justifyItems: 'center',
@@ -37,10 +38,10 @@ export default function SideBar(iconData){
 
         const hoverEffectDiv = createElement('div');
         applyStyle(hoverEffectDiv, {
-            width: '40px',
-            height:'30px',
-            padding:'5px 0',
-            borderRadius: '20px',
+            width: additionInfo.isSymmetricEffect ? 'fit-content' :'40px',
+            height:additionInfo.isSymmetricEffect ? 'fit-content' :'30px',
+            padding:additionInfo.isSymmetricEffect ? '10px' : '5px 0',
+            borderRadius: additionInfo.isSymmetricEffect ? '50%' :'20px',
             backgroundColor:'transparent',
             display:'flex',
             placeContent:'center',
@@ -48,20 +49,19 @@ export default function SideBar(iconData){
         
         const sideBarLinkIcon = createImgContainer(data.iconName, data.iconSrc, data.iconWidth, data.iconHeight)
         applyStyle(sideBarLinkIcon, {
-            opacity: '0.7',
+            opacity: data.opacity ? data.opacity :  '0.7',
         })
 
     
+        if(additionInfo.isSymmetricEffect){
+            addHoverEffect(hoverEffectDiv, [{styleProp:'backgroundColor',styleValue: '#eaebef',}])
+        }else{
+            addHoverEffect(hoverEffectDiv, [{styleProp:'backgroundColor',styleValue: '#d3e3fd',}])
+        }
 
         hoverEffectDiv.appendChild(sideBarLinkIcon)
 
-        hoverEffectDiv.onmouseenter = function(){
-            this.style.backgroundColor = '#d3e3fd';
-        }
 
-        hoverEffectDiv.onmouseleave = function(){
-            this.style.backgroundColor = 'transparent';
-        }
 
         const sideBarLinkText = createElement('p')
         sideBarLinkText.id = `${data.iconText}${i}`
