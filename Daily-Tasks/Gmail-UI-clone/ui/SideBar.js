@@ -49,7 +49,7 @@ export default function SideBar(iconData, additionInfo={}){
         
         const sideBarLinkIcon = createImgContainer(data.iconName, data.iconSrc, data.iconWidth, data.iconHeight)
         applyStyle(sideBarLinkIcon, {
-            opacity: data.opacity ? data.opacity :  '0.7',
+            opacity: data.opacity ? data.opacity :  '1',
         })
 
     
