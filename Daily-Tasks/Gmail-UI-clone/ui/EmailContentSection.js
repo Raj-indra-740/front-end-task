@@ -103,12 +103,13 @@ export default function EmailContentSection(){
             fontWeight: item.isRead ? 'normal' : 'bold',
             color:item.isRead ? '#5F6368' : '#202124',
         })
-        console.log(item)
+        // console.log(item)
 
 
         //Email content
         const emailContentPreviewDiv = createElement('div');
         emailContentPreviewDiv.id ='emailContentPreviewDiv';
+        emailContentPreviewDiv.classList.add('emailContentPreviewDiv')
         emailContentPreviewDiv.innerHTML = `
             <span id=emailSubject${i} 
                 style="
