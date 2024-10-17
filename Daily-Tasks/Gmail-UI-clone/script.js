@@ -33,3 +33,14 @@ document.body.appendChild(mainDiv)
 
 mainDiv.appendChild(NavBar())
 mainDiv.appendChild(MainSection())
+
+
+document.addEventListener('DOMContentLoaded', function(){
+    const functionalScript = document.createElement('script')
+    functionalScript.src = 'functionalScript.js'
+    functionalScript.type = 'module'
+    document.querySelector('body').appendChild(functionalScript)
+})
+
+
+
