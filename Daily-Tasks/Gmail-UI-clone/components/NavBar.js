@@ -41,6 +41,7 @@ export default function NavBar(){
     })
 
     const menuIconDiv = createElement('div');
+    menuIconDiv.id = 'menuIconDiv'
     applyStyle(menuIconDiv, {
         height:'100%',
         backgroundColor:'#eaf1fb',
@@ -72,7 +73,8 @@ export default function NavBar(){
         paddingLeft: '88px',
         display:'flex',
         justifyContent:'space-between',
-        gap: '30px'
+        gap: '30px',
+        position:'relative',
     })
 
     // Search bar child divs
@@ -154,6 +156,7 @@ export default function NavBar(){
         textAlign:'center',
         fontFamily: 'sans-serif',
         cursor:'pointer',
+        
     })
 
     //Help Icon Div //here sstar
