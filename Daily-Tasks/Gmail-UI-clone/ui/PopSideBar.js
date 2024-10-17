@@ -18,7 +18,7 @@ export default function PopSideBar(){
         alignItems:'flex-start',
         gap:'10px',
         overflowX:'hidden',  //for toggle pop
-        transition: 'all .08s linear, min-width 0.15s cubic-bezier(0.4,0,0.2,1)'
+        transition: 'width 1s ease-in-out'
     })
 
     //Compose Email button section
