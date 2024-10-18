@@ -2,6 +2,7 @@ import EmailContentSection from "../ui/EmailContentSection.js";
 import PopSideBar from "../ui/PopSideBar.js";
 import SideBar from "../ui/SideBar.js";
 import applyStyle from "../utilities/applyStyle.js";
+import { emailData } from "../constants/emailData.js";
 
 const createElement = document.createElement.bind(document)
 
@@ -90,7 +91,7 @@ export default function MainSection(){
     })
 
 
-    mainSectionDiv.append(SideBar(gmailSpecificIconData, ema), PopSideBar(), EmailContentSection(), SideBar(googleAppIconData, googleAppIconDataStyle))
+    mainSectionDiv.append(SideBar(gmailSpecificIconData, emailData), PopSideBar(), EmailContentSection(), SideBar(googleAppIconData, googleAppIconDataStyle))
 
 
     
