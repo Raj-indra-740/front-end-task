@@ -1,5 +1,4 @@
 import applyStyle from "../utilities/applyStyle.js";
-
  
 const createElement = document.createElement.bind(document)
 export default function NavBar(){
@@ -148,7 +147,7 @@ export default function NavBar(){
         </div>`
     applyStyle(activeStatusDiv, {
         width:'100%',
-        maxWidth: '101px',
+        maxWidth: 'fit-content',
         backgroundColor:'#eaf1fb',
         border: 'none',
         borderRadius: '20px',
