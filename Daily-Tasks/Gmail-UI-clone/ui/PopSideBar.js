@@ -1,8 +1,11 @@
 import applyStyle from "../utilities/applyStyle.js";
 import addHoverEffect from "../utilities/addHoverEffect.js";
 import createImgContainer from "../utilities/createImgContainer.js";
+import { emailData } from "../constants/emailData.js";
 
 const createElement = document.createElement.bind(document)
+const inboxUnreadEmailCount = emailData.filter(item => !item.isRead)
+// console.log(inboxUnreadEmailCount)
 
 export default function PopSideBar(){
 
@@ -67,7 +70,7 @@ export default function PopSideBar(){
             liName: 'Inbox',
             liIcon: './assests/main-section/inboxBaseline.png',
             liIconBlack: './assests/main-section/inboxBlack.png',
-            liExtra: '32',
+            liExtra: inboxUnreadEmailCount.length,
         },
         {
             liName: 'Starred',
@@ -132,7 +135,7 @@ export default function PopSideBar(){
         })
         liText.innerHTML = `
             <span>${item.liName}</span>
-            <span style='font-size:12px;'>${item.liExtra ? item.liExtra : ''}</span>
+            <span style='font-size:12px;'>${item.liExtra ? inboxUnreadEmailCount.length : ''}</span>
         `;
 
         li.append(liIcon, liText)
