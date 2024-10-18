@@ -40,9 +40,19 @@ export default function EmailContentSection(){
             display:'flex',
             alignItems:'center',
             // justifyContent:'space-between',
+            position:'relative',
 
         })
 
+
+        const dragIndicator = createImgContainer('draggableIndicator', './assests/main-section/dragIndicator.png', 20, 20)
+        dragIndicator.id = 'dragIndicator',
+        applyStyle(dragIndicator, {
+            marginLeft:'2px',
+            opacity:'0.5',
+            visibility:'hidden',
+            position:'absolute'
+        })
 
         const cheackBoxDiv = createElement('div');
         applyStyle(cheackBoxDiv, {
@@ -62,7 +72,7 @@ export default function EmailContentSection(){
             margin:'5px',
             border:'2px solid #5d5f5e',
             borderRadius:'2px',
-            opacity:'0.7',  
+            opacity:'0.5',  
         })
         addHoverEffect(cheackBoxDiv, [{
             styleProp:'backgroundColor',
@@ -82,6 +92,9 @@ export default function EmailContentSection(){
             cursor:'pointor',
         })
         const startIcon = createImgContainer('emailContentStarIcon', './assests/main-section/starBaseline.png', 20, 20)
+        applyStyle(startIcon,{
+            opacity:'0.5',
+        })
 
         addHoverEffect(startIcondiv, [{
             styleProp:'backgroundColor',
@@ -244,7 +257,7 @@ export default function EmailContentSection(){
         })
 
 
-        emailContentRow.append(cheackBoxDiv, startIcondiv, senderNameDiv, emailContentPreviewDiv,emailContentExtraMenuDiv, emailContentDate)
+        emailContentRow.append(dragIndicator, cheackBoxDiv, startIcondiv, senderNameDiv, emailContentPreviewDiv,emailContentExtraMenuDiv, emailContentDate)
     
         //pop effect and visiblity of extramenu div
         emailContentRow.addEventListener('mouseenter', function () {
@@ -253,6 +266,9 @@ export default function EmailContentSection(){
             emailContentPreviewDiv.style.maxWidth = '368px';
             emailContentExtraMenuDiv.style.display = 'flex';
             emailContentDate.style.display = 'none';
+            cheackBox.style.opacity = '1';
+            startIcon.style.opacity = '1';
+            dragIndicator.style.visibility = 'visible';
         });
     
         emailContentRow.addEventListener('mouseleave', function () {
@@ -261,6 +277,9 @@ export default function EmailContentSection(){
             emailContentPreviewDiv.style.maxWidth = '468px';
             emailContentExtraMenuDiv.style.display = 'none';
             emailContentDate.style.display = 'block';
+            cheackBox.style.opacity = '0.5';
+            startIcon.style.opacity = '0.5';
+            dragIndicator.style.visibility = 'hidden';
         });
         emailContenSubDiv.appendChild(emailContentRow)
     })
