@@ -27,7 +27,7 @@ menuIconDiv.addEventListener('click', function(){
     }
 })
 
-const statusData = [{type:'Auto', iconColor:'#1e8e3e'}, {type:'Do not disturb', iconColor:'red'}, {type:'Set as away', iconColor:'#fbbc04' }]
+const statusData = [{type:'Active', iconColor:'#1e8e3e'}, {type:'Do not disturb', iconColor:'red'}, {type:'Set as away', iconColor:'#fbbc04' }]
 
 
 function statusList(){
