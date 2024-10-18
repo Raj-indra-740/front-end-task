@@ -90,7 +90,7 @@ export default function MainSection(){
     })
 
 
-    mainSectionDiv.append(SideBar(gmailSpecificIconData), PopSideBar(), EmailContentSection(), SideBar(googleAppIconData, googleAppIconDataStyle))
+    mainSectionDiv.append(SideBar(gmailSpecificIconData, ema), PopSideBar(), EmailContentSection(), SideBar(googleAppIconData, googleAppIconDataStyle))
 
 
     
