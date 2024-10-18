@@ -9,11 +9,19 @@ const inboxUnreadEmailCount = emailData.filter(item => !item.isRead)
 
 export default function PopSideBar(){
 
+    const popSideBarMainDiv =  createElement('div');
+    popSideBarMainDiv.id = 'popSideBarMainDiv'
+    applyStyle(popSideBarMainDiv, {
+        width:'100%',
+        maxWidth:'256px', 
+        overflowX:'hidden',
+        transition: 'all 1s ease-in-out 0s',
+    })
+
     const popSideBarDiv = createElement('div');
     popSideBarDiv.id = 'popSideBarDiv';
     applyStyle(popSideBarDiv, {
         width:'100%',     //0% to hide
-        maxWidth:'256px', 
         backgroundColor:'#f6f8fc',
         padding:'10px',   //0 to hide
         display: 'flex',
@@ -21,7 +29,7 @@ export default function PopSideBar(){
         alignItems:'flex-start',
         gap:'10px',
         overflowX:'hidden',  //for toggle pop
-        transition: 'width 1s ease-in-out'
+        // transition: 'all 1s ease-in-out 0s',
     })
 
     //Compose Email button section
@@ -183,6 +191,8 @@ export default function PopSideBar(){
 
     popSideBarDiv.append(composeBtn, emailSectionList, labelDiv)
 
-    return popSideBarDiv
+    popSideBarMainDiv.append(popSideBarDiv)
+
+    return popSideBarMainDiv
 }
 
