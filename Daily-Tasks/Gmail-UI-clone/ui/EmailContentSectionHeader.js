@@ -1,10 +1,11 @@
 import applyStyle from "../utilities/applyStyle.js";
 import addHoverEffect from "../utilities/addHoverEffect.js";
 import createImgContainer from "../utilities/createImgContainer.js";
+import { emailData } from "../constants/emailData.js";
 
 const createElement = document.createElement.bind(document)
 
-export default function EmailContentSectionHeader(){
+export default function EmailContentSectionHeader(nextPageUpdate, previousPageUpdate, {start, end}){
 
     const emailContentSectionHead = createElement('div');
     emailContentSectionHead.id = 'emailContentSectionHead'
@@ -129,8 +130,10 @@ export default function EmailContentSectionHeader(){
 
     })
 
-    paginationCountContent.innerHTML = `<span>1</span> - <span>50</span> of <span>70</span>`
+  
+    let info = JSON.parse(localStorage.getItem('currPageInfo'))
 
+    paginationCountContent.innerHTML = `<span>${info.start}</span> - <span>${info.end}</span> of <span>${emailData.length}</span>`
     
     const navigationOfPaginationDiv = createElement('div');
     navigationOfPaginationDiv.id = 'navigationOfPaginationDiv';
@@ -141,10 +144,40 @@ export default function EmailContentSectionHeader(){
         gap:'20px'
     })
     
-    navigationOfPaginationDiv.innerHTML = `
-        <img id="prevPage" style="transform:rotate(90deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
-        <img id="nextPage" style="transform:rotate(270deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
-    `
+    // navigationOfPaginationDiv.innerHTML = `
+    //     <img id="prevPage" style="transform:rotate(90deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
+    //     <img id="nextPage" style="transform:rotate(270deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
+    // `
+    const prevPage = createImgContainer('prevPage', './assests/main-section/more.png', 16, 16 )
+    prevPage.id="prevPage";
+
+    applyStyle(prevPage, {
+        transform:'rotate(90deg)',
+        cursor:'pointer',
+    })
+
+    const nextPage = createImgContainer('nextPage', './assests/main-section/more.png', 16, 16 )
+    nextPage.id="nextPage";
+
+    applyStyle(nextPage, {
+        transform:'rotate(270deg)',
+        cursor:'pointer',
+    })
+
+    navigationOfPaginationDiv.append(prevPage, nextPage)
+
+    prevPage.addEventListener('click', function(){
+        console.log('prev clicked')
+        paginationCountContent.innerHTML = `<span>${info.start}</span> - <span>${info.end}</span> of <span>${emailData.length}</span>`
+        previousPageUpdate()
+    })
+    nextPage.addEventListener('click', function(){
+        console.log('next clicked')
+        paginationCountContent.innerHTML = `<span>${info.start}</span> - <span>${info.end}</span> of <span>${emailData.length}</span>`
+        nextPageUpdate()
+    })
+
+    // console.log(nextButton, preButton)
     paginationCountDiv.append(paginationCountContent, navigationOfPaginationDiv)
 
 
