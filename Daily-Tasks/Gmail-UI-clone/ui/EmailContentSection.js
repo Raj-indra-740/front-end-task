@@ -41,7 +41,7 @@ export default function EmailContentSection(){
             alignItems:'center',
             // justifyContent:'space-between',
             position:'relative',
-
+            cursor:'pointer',
         })
 
 
@@ -234,6 +234,7 @@ export default function EmailContentSection(){
             display:'flex',
             justifyContent:'center',
             alignItems:'center',
+          
         })
         addHoverEffect(emailClockIconDiv, [{styleProp:'backgroundColor', styleValue:'#eaebef'}])
         const emailClockIcon = createImgContainer('emailClockIcon', './assests/main-section/clockBaseline.png', 20, 20)
