@@ -1,4 +1,5 @@
 console.log('functional script is loaded!!')
+import addHoverEffect from "./utilities/addHoverEffect.js";
 import applyStye from "./utilities/applyStyle.js";
 
 let togglePopSideBarFlag = false;
@@ -8,8 +9,8 @@ const menuIconDiv = document.querySelector('#menuIconDiv')
 const emailContentPreviewDiv = document.querySelectorAll('.emailContentPreviewDiv')
 const activeStatusDiv = document.querySelector('#activeStatusDiv')
 
-console.log(popSideBarDiv, menuIconDiv)
-console.log(emailContentPreviewDiv)
+// console.log(popSideBarDiv, menuIconDiv)
+// console.log(emailContentPreviewDiv)
 
 menuIconDiv.addEventListener('click', function(){
     if(!togglePopSideBarFlag){
@@ -27,36 +28,44 @@ menuIconDiv.addEventListener('click', function(){
     }
 })
 
-const statusData = [{type:'Automatic', iconColor:'#1e8e3e'}, {type:'Do not disturb', iconColor:'red'}, {type:'Set as away', iconColor:null }]
+const statusData = [{type:'Auto', iconColor:'#1e8e3e'}, {type:'Do not disturb', iconColor:'red'}, {type:'Set as away', iconColor:'#fbbc04' }]
 
 
 function statusList(){
     const div = document.createElement('div');
     div.id = 'statusList';
     applyStye(div, {
-        display:'block',
-        borderRadius:'10px',
-        width:'fit-content',
+        borderRadius:'5px',
+        width:'200px',
         backgroundColor:'white',
         position:'absolute',
-        bottom:'-150px',
-        display:'flex',
+        top:'60px',
+        right: '-30px',
+        display:'none',
         flexDirection:'column',
         alignItems:'start',
         gap:'10px',
+        zIndex: '5',
+        boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',
+        overflow:'hidden',
     })
 
     statusData.forEach(item => {
         const option = document.createElement('div')
+        option.classList.add('statusListContents')
+        applyStye(option, {
+            width:'100%',
+        })
         option.innerHTML = `
-        <div style=
+        <div
+        style=
             '
             display:flex; 
-            justify-content:center; 
+            justify-content:start; 
             align-items:center; 
             gap:5px;
-            margin-bottom:5px;
-            padding:10px 20px;
+            padding:20px;
+            cursor:pointer;
             '>
             <span id='statusBall' 
                 style='
@@ -70,7 +79,20 @@ function statusList(){
             <span id='statusText' style='font-size:14px; '>${item.type}</span>
         </div>
         `
-
+        addHoverEffect(option, [{styleProp:'backgroundColor', styleValue:'#eaebef'}])
+    
+        option.addEventListener('click', function(){
+            activeStatusDiv.innerHTML = `
+                    <div style='display:flex; justify-content:center; align-items:center; gap:5px;'>
+                        <span id='statusBall' style='display:inline-block; border-radius:50%; background-color:${item.iconColor};  border: 1px solid ${item.iconColor ? item.iconColor : 'black' }; width:12px; height:12px;'></span>
+                        <span id='statusText' style='font-size:14px; '>${item.type}</span>
+                        <img src='./assests/down-arrow.png' width='12' height='12'/>
+                    </div>
+            `
+            this.parentElement.style.display = 'none'
+            statusListFlag = false;
+        })
+    
 
         div.appendChild(option)
 
@@ -80,14 +102,19 @@ function statusList(){
     return div
 }
 
+activeStatusDiv.after(statusList())
 activeStatusDiv.addEventListener('click', function(){
-
+    event.stopPropagation();
+    console.log('clicked')
     if(!statusListFlag){
-        activeStatusDiv.after(statusList())
+        document.querySelector('#statusList').style.display = 'flex'
         statusListFlag = !statusListFlag
     }else{
-        document.querySelector('#statusList').remove()
+        document.querySelector('#statusList').style.display = 'none'
         // activeStatusDiv.after(statusList())
         statusListFlag = !statusListFlag
     }
 })
+
+
+
