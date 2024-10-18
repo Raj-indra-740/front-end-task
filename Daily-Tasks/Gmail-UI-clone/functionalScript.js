@@ -4,26 +4,25 @@ import applyStye from "./utilities/applyStyle.js";
 
 let togglePopSideBarFlag = false;
 let statusListFlag = false;
-const popSideBarDiv = document.querySelector('#popSideBarDiv');
+const popSideBarMainDiv = document.querySelector('#popSideBarMainDiv');
 const menuIconDiv = document.querySelector('#menuIconDiv')
 const emailContentPreviewDiv = document.querySelectorAll('.emailContentPreviewDiv')
+const emailContentSection = document.querySelector('#emailContentSection')
 const activeStatusDiv = document.querySelector('#activeStatusDiv')
 
-// console.log(popSideBarDiv, menuIconDiv)
+// console.log(popSideBarMainDiv, menuIconDiv)
 // console.log(emailContentPreviewDiv)
 
 menuIconDiv.addEventListener('click', function(){
     if(!togglePopSideBarFlag){
-        popSideBarDiv.style.width = '0%';
-        setTimeout(() => {
-            popSideBarDiv.style.padding = '0px';
-            emailContentPreviewDiv.forEach(item => item.style.maxWidth = '668px')
-        }, 900)
+        popSideBarMainDiv.style.maxWidth = '0';
+        emailContentPreviewDiv.forEach(item => item.style.maxWidth = '668px')
+        emailContentSection.style.marginLeft = '10px';
         togglePopSideBarFlag = !togglePopSideBarFlag;
     }else{
-        popSideBarDiv.style.width = '100%';
-        popSideBarDiv.style.padding = '10px';
+        popSideBarMainDiv.style.maxWidth = '256px';
         emailContentPreviewDiv.forEach(item => item.style.maxWidth = '468px')
+        emailContentSection.style.marginLeft = '0px';
         togglePopSideBarFlag = !togglePopSideBarFlag;
     }
 })
@@ -118,3 +117,11 @@ activeStatusDiv.addEventListener('click', function(){
 
 
 
+document.addEventListener('click', function(event){
+    const statusListDiv = document.querySelector('#statusList');
+    
+    if (statusListDiv && !statusListDiv.contains(event.target) && !activeStatusDiv.contains(event.target)) {
+        statusListDiv.style.display = 'none';  // Hide the popup
+        statusListFlag = false;  // Reset the flag
+    }
+});
