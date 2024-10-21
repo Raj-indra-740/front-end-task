@@ -296,32 +296,49 @@ export default function EmailContentSection(){
         })
     }
 
-    const updatePagination = () => {
+    const updatePagination = (paginationCountDiv) => {
         start = (currentPage - 1) * noOfEmailToRender;
         end = currentPage * noOfEmailToRender;
         const emailToRender =  emailData.slice(start, end)
-
-        console.log(currentPage, emailToRender.length, start, end, emailData.toSpliced(start, end))
+        const preButton = document.querySelector('#prevPage')
+        const nextButton = document.querySelector('#nextPage')
+       
+        if(preButton && preButton){
+            if(currentPage <= 1){
+                preButton.style.opacity = '0.5'
+            }else{
+                preButton.style.opacity = '1'
+            }
+            if(currentPage * noOfEmailToRender == emailData.length){
+                nextButton.style.opacity = '0.5'
+            }else{
+                nextButton.style.opacity = '1'
+            }
+        }
+            
+        if(paginationCountDiv){
+            paginationCountDiv
+                .querySelector('#paginationCountContent')
+                .innerHTML = `<span>${start}</span> - <span>${end}</span> of <span>${emailData.length}</span>`;
+        } 
+        
         renderEmails(emailToRender)
-        
-        let currPageInfo = {start, end}
-        
-        localStorage.setItem('currPageInfo', JSON.stringify(currPageInfo))
-
     }
 
-    const nextPageUpdate = () => {
+    const nextPageUpdate = (paginationCountDiv) => {
+
         if(currentPage * noOfEmailToRender < emailData.length ){
             currentPage++;
-            updatePagination()
+            updatePagination(paginationCountDiv)
         }
     }
 
-    const previousPageUpdate = () => {
+    const previousPageUpdate = (paginationCountDiv) => {
         if(currentPage > 1){
             currentPage--;
-            updatePagination();
+            updatePagination(paginationCountDiv);
         }
+
     }
 
     updatePagination()
@@ -330,7 +347,7 @@ export default function EmailContentSection(){
 
     
 
-    emailContentSection.append(EmailContentSectionHeader(nextPageUpdate, previousPageUpdate, {start, end}), emailContentDiv)
+    emailContentSection.append(EmailContentSectionHeader(nextPageUpdate, previousPageUpdate), emailContentDiv)
 
     return emailContentSection
 }
