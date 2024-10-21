@@ -5,7 +5,7 @@ import { emailData } from "../constants/emailData.js";
 
 const createElement = document.createElement.bind(document)
 
-export default function EmailContentSectionHeader(nextPageUpdate, previousPageUpdate, {start, end}){
+export default function EmailContentSectionHeader(nextPageUpdate, previousPageUpdate){
 
     const emailContentSectionHead = createElement('div');
     emailContentSectionHead.id = 'emailContentSectionHead'
@@ -144,14 +144,11 @@ export default function EmailContentSectionHeader(nextPageUpdate, previousPageUp
         gap:'20px'
     })
     
-    // navigationOfPaginationDiv.innerHTML = `
-    //     <img id="prevPage" style="transform:rotate(90deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
-    //     <img id="nextPage" style="transform:rotate(270deg); cursor:pointer;" src="./assests/main-section/more.png" width="16" height="16" alt="image">
-    // `
     const prevPage = createImgContainer('prevPage', './assests/main-section/more.png', 16, 16 )
     prevPage.id="prevPage";
 
     applyStyle(prevPage, {
+        opacity:'0.5',
         transform:'rotate(90deg)',
         cursor:'pointer',
     })
@@ -168,13 +165,11 @@ export default function EmailContentSectionHeader(nextPageUpdate, previousPageUp
 
     prevPage.addEventListener('click', function(){
         console.log('prev clicked')
-        paginationCountContent.innerHTML = `<span>${info.start}</span> - <span>${info.end}</span> of <span>${emailData.length}</span>`
-        previousPageUpdate()
+        previousPageUpdate(paginationCountDiv)
     })
     nextPage.addEventListener('click', function(){
         console.log('next clicked')
-        paginationCountContent.innerHTML = `<span>${info.start}</span> - <span>${info.end}</span> of <span>${emailData.length}</span>`
-        nextPageUpdate()
+        nextPageUpdate(paginationCountDiv)
     })
 
     // console.log(nextButton, preButton)
