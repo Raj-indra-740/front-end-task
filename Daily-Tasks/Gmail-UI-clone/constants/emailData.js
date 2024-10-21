@@ -602,14 +602,6 @@
       date: "Sep 12, 2024",
       isRead: true,
     },
-    {
-      id: 61,
-      sender: "Trello",
-      subject: "Task Assignment",
-      body: "You have been assigned a new task on your Trello board.",
-      date: "Sep 11, 2024",
-      isRead: true,
-    }
   ]
 
 
